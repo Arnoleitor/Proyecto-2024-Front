@@ -1,0 +1,26 @@
+
+// https://medium.com/codeartisan/breakpoints-and-media-queries-in-scss-46e8f551e2f2
+
+
+
+// Small devices
+@mixin mobile {
+	@media (max-width: 576px) {
+		@content;
+	}
+}
+
+// Medium devices
+@mixin tablet {
+	@media (min-width: 577px) {
+		@content;
+	}
+}
+
+
+// Large devices
+@mixin desktop {
+	@media (min-width: 768px) {
+		@content;
+	}
+}

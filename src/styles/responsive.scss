@@ -1,0 +1,101 @@
+
+
+$sizes: (0:0rem, 1:0.25rem, 2:0.5rem, 3:1rem, 4:1.5rem, 5:2rem);
+
+@include mobile {
+
+    @for $i from 1 through 100 {
+        .mvw#{$i} {width: #{$i}#{'vw'} !important};
+        .mvh#{$i} {height: #{$i}#{'vh'} !important};
+    }
+    @for $i from 1 through 100 {
+        .mw#{$i} {width: #{$i}#{'%'} !important};
+        .mh#{$i} {height: #{$i}#{'%'} !important};
+    }
+    @for $i from 1 through 100 {
+        .mw#{$i}em {width: #{$i}#{'em'} !important};
+        .mh#{$i}em {height: #{$i}#{'em'} !important};
+    }
+
+    @each $index, $size in $sizes {
+        .mp#{$index}{ padding: $size !important; }
+        .mtp#{$index}{ padding-top: $size !important; }
+        .mrp#{$index}{ padding-right: $size !important; }
+        .mbp#{$index}{ padding-bottom: $size !important; }
+        .mlp#{$index}{ padding-left: $size !important; }
+    }    
+    
+}
+
+@include tablet {
+
+    @for $i from 1 through 100 {
+        .tvw#{$i} {width: #{$i}#{'vw'} !important};
+        .tvh#{$i} {height: #{$i}#{'vh'} !important};
+    }
+    @for $i from 1 through 100 {
+        .tw#{$i} {width: #{$i}#{'%'} !important};
+        .th#{$i} {height: #{$i}#{'%'} !important};
+    }
+    @for $i from 1 through 100 {
+        .tw#{$i}em {width: #{$i}#{'em'} !important};
+        .th#{$i}em {height: #{$i}#{'em'} !important};
+    }
+
+    @each $index, $size in $sizes {
+        .tp#{$index}{ padding: $size !important; }
+        .ttp#{$index}{ padding-top: $size !important; }
+        .trp#{$index}{ padding-right: $size !important; }
+        .tbp#{$index}{ padding-bottom: $size !important; }
+        .tlp#{$index}{ padding-left: $size !important; }
+    }
+}
+
+// @include miniDesktop {
+
+//     @for $i from 1 through 100 {
+//         .mDvw#{$i} {width: #{$i}#{'vw'} !important};
+//         .mDvh#{$i} {height: #{$i}#{'vh'} !important};
+//     }
+//     @for $i from 1 through 100 {
+//         .mDw#{$i} {width: #{$i}#{'%'} !important};
+//         .mDh#{$i} {height: #{$i}#{'%'} !important};
+//     }
+//     @for $i from 1 through 100 {
+//         .mDw#{$i}em {width: #{$i}#{'em'} !important};
+//         .mDh#{$i}em {height: #{$i}#{'em'} !important};
+//     }
+
+//     @each $index, $size in $sizes {
+//         .mDp#{$index}{ padding: $size !important; }
+//         .mDtp#{$index}{ padding-top: $size !important; }
+//         .mDrp#{$index}{ padding-right: $size !important; }
+//         .mDbp#{$index}{ padding-bottom: $size !important; }
+//         .mDlp#{$index}{ padding-left: $size !important; }
+//     }
+// }
+
+
+@include desktop {
+
+    @for $i from 1 through 100 {
+        .dvw#{$i} {width: #{$i}#{'vw'} !important};
+        .dvh#{$i} {height: #{$i}#{'vh'} !important};
+    }
+    @for $i from 1 through 100 {
+        .dw#{$i} {width: #{$i}#{'%'} !important};
+        .dh#{$i} {height: #{$i}#{'%'} !important};
+    }
+    @for $i from 1 through 100 {
+        .dw#{$i}em {width: #{$i}#{'em'} !important};
+        .dh#{$i}em {height: #{$i}#{'em'} !important};
+    }
+
+    @each $index, $size in $sizes {
+        .dp#{$index}{ padding: $size !important; }
+        .dtp#{$index}{ padding-top: $size !important; }
+        .drp#{$index}{ padding-right: $size !important; }
+        .dbp#{$index}{ padding-bottom: $size !important; }
+        .dlp#{$index}{ padding-left: $size !important; }
+    }
+}
