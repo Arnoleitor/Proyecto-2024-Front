@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import { Button, Menu } from 'antd';
+
 import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
+  UsbOutlined,
+  BuildOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  PieChartOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
-import { Button, Menu } from 'antd';
+
+
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -18,20 +19,25 @@ function getItem(label, key, icon, children, type) {
     type,
   };
 }
+
 const items = [
-  getItem('Inicio', '1', <PieChartOutlined />),
-  getItem('Componentes', 'sub1', <MailOutlined />, [
-    getItem('Placas base', '5'),
-    getItem('T.Gráficas', '6'),
-    getItem('Discos duros', '7'),
-    getItem('Procesadores', '8'),
+  getItem('Inicio', '1', <HomeOutlined />),
+  getItem('Componentes', 'sub1', <BuildOutlined />, [
+    getItem('Placas base', '2', null, null, null, '/src/pages/Pieces/Components/Motherboards.jsx'),
+    getItem('T.Gráficas', '3'),
+    getItem('Discos duros', '4'),
+    getItem('Procesadores', '5'),
   ]),
-  getItem('Accesorios', 'sub2', <AppstoreOutlined />, [
-    getItem('Teclados', '9'),
-    getItem('Ratones', '10'),
-    getItem('Pantallas', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
+
+  getItem('Accesorios', 'sub2', <UsbOutlined />, [
+    getItem('Teclados', '6'),
+    getItem('Ratones', '7'),
+    getItem('Pantallas', '8'),
+    getItem('Otros', 'sub3', null, [getItem('Cables', '9'), getItem('Usb', '10')]),
   ]),
+
 ];
+
 const Selector = () => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
@@ -44,10 +50,11 @@ const Selector = () => {
       }}
     >
       <Button
-        type="primary"
+        type=""
         onClick={toggleCollapsed}
         style={{
           marginBottom: 16,
+          color:"black",
         }}
       >
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

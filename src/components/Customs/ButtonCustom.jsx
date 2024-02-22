@@ -1,11 +1,11 @@
 import { Button } from "antd";
 
-export default function SimpleButton({
+export default function ButtonCustom({
     className = "mr2",
     text = "",
     children,
     onClick = ()=>{
-        console.log( "SimpleButton" );
+        console.log( "ButtonCustom" );
     },
     ...props
 }) {
