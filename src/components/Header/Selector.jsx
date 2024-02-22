@@ -23,7 +23,7 @@ function getItem(label, key, icon, children, type) {
 const items = [
   getItem('Inicio', '1', <HomeOutlined />),
   getItem('Componentes', 'sub1', <BuildOutlined />, [
-    getItem('Placas base', '2', null, null, null, '/src/pages/Pieces/Components/Motherboards.jsx'),
+    getItem('Placas base', '2'),
     getItem('T.Gráficas', '3'),
     getItem('Discos duros', '4'),
     getItem('Procesadores', '5'),

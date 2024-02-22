@@ -5,7 +5,7 @@ import {
 const Home = () => {
   return (
     <div >
-      <p><span style={{ 'font-size': "50px", 'font-family': "fantasy" }}>PC Piezas</span><ToolOutlined /> <span style={{ 'font-size': "20px", 'margin-left': "1em", 'font-family': "fantasy" }}>Tu tienda de componentes</span> </p>
+      <p><span style={{ 'fontSize': "50px", 'fontFamily': "fantasy" }}>PC Piezas</span><ToolOutlined /> <span style={{ 'fontSize': "20px", 'marginLeftt': "1em", 'fontFamily': "fantasy" }}>Tu tienda de componentes</span> </p>
     </div>
   );
 };
