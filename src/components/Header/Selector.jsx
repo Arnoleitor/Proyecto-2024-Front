@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Menu } from 'antd';
+import { Button, Input, Menu } from 'antd';
 
 import {
   UsbOutlined,
@@ -21,6 +21,7 @@ function getItem(label, key, icon, children, type) {
 }
 
 const items = [
+  { label: (<Input.Search placeholder='Buscar...' />), key: "Buscar" },
   getItem('Inicio', '1', <HomeOutlined />),
   getItem('Componentes', 'sub1', <BuildOutlined />, [
     getItem('Placas base', '2'),
@@ -54,7 +55,7 @@ const Selector = () => {
         onClick={toggleCollapsed}
         style={{
           marginBottom: 16,
-          color:"black",
+          color: "black",
         }}
       >
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -66,6 +67,9 @@ const Selector = () => {
         theme="white"
         inlineCollapsed={collapsed}
         items={items}
+        onClick={(info) => {
+          console.log(info.key)
+        }}
       />
     </div>
   );
