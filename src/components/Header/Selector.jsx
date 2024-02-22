@@ -22,15 +22,15 @@ function getItem(label, key, icon, children, type) {
 
 const items = [
   { label: (<Input.Search placeholder='Buscar...' />), key: "Buscar" },
-  getItem('Inicio', '1', <HomeOutlined />),
-  getItem('Componentes', 'sub1', <BuildOutlined />, [
+    getItem('Inicio', '1', <HomeOutlined />),
+    getItem('Componentes', 'sub1', <BuildOutlined />, [
     getItem('Placas base', '2'),
     getItem('T.Gráficas', '3'),
     getItem('Discos duros', '4'),
     getItem('Procesadores', '5'),
   ]),
 
-  getItem('Accesorios', 'sub2', <UsbOutlined />, [
+    getItem('Accesorios', 'sub2', <UsbOutlined />, [
     getItem('Teclados', '6'),
     getItem('Ratones', '7'),
     getItem('Pantallas', '8'),
