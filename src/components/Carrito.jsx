@@ -3,19 +3,19 @@ import { Button, List, Modal, Avatar } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 
 const Carrito = () => {
-  const [cartItems, setCartItems] = useState([
+  const [articulo, setArticulo] = useState([
     { id: 1, name: 'Producto 1', price: 20 },
     { id: 2, name: 'Producto 2', price: 30 },
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleRemoveFromCart = (itemId) => {
-    const updatedCartItems = cartItems.filter(item => item.id !== itemId);
-    setCartItems(updatedCartItems);
+  const borrarArticulo = (itemId) => {
+    const actualizarArticulo = articulo.filter(item => item.id !== itemId);
+    setArticulo(actualizarArticulo);
   };
 
-  const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+  const precioTotal = articulo.reduce((total, item) => total + item.price, 0);
 
   const showModal = () => {
     setModalVisible(true);
@@ -32,7 +32,7 @@ const Carrito = () => {
   return (
     <div>
       <Button icon={<ShoppingCartOutlined />} onClick={showModal}>
-        Árticulos ({cartItems.length})
+        Árticulos ({articulo.length})
       </Button>
 
       <Modal
@@ -51,7 +51,7 @@ const Carrito = () => {
       >
         <List
           bordered
-          dataSource={cartItems}
+          dataSource={articulo}
           renderItem={(item) => (
             <List.Item>
               <List.Item.Meta
@@ -59,14 +59,14 @@ const Carrito = () => {
                 title={item.name}
                 description={`Precio: ${item.price} €`}
               />
-              <Button onClick={() => handleRemoveFromCart(item.id)} type="danger" size="small">
+              <Button onClick={() => borrarArticulo(item.id)} type="danger" size="small">
                 Quitar
               </Button>
             </List.Item>
           )}
         />
         <div style={{ marginTop: '20px', textAlign: 'right' }}>
-          <strong>Total: {totalPrice} €</strong>
+          <strong>Total: {precioTotal} €</strong>
         </div>
       </Modal>
     </div>
