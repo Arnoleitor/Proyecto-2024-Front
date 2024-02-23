@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, List, Modal, Avatar } from 'antd';
+import { Button, List, Modal, Avatar, Tooltip } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import imagen from '../assets/img/procesador.webp'
 
 const Carrito = () => {
   const [articulo, setArticulo] = useState([
@@ -31,9 +32,11 @@ const Carrito = () => {
 
   return (
     <div>
-      <Button icon={<ShoppingCartOutlined />} onClick={showModal}>
-        Árticulos ({articulo.length})
-      </Button>
+      <Tooltip title={`Total: ${precioTotal} €`} placement="bottom">
+        <Button icon={<ShoppingCartOutlined />} onClick={showModal}>
+          Árticulos ({articulo.length})
+        </Button>
+      </Tooltip>
 
       <Modal
         title="Carrito de Compras"
@@ -55,7 +58,7 @@ const Carrito = () => {
           renderItem={(item) => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Avatar src="imagen_del_producto" />}
+                avatar={<Avatar src={imagen} />}
                 title={item.name}
                 description={`Precio: ${item.price} €`}
               />
