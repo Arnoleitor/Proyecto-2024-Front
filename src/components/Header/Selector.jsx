@@ -9,7 +9,6 @@ import {
   InboxOutlined
 } from '@ant-design/icons';
 
-
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -21,23 +20,20 @@ function getItem(label, key, icon, children, type) {
 }
 
 const items = [
-  { label: (<Input.Search placeholder='Buscar...' />), key: "Buscar" },
-    getItem('Inicio', '0', <HomeOutlined />),
-    getItem('Todo', '1', <InboxOutlined />),
-    getItem('Componentes', 'sub1', <BuildOutlined />, [
+  getItem('Inicio', '0', <HomeOutlined />),
+  getItem('Todo', '1', <InboxOutlined />),
+  getItem('Componentes', 'sub1', <BuildOutlined />, [
     getItem('Placas base', '2'),
     getItem('T.Gráficas', '3'),
     getItem('Discos duros', '4'),
     getItem('Procesadores', '5'),
   ]),
-
-    getItem('Accesorios', 'sub2', <UsbOutlined />, [
+  getItem('Accesorios', 'sub2', <UsbOutlined />, [
     getItem('Teclados', '6'),
     getItem('Ratones', '7'),
     getItem('Pantallas', '8'),
     getItem('Otros', 'sub3', null, [getItem('Cables', '9'), getItem('Usb', '10')]),
   ]),
-
 ];
 
 const Selector = () => {
@@ -55,6 +51,7 @@ const Selector = () => {
         break;
     }
   };
+
   return (
     <div
       style={{
@@ -71,6 +68,9 @@ const Selector = () => {
       >
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
+      {collapsed ? null : (
+        <Input.Search placeholder='Buscar...' style={{ marginBottom: 16, marginLeft:'2em' }} />
+      )}
       <Menu
         defaultSelectedKeys={['1']}
         defaultOpenKeys={['sub1', 'sub2', 'sub3']}
@@ -83,4 +83,5 @@ const Selector = () => {
     </div>
   );
 };
+
 export default Selector;

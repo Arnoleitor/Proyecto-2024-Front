@@ -39,7 +39,7 @@ const Carrito = () => {
       </Tooltip>
 
       <Modal
-        title="Carrito de Compras"
+        title="Carrito"
         open={modalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
