@@ -41,9 +41,15 @@ const Selector = () => {
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
-  
+
   const handleMenuSelect = ({ key }) => {
     switch (key) {
+      case '0':
+        window.location.href = '/';
+        break;
+      case '1':
+        window.location.href = '/Piezas';
+        break;
       case '2':
         window.location.href = '/Motherboards';
         break;
@@ -69,7 +75,7 @@ const Selector = () => {
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
       {collapsed ? null : (
-        <Input.Search placeholder='Buscar...' style={{ marginBottom: 16, marginLeft:'2em' }} />
+        <Input.Search placeholder='Buscar...' style={{ marginBottom: 16, marginLeft: '2em' }} />
       )}
       <Menu
         defaultSelectedKeys={['1']}
