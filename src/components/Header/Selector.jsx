@@ -64,7 +64,7 @@ const Selector = () => {
       </Button>
       <Menu
         defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
+        defaultOpenKeys={['sub1', 'sub2', 'sub3']}
         mode="inline"
         theme="white"
         inlineCollapsed={collapsed}

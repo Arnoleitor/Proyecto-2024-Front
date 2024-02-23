@@ -32,8 +32,8 @@ const Carrito = () => {
 
   return (
     <div>
-      <Tooltip title={`Total: ${precioTotal} €`} placement="bottom">
-        <Button icon={<ShoppingCartOutlined />} onClick={showModal}>
+      <Tooltip title={`Total: ${precioTotal} € IVA inc`} placement="bottom">
+        <Button style={{marginLeft:'15px', marginTop:'25px', marginBottom:'15px'}} icon={<ShoppingCartOutlined />} onClick={showModal}>
           Árticulos ({articulo.length})
         </Button>
       </Tooltip>
@@ -69,7 +69,7 @@ const Carrito = () => {
           )}
         />
         <div style={{ marginTop: '20px', textAlign: 'right' }}>
-          <strong>Total: {precioTotal} €</strong>
+          <strong>Total: {precioTotal} € IVA inc.</strong>
         </div>
       </Modal>
     </div>
