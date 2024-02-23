@@ -4,7 +4,7 @@ import Grid from '../components/Grid'
 const Motherboards = () => {
   return (
       <div>
-      <h1>Hola</h1>
+      <h1>Placas base</h1>
       <Grid/>
     </div>
   )

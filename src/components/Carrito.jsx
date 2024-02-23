@@ -62,7 +62,7 @@ const Carrito = () => {
                 title={item.name}
                 description={`Precio: ${item.price} €`}
               />
-              <Button onClick={() => borrarArticulo(item.id)} type="danger" size="small">
+              <Button onClick={() => borrarArticulo(item.id)} type="primary" danger ghost size="small">
                 Quitar
               </Button>
             </List.Item>
