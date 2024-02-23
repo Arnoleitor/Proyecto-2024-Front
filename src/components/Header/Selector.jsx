@@ -7,6 +7,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   HomeOutlined,
+  InboxOutlined
 } from '@ant-design/icons';
 
 
@@ -22,7 +23,8 @@ function getItem(label, key, icon, children, type) {
 
 const items = [
   { label: (<Input.Search placeholder='Buscar...' />), key: "Buscar" },
-    getItem('Inicio', '1', <HomeOutlined />),
+    getItem('Inicio', '0', <HomeOutlined />),
+    getItem('Todo', '1', <InboxOutlined />),
     getItem('Componentes', 'sub1', <BuildOutlined />, [
     getItem('Placas base', '2'),
     getItem('T.Gráficas', '3'),
