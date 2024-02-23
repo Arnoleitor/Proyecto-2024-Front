@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Input, Menu } from 'antd';
-
 import {
   UsbOutlined,
   BuildOutlined,
@@ -46,6 +45,16 @@ const Selector = () => {
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
+  
+  const handleMenuSelect = ({ key }) => {
+    switch (key) {
+      case '2':
+        window.location.href = '/Motherboards';
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <div
       style={{
@@ -69,9 +78,7 @@ const Selector = () => {
         theme="white"
         inlineCollapsed={collapsed}
         items={items}
-        onClick={(info) => {
-          console.log(info.key)
-        }}
+        onSelect={handleMenuSelect}
       />
     </div>
   );

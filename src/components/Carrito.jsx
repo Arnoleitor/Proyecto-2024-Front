@@ -31,7 +31,7 @@ const Carrito = () => {
   };
 
   return (
-    <div>
+    <div className='carrito'>
       <Tooltip title={`Total: ${precioTotal} € IVA inc`} placement="bottom">
         <Button style={{marginLeft:'15px', marginTop:'25px', marginBottom:'15px'}} icon={<ShoppingCartOutlined />} onClick={showModal}>
           Árticulos ({articulo.length})
