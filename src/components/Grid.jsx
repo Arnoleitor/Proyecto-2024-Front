@@ -16,14 +16,14 @@ const TipoProducto = ({ imagenSrc, descripcion, precio }) => (
 
 const Grid = () => {
   const productos = [
-    { imagenSrc: imagen, descripcion: 'Asus ge476', precio: '100€' },
-    { imagenSrc: imagen, descripcion: 'Asus ge474', precio: '150€' },
-    { imagenSrc: imagen, descripcion: 'Asus m2ltd3', precio: '120€' },
-    { imagenSrc: imagen, descripcion: 'Asus ge474', precio: '150€' },
-    { imagenSrc: imagen, descripcion: 'Asus m2ltd3', precio: '400€' },
-    { imagenSrc: imagen, descripcion: 'Asus ge474', precio: '150€' },
-    { imagenSrc: imagen, descripcion: 'Asus m2ltd3', precio: '200€' },
-    { imagenSrc: imagen, descripcion: 'Asus ge474', precio: '350€' },
+    { imagenSrc: imagen, descripcion: <span style={{fontFamily:'fantasy'}}>'Asus ge476'</span>, precio: '100€' },
+    { imagenSrc: imagen, descripcion: <span style={{fontFamily:'fantasy'}}>'Asus ml2td3'</span>, precio: '150€' },
+    { imagenSrc: imagen, descripcion: <span style={{fontFamily:'fantasy'}}>'Asus ge476'</span>, precio: '120€' },
+    { imagenSrc: imagen, descripcion: <span style={{fontFamily:'fantasy'}}>'Asus ml2td3'</span>, precio: '150€' },
+    { imagenSrc: imagen, descripcion: <span style={{fontFamily:'fantasy'}}>'Asus ge476'</span>, precio: '400€' },
+    { imagenSrc: imagen, descripcion: <span style={{fontFamily:'fantasy'}}>'Asus ml2td3'</span>, precio: '150€' },
+    { imagenSrc: imagen, descripcion: <span style={{fontFamily:'fantasy'}}>'Asus ge476'</span>, precio: '200€' },
+    { imagenSrc: imagen, descripcion: <span style={{fontFamily:'fantasy'}}>'Asus ge476'</span>, precio: '350€' },
   ];
 
   const itemsPerPage = 4;
