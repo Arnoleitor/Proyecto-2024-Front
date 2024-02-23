@@ -1,9 +1,11 @@
 import React from 'react';
+import Grid from '../components/Grid';
 
 const Piezas = () => {
   return (
     <div>
-      <h1>Componentes</h1>
+      <h1>Todos los componentes</h1>
+      <Grid/>
     </div>
   );
 };
