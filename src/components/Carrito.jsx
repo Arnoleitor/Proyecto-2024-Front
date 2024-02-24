@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
-import { Button, List, Modal, Avatar, Tooltip } from 'antd';
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { Button, List, Modal, Avatar, Tooltip, Steps } from 'antd';
+import {
+  ShoppingCartOutlined,
+  UserOutlined,
+  LoadingOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
 import imagen from '../assets/img/procesador.webp';
+
+const { Step } = Steps;
 
 const Carrito = () => {
   const [articulo, setArticulo] = useState([
@@ -10,9 +17,10 @@ const Carrito = () => {
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [pasoActual, setPasoActual] = useState(0);
 
   const borrarArticulo = (itemId) => {
-    const actualizarArticulo = articulo.filter(item => item.id !== itemId);
+    const actualizarArticulo = articulo.filter((item) => item.id !== itemId);
     setArticulo(actualizarArticulo);
   };
 
@@ -23,7 +31,8 @@ const Carrito = () => {
   };
 
   const handleOk = () => {
-    setModalVisible(false);
+    setPasoActual(2);
+    setModalVisible(true);
   };
 
   const handleCancel = () => {
@@ -41,7 +50,7 @@ const Carrito = () => {
 
       <Modal
         title="Mi cesta"
-        open={modalVisible} 
+        open={modalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
@@ -53,6 +62,14 @@ const Carrito = () => {
           </Button>,
         ]}
       >
+        {pasoActual >= 2 && (
+          <Steps current={pasoActual - 2} style={{ marginBottom: '20px' }}>
+            <Step title="Login" icon={<UserOutlined />} />
+            <Step title="Pago" icon={<LoadingOutlined />} />
+            <Step title="Completado" icon={<SmileOutlined />} />
+          </Steps>
+        )}
+
         <List
           bordered
           dataSource={articulo}
