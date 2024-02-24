@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { ToolOutlined } from '@ant-design/icons';
 import Carrito from '../components/Carrito';
 import { Divider } from 'antd';
@@ -14,7 +14,7 @@ const Home = () => {
             </span>
             <ToolOutlined />
             <span style={{ fontSize: '20px', marginLeft: '1em', fontFamily: 'fantasy' }}>
-              Tu tienda de componentes
+              Tu tienda de componentes esto es el home???
             </span>
           </p>
 

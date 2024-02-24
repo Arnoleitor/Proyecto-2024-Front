@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, List, Modal, Avatar, Tooltip, Steps } from 'antd';
+import { useState } from 'react';
+import { Button, List, Modal, Avatar, Tooltip, Steps, Flex } from 'antd';
 import {
   ShoppingCartOutlined,
   UserOutlined,
@@ -40,7 +40,7 @@ const Carrito = () => {
   };
 
   return (
-    <div className=''>
+    <div style={{ display: 'flex', alignItems: 'center'}}>
       <Tooltip title={`Total: ${precioTotal} € IVA inc`} placement="bottom">
         <Button icon={<ShoppingCartOutlined />} onClick={showModal}>
           Mi cesta
