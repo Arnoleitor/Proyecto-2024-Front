@@ -2,6 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { lazy } from 'react';
 import Selector from './components/Header/Selector';
 import Ayuda from './components/Ayuda';
+import { Divider } from 'antd';
+import PieDePagina from './components/PieDePagina';
+
 
 const Home = lazy(() => import('./pages/Home'));
 const Piezas = lazy(() => import('./pages/Piezas'));
@@ -19,6 +22,8 @@ const App = () => {
       </Router>
       <Selector />
       <Ayuda />
+      <Divider/>
+      <PieDePagina/>
     </>
   );
 };

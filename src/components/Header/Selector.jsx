@@ -21,7 +21,7 @@ function getItem(label, key, icon, children, type) {
 
 const items = [
     getItem('Inicio', '0', <HomeOutlined />),
-    getItem('Todo', '1', <InboxOutlined />),
+    getItem('Todos', '01', <InboxOutlined />),
     getItem('Componentes', 'sub1', <BuildOutlined />, [
     getItem('Placas base', '2'),
     getItem('T.Gráficas', '3'),
@@ -47,7 +47,7 @@ const Selector = () => {
     case '0':
       window.location.href = '/';
       break;
-    case '1':
+    case '01':
       window.location.href = '/Piezas';
       break;
     case '2':

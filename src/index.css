@@ -9,3 +9,28 @@ html{
     justify-content: space-between;
     align-items: flex-end;
 }
+
+.titulo{
+    width: 50%;
+    height: 100%;
+}
+
+.carrito{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.circuloCesta {
+    display: inline-block;
+    background-color: #c7c7c7;
+    color: #000000;
+    border-radius: 50%; 
+    width: 20px; 
+    height: 20px; 
+    line-height: 20px;
+    text-align: center; 
+    font-size: 12px;
+    margin-left:5px;
+  }
