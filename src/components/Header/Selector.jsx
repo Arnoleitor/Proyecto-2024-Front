@@ -20,15 +20,15 @@ function getItem(label, key, icon, children, type) {
 }
 
 const items = [
-  getItem('Inicio', '0', <HomeOutlined />),
-  getItem('Todo', '1', <InboxOutlined />),
-  getItem('Componentes', 'sub1', <BuildOutlined />, [
+    getItem('Inicio', '0', <HomeOutlined />),
+    getItem('Todo', '1', <InboxOutlined />),
+    getItem('Componentes', 'sub1', <BuildOutlined />, [
     getItem('Placas base', '2'),
     getItem('T.Gráficas', '3'),
     getItem('Discos duros', '4'),
     getItem('Procesadores', '5'),
   ]),
-  getItem('Accesorios', 'sub2', <UsbOutlined />, [
+    getItem('Accesorios', 'sub2', <UsbOutlined />, [
     getItem('Teclados', '6'),
     getItem('Ratones', '7'),
     getItem('Pantallas', '8'),
@@ -42,21 +42,21 @@ const Selector = () => {
     setCollapsed(!collapsed);
   };
 
-  const handleMenuSelect = ({ key }) => {
-    switch (key) {
-      case '0':
-        window.location.href = '/';
-        break;
-      case '1':
-        window.location.href = '/Piezas';
-        break;
-      case '2':
-        window.location.href = '/Motherboards';
-        break;
-      default:
-        break;
-    }
-  };
+ const seleccionMenu = ({ key }) => {
+  switch (key) {
+    case '0':
+      window.location.href = '/';
+      break;
+    case '1':
+      window.location.href = '/Piezas';
+      break;
+    case '2':
+      window.location.href = '/Motherboards';
+      break;
+    default:
+      break;
+  }
+};
 
   return (
     <div
@@ -84,7 +84,7 @@ const Selector = () => {
         theme="white"
         inlineCollapsed={collapsed}
         items={items}
-        onSelect={handleMenuSelect}
+        onSelect={seleccionMenu}
       />
     </div>
   );
