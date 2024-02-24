@@ -22,7 +22,6 @@ const App = () => {
       </Router>
       <Selector />
       <Ayuda />
-      <Divider/>
       <PieDePagina/>
     </>
   );

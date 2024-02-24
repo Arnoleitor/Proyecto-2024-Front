@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Row, Col } from 'antd';
-import { FacebookOutlined, TwitterOutlined, InstagramOutlined, LinkedinOutlined } from '@ant-design/icons';
+import { FacebookOutlined, TwitterOutlined, InstagramOutlined } from '@ant-design/icons';
 
 const { Footer } = Layout;
 
@@ -38,7 +38,7 @@ const PieDePagina = () => {
           <a href="/comoComprar">Como comprar</a>
         </Col>
       </Row>
-      <p style={{ fontFamily: 'fantasy', marginTop: '20px' }}>&copy;{new Date().getFullYear()} PC Piezas. Creado por Arnold</p>
+      <p style={{ fontFamily: 'fantasy', marginTop: '30px' }}>&copy;{new Date().getFullYear()} <span>PC Piezas. Creado por Arnold</span></p>
     </Footer>
   );
 };
