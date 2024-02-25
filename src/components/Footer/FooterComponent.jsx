@@ -1,12 +1,12 @@
-import React from 'react';
 import { Layout, Row, Col } from 'antd';
 import { FacebookOutlined, TwitterOutlined, InstagramOutlined } from '@ant-design/icons';
 
 const { Footer } = Layout;
 
-const PieDePagina = () => {
+const FooterComponent  = () => {
   return (
-    <Footer style={{ textAlign: 'center', backgroundColor: 'aliceblue', padding: '20px' }}>
+    <Footer style={{ textAlign: 'center', backgroundColor: 'aliceblue', margin: '0 16px' }}>
+
       <Row justify="center">
         <Col span={6}>
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
@@ -38,9 +38,9 @@ const PieDePagina = () => {
           <a href="/comoComprar">Como comprar</a>
         </Col>
       </Row>
-      <p style={{ fontFamily: 'fantasy', marginTop: '30px' }}>&copy;{new Date().getFullYear()} <span>PC Piezas. Creado por Arnold</span></p>
+      <p style={{ fontFamily: 'fantasy' }}>&copy;{new Date().getFullYear()} <span>PC Piezas. Creado por Arnold</span></p>
     </Footer>
   );
 };
 
-export default PieDePagina;
+export default FooterComponent;

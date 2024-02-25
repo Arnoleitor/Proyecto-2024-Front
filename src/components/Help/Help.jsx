@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { FloatButton, Modal } from 'antd';
 
-const Ayuda = () => {
+const Help = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleButtonClick = () => {
@@ -19,7 +19,8 @@ const Ayuda = () => {
         icon={<QuestionCircleOutlined />}
         type="default"
         style={{
-          right: 24,
+          right: 60,
+          bottom: 30
         }}
         onClick={handleButtonClick}
       />
@@ -40,4 +41,4 @@ const Ayuda = () => {
   );
 };
 
-export default Ayuda;
+export default Help;

@@ -4,12 +4,6 @@ html{
     height: 100%;
 }
 
-.home{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
 .titulo{
     width: 50%;
     height: 100%;

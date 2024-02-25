@@ -4,8 +4,10 @@ import HeaderComponent from './components/Header/Header';
 import MenuComponent from './components/Menu/Menu';
 import Piezas from './pages/Piezas';
 import Motherboards from './pages/Motherboards'
+import FooterComponent from './components/Footer/FooterComponent';
+import Help from './components/Help/Help';
 
-const { Header, Content, Sider, Footer } = Layout;
+const { Header, Content, Sider } = Layout;
 
 const App = () => {
   const {
@@ -53,28 +55,13 @@ const App = () => {
                     </Routes>
                   </Router>
                 </div>
+                <Help />
               </Content>
-              <Footer
-                style={{
-                  textAlign: 'center',
-                }}
-              >
-                Ant Design ©{new Date().getFullYear()} Created by Ant UED
-              </Footer>
+              <FooterComponent />
             </Layout>
           </Layout>
         </Layout>
       </Layout>
-      {/* <Header />
-      <Router>
-        <Routes>
-          <Route path="/Piezas" element={<Piezas />} />
-          <Route path="/Motherboards" element={<Motherboards />} />
-        </Routes>
-      </Router>
-      <Selector />
-      <Ayuda />
-      <PieDePagina/> */}
     </>
   );
 };

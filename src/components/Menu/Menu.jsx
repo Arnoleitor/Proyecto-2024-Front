@@ -1,7 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
-import { LaptopOutlined, HomeOutlined } from '@ant-design/icons';
-
+import { LaptopOutlined, HomeOutlined, AudioOutlined } from '@ant-design/icons';
 
 const items = [
     {
@@ -36,7 +35,7 @@ const items = [
     },
     {
         key: "2",
-        icon: React.createElement(LaptopOutlined),
+        icon: React.createElement(AudioOutlined),
         label: "Accesorios",
         children: [
             {
@@ -62,11 +61,7 @@ const items = [
 ;
 
 const handlerMenu = (event) => {
-    console.log(event)
-    console.log(event.item.props.path);
-    const route = event.item.props.path;
-    window.location.href = route;
-
+    window.location.href = event.item.props.path;
 }
 
 const MenuComponent = () => {
@@ -85,15 +80,3 @@ const MenuComponent = () => {
 };
 
 export default MenuComponent;
-
-
-// getItem('Placas base', '2'),
-// getItem('T.Gráficas', '3'),
-// getItem('Discos duros', '4'),
-// getItem('Procesadores', '5'),
-// ]),
-// getItem('Accesorios', 'sub2', <UsbOutlined />, [
-// getItem('Teclados', '6'),
-// getItem('Ratones', '7'),
-// getItem('Pantallas', '8'),
-// getItem('Otros', 'sub3', null, [getItem('Cables', '9'), getItem('Usb', '10')]),
