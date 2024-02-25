@@ -15,20 +15,21 @@ const items = [
         label: "Componentes",
         children: [
             {
-                key:3,
+                key:4,
                 label: `Placas base`,
                 path: '/Motherboards'
             },
             {
-                key: 4,
-                label: `T.Gráficas`,
-            },
-            {
                 key: 5,
-                label: `Discos duros`,
+                label: `T.Gráficas`,
+                path: '/Tgraficas'
             },
             {
                 key: 6,
+                label: `Discos duros`,
+            },
+            {
+                key: 7,
                 label: `Procesadores`,
             }
     ]
@@ -39,16 +40,16 @@ const items = [
         label: "Accesorios",
         children: [
             {
-                key: 7,
+                key: 8,
                 label: `Teclados`,
                 path: '/Teclados'
             },
             {
-                key: 8,
+                key: 9,
                 label: `Ratones`,
             },
             {
-                key: 9,
+                key: 10,
                 label: `Pantallas`,
             },
     ]
@@ -58,15 +59,15 @@ const items = [
         label: "Otros",
         children: [
             {
-                key: 10,
+                key: 11,
                 label: `Usb`,
             },
             {
-                key: 11,
+                key: 12,
                 label: `Cables`,
             },
             {
-                key: 12,
+                key: 13,
                 label: `Impresoras`,
             }
     ]

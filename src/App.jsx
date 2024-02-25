@@ -6,6 +6,7 @@ import Piezas from './pages/Piezas';
 import Motherboards from './pages/Motherboards'
 import FooterComponent from './components/Footer/FooterComponent';
 import Help from './components/Help/Help';
+import Tgraficas from './pages/Tgraficas';
 
 const { Header, Content, Sider } = Layout;
 
@@ -52,6 +53,7 @@ const App = () => {
                     <Routes>
                       <Route path="/" element={<Piezas />} />
                       <Route path="/Motherboards" element={<Motherboards />} />
+                      <Route path="/Tgraficas" element={<Tgraficas />} />
                     </Routes>
                   </Router>
                 </div>
