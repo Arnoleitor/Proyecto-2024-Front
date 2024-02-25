@@ -12,8 +12,8 @@ const { Step } = Steps;
 
 const Carrito = () => {
   const [articulo, setArticulo] = useState([
-    { id: 1, name: 'Producto 1', price: 20 },
-    { id: 2, name: 'Producto 2', price: 30 },
+    { id: 1, descripcion: 'Producto 1', precio: 20 },
+    { id: 2, descripcion: 'Producto 2', precio: 30 },
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,7 +24,7 @@ const Carrito = () => {
     setArticulo(actualizarArticulo);
   };
 
-  const precioTotal = articulo.reduce((total, item) => total + item.price, 0);
+  const precioTotal = articulo.reduce((total, item) => total + item.precio, 0);
 
   const showModal = () => {
     setModalVisible(true);
@@ -77,8 +77,8 @@ const Carrito = () => {
             <List.Item>
               <List.Item.Meta
                 avatar={<Avatar src={imagen} />}
-                title={item.name}
-                description={`Precio: ${item.price} €`}
+                title={item.descripcion}
+                description={`Precio: ${item.precio} €`}
               />
               <Button onClick={() => borrarArticulo(item.id)} type="primary" danger ghost size="small">
                 Quitar

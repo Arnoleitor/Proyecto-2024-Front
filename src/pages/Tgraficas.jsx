@@ -3,7 +3,7 @@ import Grid from '../components/Grid'
 const Tgraficas = () => {
   return (
       <div>
-      <h1 style={{fontFamily:'fantasy'}}>T.Graficas</h1>
+      <h1 style={{fontFamily:'fantasy'}}>Tarjetas Gráficas</h1>
       <Grid/>
     </div>
   )
