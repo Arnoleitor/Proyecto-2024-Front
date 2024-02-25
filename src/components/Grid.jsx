@@ -21,7 +21,6 @@ const Grid = () => {
   useEffect(() => {
 
     setTimeout(() => setShowSkeleton(false), 2000);
-    //I mock loading with setTimeout,the skeleton disappears in 2 seconds
 
   }, [])
   const productos = [
