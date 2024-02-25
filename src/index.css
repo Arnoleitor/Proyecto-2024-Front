@@ -4,18 +4,6 @@ html{
     height: 100%;
 }
 
-.titulo{
-    width: 50%;
-    height: 100%;
-}
-
-.carrito{
-    width: 50%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
-
 .circuloCesta {
     display: inline-block;
     background-color: #c7c7c7;

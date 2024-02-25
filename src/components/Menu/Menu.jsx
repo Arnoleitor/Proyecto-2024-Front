@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
-import { LaptopOutlined, HomeOutlined, AudioOutlined } from '@ant-design/icons';
+import { LaptopOutlined, HomeOutlined, AudioOutlined, UsbOutlined } from '@ant-design/icons';
 
 const items = [
     {
@@ -51,9 +51,23 @@ const items = [
                 key: 9,
                 label: `Pantallas`,
             },
+    ]
+    },{
+        key: "3",
+        icon: React.createElement(UsbOutlined),
+        label: "Otros",
+        children: [
             {
                 key: 10,
-                label: `Otros`,
+                label: `Usb`,
+            },
+            {
+                key: 11,
+                label: `Cables`,
+            },
+            {
+                key: 12,
+                label: `Impresoras`,
             }
     ]
     },
@@ -70,7 +84,7 @@ const MenuComponent = () => {
             <Menu
                 mode="inline"
                 defaultSelectedKeys={['0']}
-                defaultOpenKeys={['1']}
+                defaultOpenKeys={['1', '2', '3']}
                 onClick={handlerMenu}
                 style={{ height: '100%', borderRight: 0 }}
                 items={items}
