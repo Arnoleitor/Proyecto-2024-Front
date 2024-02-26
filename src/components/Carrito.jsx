@@ -32,7 +32,7 @@ const Carrito = () => {
     showSuccessMessage('Producto eliminado del carrito');
   };
 
-  const precioTotal = articulo.reduce((total, item) => total + item.precio, 0);
+  const precioTotal = articulo.reduce((total, item) => total + parseFloat(item.precio) * item.quantity, 0);
 
   const showModal = () => {
     setModalVisible(true);
