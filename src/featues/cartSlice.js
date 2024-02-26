@@ -34,7 +34,6 @@ export const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.id === action.payload);
       if (existingItem) {
         existingItem.quantity += 1;
-        showSuccessMessage('Producto añadido al carrito');
       }
     },
 

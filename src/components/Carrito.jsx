@@ -24,7 +24,6 @@ const Carrito = () => {
 
   const decrementarCantidad = (itemId) => {
     dispatch(decrementItemQuantity(itemId));
-    showSuccessMessage('Producto retirado del carrito');
   };
 
   const borrarArticulo = (itemId) => {
