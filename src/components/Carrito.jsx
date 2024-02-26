@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Button, List, Modal, Avatar, Tooltip, Steps, Flex } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { Button, List, Modal, Avatar, Tooltip, Steps, message } from 'antd';
 import {
   ShoppingCartOutlined,
   UserOutlined,
@@ -7,20 +8,28 @@ import {
   SmileOutlined,
 } from '@ant-design/icons';
 import imagen from '../assets/img/procesador.webp';
+import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../featues/cartSlice';
 
 const { Step } = Steps;
 
 const Carrito = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pasoActual, setPasoActual] = useState(0);
+  const dispatch = useDispatch();
+  const articulo = useSelector((state) => state.cart.items);
 
-  const [articulo, setArticulo] = useState([
-    
-  ]);
+  const incrementarCantidad = (itemId) => {
+    dispatch(incrementItemQuantity(itemId));
+  };
+
+  const decrementarCantidad = (itemId) => {
+    dispatch(decrementItemQuantity(itemId));
+    showSuccessMessage('Producto retirado del carrito');
+  };
 
   const borrarArticulo = (itemId) => {
-    const actualizarArticulo = articulo.filter((item) => item.id !== itemId);
-    setArticulo(actualizarArticulo);
+    dispatch(removeItem(itemId));
+    showSuccessMessage('Producto eliminado del carrito');
   };
 
   const precioTotal = articulo.reduce((total, item) => total + item.precio, 0);
@@ -38,8 +47,12 @@ const Carrito = () => {
     setModalVisible(false);
   };
 
+  const showSuccessMessage = (text) => {
+    message.success(text);
+  };
+
   return (
-    <div style={{ display: 'flex', alignItems: 'center'}}>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <Tooltip title={`Total: ${precioTotal} € IVA inc`} placement="bottom">
         <Button icon={<ShoppingCartOutlined />} onClick={showModal}>
           Mi cesta
@@ -77,11 +90,37 @@ const Carrito = () => {
               <List.Item.Meta
                 avatar={<Avatar src={imagen} />}
                 title={item.descripcion}
-                description={`Precio: ${item.precio} €`}
+                description={`Precio: ${item.precio} € x ${item.quantity} = ${item.precio * item.quantity} €`}
               />
-              <Button onClick={() => borrarArticulo(item.id)} type="primary" danger ghost size="small">
-                Quitar
-              </Button>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Button
+                  onClick={() => incrementarCantidad(item.id)}
+                  type="primary"
+                  ghost
+                  size="small"
+                  style={{ marginRight: '8px', width: '24px' }}
+                >
+                  +
+                </Button>
+                <Button
+                  onClick={() => decrementarCantidad(item.id)}
+                  type="primary"
+                  ghost
+                  size="small"
+                  style={{ marginRight: '8px', width: '24px' }}
+                >
+                  -
+                </Button>
+                <Button
+                  onClick={() => borrarArticulo(item.id)}
+                  type="primary"
+                  danger
+                  ghost
+                  size="small"
+                >
+                  Quitar
+                </Button>
+              </div>
             </List.Item>
           )}
         />

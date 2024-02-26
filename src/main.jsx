@@ -4,12 +4,12 @@ import App from './App.jsx'
 import './index.css'
 import { store } from './app/store'
 import { Provider } from 'react-redux'
-import { Counter } from './featues/counter/Counter.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <App />
-    <Counter/>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
   </Provider>,
   document.getElementById('root')
 )
