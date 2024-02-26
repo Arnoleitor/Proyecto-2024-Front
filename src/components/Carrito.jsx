@@ -11,13 +11,12 @@ import imagen from '../assets/img/procesador.webp';
 const { Step } = Steps;
 
 const Carrito = () => {
-  const [articulo, setArticulo] = useState([
-    { id: 1, descripcion: 'Producto 1', precio: 20 },
-    { id: 2, descripcion: 'Producto 2', precio: 30 },
-  ]);
-
   const [modalVisible, setModalVisible] = useState(false);
   const [pasoActual, setPasoActual] = useState(0);
+
+  const [articulo, setArticulo] = useState([
+    
+  ]);
 
   const borrarArticulo = (itemId) => {
     const actualizarArticulo = articulo.filter((item) => item.id !== itemId);

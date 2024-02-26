@@ -5,7 +5,7 @@ const { Footer } = Layout;
 
 const FooterComponent  = () => {
   return (
-    <Footer style={{ textAlign: 'center', backgroundColor: 'aliceblue', margin: '0 16px' }}>
+    <Footer style={{ textAlign: 'center', margin: '0 16px' }}>
 
       <Row justify="center">
         <Col span={6}>
