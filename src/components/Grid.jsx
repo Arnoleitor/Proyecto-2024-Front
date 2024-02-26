@@ -4,23 +4,23 @@ import imagen from '../assets/img/placaBase3.png';
 import SkeletonComponent from './Skeleton/Skeleton';
 
 const TipoProducto = ({ id, imagenSrc, descripcion, precio, AgregarAlCarrito }) => (
-  <div style={{ borderRadius: '20px', textAlign: 'center' }}>
-    <img
-      src={imagenSrc}
-      alt="Descripción de la imagen"
-      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-    />
-    <p>{descripcion}</p>
-    <p>Precio: {precio}</p>
-    <Button onClick={() => AgregarAlCarrito({ id, descripcion, precio })}>
-      Agregar al carrito
-    </Button>
-  </div>
-);
+    <div style={{ borderRadius: '20px', textAlign: 'center' }}>
+      <img
+        src={imagenSrc}
+        alt="Descripción de la imagen"
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      />
+      <p>{descripcion}</p>
+      <p>Precio: {precio}</p>
+      <Button type='primary' ghost onClick={() => AgregarAlCarrito({ id, descripcion, precio })}>
+        Agregar al carrito
+      </Button>
+    </div>
+  );
 
-const Grid = () => {
+const Grid = ({ agregarAlCarrito }) => {
   const [showSkeleton, setShowSkeleton] = useState(true);
-  
+  console.log("agregarAlCarrito in Grid:", agregarAlCarrito);
 
   useEffect(() => {
 
@@ -28,14 +28,14 @@ const Grid = () => {
 
   }, [])
   const productos = [
-    { imagenSrc: imagen, descripcion: <span style={{ fontFamily: 'fantasy' }}>'Asus ge476'</span>, precio: '100€' },
-    { imagenSrc: imagen, descripcion: <span style={{ fontFamily: 'fantasy' }}>'Asus ml2td3'</span>, precio: '150€' },
-    { imagenSrc: imagen, descripcion: <span style={{ fontFamily: 'fantasy' }}>'Asus ge476'</span>, precio: '120€' },
-    { imagenSrc: imagen, descripcion: <span style={{ fontFamily: 'fantasy' }}>'Asus ml2td3'</span>, precio: '150€' },
-    { imagenSrc: imagen, descripcion: <span style={{ fontFamily: 'fantasy' }}>'Asus ge476'</span>, precio: '400€' },
-    { imagenSrc: imagen, descripcion: <span style={{ fontFamily: 'fantasy' }}>'Asus ml2td3'</span>, precio: '150€' },
-    { imagenSrc: imagen, descripcion: <span style={{ fontFamily: 'fantasy' }}>'Asus ge476'</span>, precio: '200€' },
-    { imagenSrc: imagen, descripcion: <span style={{ fontFamily: 'fantasy' }}>'Asus ge476'</span>, precio: '350€' },
+    { id: 1, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: '100€' },
+    { id: 2, imagenSrc: imagen, descripcion: 'Asus ml2td3', precio: '150€' },
+    { id: 3, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: '120€' },
+    { id: 4, imagenSrc: imagen, descripcion: 'Asus ml2td3', precio: '150€' },
+    { id: 5, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: '400€' },
+    { id: 6, imagenSrc: imagen, descripcion: 'Asus ml2td3', precio: '150€' },
+    { id: 7, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: '200€' },
+    { id: 8, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: '350€' },
   ];
 
   const itemsPerPage = 4;
@@ -62,7 +62,7 @@ const Grid = () => {
             <Row gutter={[32, 32]}>
               {currentProducts.map((producto, index) => (
                 <Col span={6} key={index}>
-                  <TipoProducto {...producto} />
+                  <TipoProducto {...producto} AgregarAlCarrito={agregarAlCarrito} />
                 </Col>
               ))}
             </Row>

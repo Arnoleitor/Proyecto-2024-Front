@@ -1,19 +1,22 @@
+import React, { lazy, Suspense } from 'react';
 import { Layout, theme } from 'antd';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HeaderComponent from './components/Header/Header';
 import MenuComponent from './components/Menu/Menu';
-import Piezas from './pages/Piezas';
-import Motherboards from './pages/Motherboards'
 import FooterComponent from './components/Footer/FooterComponent';
 import Help from './components/Help/Help';
-import Tgraficas from './pages/Tgraficas';
 
 const { Header, Content, Sider } = Layout;
+
+const Piezas = lazy(() => import('./pages/Piezas'));
+const Motherboards = lazy(() => import('./pages/Motherboards'));
+const Tgraficas = lazy(() => import('./pages/Tgraficas'));
 
 const App = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
   return (
     <>
       <Layout>
@@ -50,11 +53,13 @@ const App = () => {
                   }}
                 >
                   <Router>
-                    <Routes>
-                      <Route path="/" element={<Piezas />} />
-                      <Route path="/Motherboards" element={<Motherboards />} />
-                      <Route path="/Tgraficas" element={<Tgraficas />} />
-                    </Routes>
+                    <Suspense fallback={<div>Cargando...</div>}>
+                      <Routes>
+                        <Route path="/" element={<Piezas />} />
+                        <Route path="/Motherboards" element={<Motherboards />} />
+                        <Route path="/Tgraficas" element={<Tgraficas />} />
+                      </Routes>
+                    </Suspense>
                   </Router>
                 </div>
                 <Help />
