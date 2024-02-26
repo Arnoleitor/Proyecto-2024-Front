@@ -7,7 +7,7 @@ import {
   LoadingOutlined,
   SmileOutlined,
 } from '@ant-design/icons';
-import imagen from '../assets/img/procesador.webp';
+import imagen from '../assets/img/placaBase3.png';
 import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../featues/cartSlice';
 
 const { Step } = Steps;

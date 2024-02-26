@@ -14,7 +14,7 @@ const TipoArticulo = ({ id, imagenSrc, descripcion, precio, agregarAlCarrito }) 
     />
     <p>{descripcion}</p>
     <p>Precio: {precio}€</p>
-    <Button type='primary' ghost onClick={() => agregarAlCarrito({ id, descripcion, precio })}>
+    <Button type='primary' ghost onClick={() => agregarAlCarrito({ id, descripcion, precio, imagenSrc })}>
       Agregar al carrito
     </Button>
   </div>

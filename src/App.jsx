@@ -52,15 +52,13 @@ const App = () => {
                     borderRadius: borderRadiusLG,
                   }}
                 >
-                  <Router>
-                    <Suspense fallback={<div>Cargando...</div>}>
-                      <Routes>
-                        <Route path="/" element={<Piezas />} />
-                        <Route path="/Motherboards" element={<Motherboards />} />
-                        <Route path="/Tgraficas" element={<Tgraficas />} />
-                      </Routes>
-                    </Suspense>
-                  </Router>
+                  <Suspense fallback={<div>Cargando...</div>}>
+                    <Routes>
+                      <Route path="/" element={<Piezas />} />
+                      <Route path="/Motherboards" element={<Motherboards />} />
+                      <Route path="/Tgraficas" element={<Tgraficas />} />
+                    </Routes>
+                  </Suspense>
                 </div>
                 <Help />
               </Content>

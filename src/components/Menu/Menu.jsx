@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { LaptopOutlined, HomeOutlined, AudioOutlined, UsbOutlined } from '@ant-design/icons';
+import { useNavigate } from "react-router-dom";
 
 const items = [
     {
@@ -75,11 +76,14 @@ const items = [
 ]
 ;
 
-const handlerMenu = (event) => {
-    window.location.href = event.item.props.path;
-}
-
 const MenuComponent = () => {
+    const navigate = useNavigate();
+
+    const handlerMenu = (event) => {
+        const path = event.item.props.path;
+        navigate(path); 
+    }
+
     return (
         <>
             <Menu
