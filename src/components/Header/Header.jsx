@@ -3,6 +3,7 @@ import { UsbOutlined } from "@ant-design/icons";
 import { Modal, Button } from 'antd';
 import Carrito from "../Carrito";
 import Login from "../../components/Auth/Login";
+
 const HeaderComponent = () => {
   const [modalVisible, setModalVisible] = useState(false);
 

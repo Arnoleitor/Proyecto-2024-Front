@@ -36,7 +36,7 @@ const Login = () => {
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
-          placeholder="Password"
+          placeholder="Contraseña"
         />
       </Form.Item>
       <Form.Item>
@@ -52,7 +52,7 @@ const Login = () => {
         <Button type="primary" htmlType="submit" className="login-form-button">
           Inicia sesion
         </Button>
-        <span style={{marginLeft:'1%'}}>O</span><a style={{marginLeft:'1%'}} href="/">registrate!</a>
+        <span style={{marginLeft:'1%'}}>O</span><a style={{marginLeft:'1%'}} href="../../components/Auth/Register.jsx">registrate!</a>
       </Form.Item>
     </Form>
   );
