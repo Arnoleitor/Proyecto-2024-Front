@@ -58,6 +58,18 @@ const AdminPanel = () => {
       dataIndex: 'email',
       key: 'email',
     },
+    {
+      title: 'Acciones',
+      key: 'acciones',
+      render: (text, record) => (
+        <Space size="middle">
+          <Button onClick={() => handleEditarUsuario(record)}>Editar</Button>
+          <Button onClick={() => handleEliminarUsuario(record._id)} type="default" danger>
+            Eliminar
+          </Button>
+        </Space>
+      ),
+    },
   ];
 
   const columnsPedidos = [
@@ -103,6 +115,24 @@ const AdminPanel = () => {
       ),
     },
   ];
+
+  const handleEditarUsuario = async (_id) => {
+    try {
+      await axios.put(`http://localhost:3000/api/usuarios/${_id}`);
+      setUsers(users.filter((usuario) => usuario._id !== _id));
+    } catch (error) {
+      console.error('Error al actualizar usuario:', error.message);
+    }
+  };
+
+  const handleEliminarUsuario = async (_id) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/usuarios/${_id}`);
+      setUsers(users.filter((usuario) => usuario._id !== _id));
+    } catch (error) {
+      console.error('Error al eliminar usuario:', error.message);
+    }
+  };
 
   const handleAgregarProducto = () => {
     setModalVisible(true);
