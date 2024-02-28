@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { UsbOutlined } from "@ant-design/icons";
 import { Modal, Button } from 'antd';
 import Carrito from "../Carrito";
@@ -18,11 +19,15 @@ const HeaderComponent = () => {
   return (
     <>
       <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%'}}>
-        <span style={{ fontSize: '35px'}}>PC Piezas</span> <UsbOutlined style={{marginLeft: '1%'}} />Tu tienda de componentes
+        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <span style={{ fontSize: '35px'}}>PC Piezas</span>
+        </Link>
+        <UsbOutlined style={{ marginLeft: '2%' }} />Tu tienda de componentes
       </div>
+
       <Carrito />
 
-      <Button style={{marginLeft:'1%'}} type="primary" onClick={handleOpenModal}>
+      <Button style={{ marginLeft: '1%' }} type="primary" onClick={handleOpenModal}>
         Iniciar sesión
       </Button>
 

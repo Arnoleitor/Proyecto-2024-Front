@@ -7,15 +7,17 @@ import FooterComponent from './components/Footer/FooterComponent';
 import Help from './components/Help/Help';
 
 const { Header, Content, Sider } = Layout;
-
 const Piezas = lazy(() => import('./pages/Piezas'));
 const Motherboards = lazy(() => import('./pages/Motherboards'));
 const Tgraficas = lazy(() => import('./pages/Tgraficas'));
+const Admin = lazy(() => import('./pages/Admin/Admin'));
 
+ 
 const App = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  // const userRole = obtenerElRolDelUsuario();
 
   return (
     <>
@@ -57,6 +59,9 @@ const App = () => {
                       <Route path="/" element={<Piezas />} />
                       <Route path="/Motherboards" element={<Motherboards />} />
                       <Route path="/Tgraficas" element={<Tgraficas />} />
+                      {/* {userRole === 1 && ( */}
+                      <Route path="/Admin" element={<Admin />} />
+                      {/* )} */}
                     </Routes>
                   </Suspense>
                 </div>
