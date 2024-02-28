@@ -31,6 +31,12 @@ const HeaderComponent = () => {
         Iniciar sesión
       </Button>
 
+      <Link to="/admin">
+        <Button type="default" danger style={{ marginLeft: '2%' }}>
+          Panel Admin
+        </Button>
+      </Link>
+
       <Modal
         title="Iniciar sesión"
         open={modalVisible}
