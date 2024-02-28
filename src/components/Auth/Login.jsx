@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, message, Modal, notification } from 'antd';
+import { Form, Input, Button, Modal, notification } from 'antd';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Register from '../Auth/Register';

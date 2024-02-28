@@ -94,13 +94,24 @@ const AdminPanel = () => {
     {
       title: 'Precio',
       dataIndex: 'precio',
-      key: 'precio',
+      render: (precio) => (
+      <span>
+        {precio} €
+      </span>
+    ),
     },
     {
       title: 'Imagen',
       dataIndex: 'imagen',
       key: 'imagen',
-      render: (text, record) => <img src={record.imagen} alt={record.descripcion} style={{ maxWidth: '50px' }} />,
+      render: (text, record) => (
+        <img
+          src={record.imagen}
+          alt={record.descripcion}
+          style={{ maxWidth: '50px', border: '1px solid #ddd', padding: '5px' }}
+          onError={(e) => console.log('Error loading image:', e)}
+        />
+      ),
     },
     {
       title: 'Acciones',
