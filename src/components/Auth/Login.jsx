@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, message, Modal } from 'antd';
+import { Form, Input, Button, message, Modal, notification } from 'antd';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Register from '../Auth/Register';
@@ -7,7 +7,7 @@ import Register from '../Auth/Register';
 const Login = () => {
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [userData, setUserData] = useState(null);
-  console.log(userData)
+
   const showRegisterModal = () => {
     setRegisterModalVisible(true);
   };
@@ -20,12 +20,12 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:3000/auth/login', values);
       console.log('Inicio de sesión correcto:', response.data);
-
+      
       setUserData(response.data);
-
+      notification.success({ message: 'Inicio de sesion correcto!' });
     } catch (error) {
       console.error('Login failed:', error);
-      message.error("No existe ese correo o contraseña");
+      notification.error({ message: 'Correo o contraseña invalido!' });
     }
   };
 

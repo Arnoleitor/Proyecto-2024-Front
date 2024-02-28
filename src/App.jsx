@@ -13,12 +13,11 @@ const Tgraficas = lazy(() => import('./pages/Tgraficas'));
 const Admin = lazy(() => import('./pages/Admin/Admin'));
 
  
-const App = () => {
+const App = ({userData}) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  // const userRole = obtenerElRolDelUsuario();
-
+// const userRole = userData?.role
   return (
     <>
       <Layout>
@@ -60,7 +59,7 @@ const App = () => {
                       <Route path="/Motherboards" element={<Motherboards />} />
                       <Route path="/Tgraficas" element={<Tgraficas />} />
                       {/* {userRole === 1 && ( */}
-                      <Route path="/Admin" element={<Admin />} />
+                      <Route path="/Admin" element={<Admin userData={userData} />} />
                       {/* )} */}
                     </Routes>
                   </Suspense>
