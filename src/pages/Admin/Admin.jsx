@@ -16,7 +16,7 @@ const AdminPanel = () => {
     useEffect(() => {
       const fetchUsers = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/admin/users');
+          const response = await axios.get('http://localhost:3000/api/users');
           setUsers(response.data);
         } catch (error) {
           console.error('Error al obtener usuarios:', error.message);
@@ -25,7 +25,7 @@ const AdminPanel = () => {
   
       const fetchPedidos = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/admin/pedidos');
+          const response = await axios.get('http://localhost:3000/api/pedidos');
           setPedidos(response.data);
         } catch (error) {
           console.error('Error al obtener pedidos:', error.message);
@@ -34,7 +34,7 @@ const AdminPanel = () => {
   
       const fetchProductos = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/admin/productos');
+          const response = await axios.get('http://localhost:3000/api/productos');
           setProductos(response.data);
         } catch (error) {
           console.error('Error al obtener productos:', error.message);
