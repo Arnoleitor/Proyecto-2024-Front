@@ -109,7 +109,7 @@ const AdminPanel = () => {
           src={record.imagen}
           alt={record.descripcion}
           style={{ maxWidth: '50px', border: '1px solid #ddd', padding: '5px' }}
-          onError={(e) => console.log('Error loading image:', e)}
+          onError={(e) => console.log('Error al cargar imagen:', e)}
         />
       ),
     },
@@ -127,19 +127,19 @@ const AdminPanel = () => {
     },
   ];
 
-  const handleEditarUsuario = async (_id) => {
+  const handleEditarUsuario = async (id) => {
     try {
-      await axios.put(`http://localhost:3000/api/usuarios/${_id}`);
-      setUsers(users.filter((usuario) => usuario._id !== _id));
+      await axios.put(`http://localhost:3000/api/users/${id}`);
+      setUsers(users.filter((users) => users.id !== id));
     } catch (error) {
       console.error('Error al actualizar usuario:', error.message);
     }
   };
 
-  const handleEliminarUsuario = async (_id) => {
+  const handleEliminarUsuario = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/usuarios/${_id}`);
-      setUsers(users.filter((usuario) => usuario._id !== _id));
+      await axios.delete(`http://localhost:3000/api/users/${id}`);
+      setUsers(users.filter((users) => users.id !== id));
     } catch (error) {
       console.error('Error al eliminar usuario:', error.message);
     }
