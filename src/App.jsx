@@ -5,6 +5,7 @@ import HeaderComponent from './components/Header/Header';
 import MenuComponent from './components/Menu/Menu';
 import FooterComponent from './components/Footer/FooterComponent';
 import Help from './components/Help/Help';
+import { useSelector } from 'react-redux';
 
 const { Header, Content, Sider } = Layout;
 const Piezas = lazy(() => import('./pages/Piezas'));
@@ -13,11 +14,12 @@ const Tgraficas = lazy(() => import('./pages/Tgraficas'));
 const Admin = lazy(() => import('./pages/Admin/Admin'));
 
  
-const App = ({userData}) => {
+const App = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-// const userRole = userData?.role
+  const userData = useSelector((state) => state.user);
+
   return (
     <>
       <Layout>
@@ -58,9 +60,9 @@ const App = ({userData}) => {
                       <Route path="/" element={<Piezas />} />
                       <Route path="/Motherboards" element={<Motherboards />} />
                       <Route path="/Tgraficas" element={<Tgraficas />} />
-                      {/* {userRole === 1 && ( */}
+                      {userData && userData.role === 1 && (
                       <Route path="/Admin" element={<Admin userData={userData} />} />
-                      {/* )} */}
+                       )}
                     </Routes>
                   </Suspense>
                 </div>
