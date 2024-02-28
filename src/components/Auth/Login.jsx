@@ -3,10 +3,12 @@ import { Form, Input, Button, Modal, notification } from 'antd';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Register from '../Auth/Register';
+import { useDispatch } from 'react-redux'; // Import useDispatch
+import { setUserData } from '../../featues/userSlice ';
 
 const Login = () => {
+  const dispatch = useDispatch(); // Get the dispatch function
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
-  const [userData, setUserData] = useState(null);
 
   const showRegisterModal = () => {
     setRegisterModalVisible(true);
@@ -19,10 +21,8 @@ const Login = () => {
   const onFinish = async (values) => {
     try {
       const response = await axios.post('http://localhost:3000/auth/login', values);
-      console.log('Inicio de sesión correcto:', response.data);
-      
-      setUserData(response.data);
-      notification.success({ message: 'Inicio de sesion correcto!' });
+      notification.success({ message: 'Inicio de sesión correcto!' });
+      dispatch(setUserData(response.data));
     } catch (error) {
       console.error('Login failed:', error);
       notification.error({ message: 'Correo o contraseña invalido!' });
@@ -68,8 +68,8 @@ const Login = () => {
         <Button type="primary" htmlType="submit" className="login-form-button">
           Inicia sesión
         </Button>
-        <span style={{marginLeft:'1%'}}>O</span>
-        <Button style={{marginLeft:'1%'}} type='primary' ghost onClick={showRegisterModal}>regístrate aquí!</Button>
+        <span style={{ marginLeft: '1%' }}>O</span>
+        <Button style={{ marginLeft: '1%' }} type='primary' ghost onClick={showRegisterModal}>regístrate aquí!</Button>
       </Form.Item>
 
       <Modal
