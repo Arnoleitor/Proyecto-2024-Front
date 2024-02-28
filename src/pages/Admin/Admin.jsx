@@ -35,7 +35,7 @@ const AdminPanel = () => {
 
     const fetchProductos = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/productos');
+        const response = await axios.get('http://localhost:3000/api/recibirProducto');
         setProductos(response.data);
       } catch (error) {
         console.error('Error al obtener productos:', error.message);
@@ -71,8 +71,8 @@ const AdminPanel = () => {
   const columnsProductos = [
     {
       title: 'Nombre',
-      dataIndex: 'nombre',
-      key: 'nombre',
+      dataIndex: 'descripcion',
+      key: 'descripcion',
     },
     {
       title: 'Tipo',
@@ -85,12 +85,18 @@ const AdminPanel = () => {
       key: 'precio',
     },
     {
+      title: 'Imagen',
+      dataIndex: 'imagen',
+      key: 'imagen',
+      render: (text, record) => <img src={record.imagen} alt={record.descripcion} style={{ maxWidth: '50px' }} />,
+    },
+    {
       title: 'Acciones',
       key: 'acciones',
       render: (text, record) => (
         <Space size="middle">
           <Button onClick={() => handleEditarProducto(record)}>Editar</Button>
-          <Button onClick={() => handleEliminarProducto(record._id)} type="danger">
+          <Button onClick={() => handleEliminarProducto(record._id)} type="default" danger>
             Eliminar
           </Button>
         </Space>
@@ -107,7 +113,7 @@ const AdminPanel = () => {
       .validateFields()
       .then(async (values) => {
         try {
-          await axios.post('http://localhost:3000/admin/productos', values);
+          await axios.post('http://localhost:3000/api/productos', values);
           setModalVisible(false);
           form.resetFields();
           setProductos([...productos, values]);
@@ -131,7 +137,7 @@ const AdminPanel = () => {
 
   const handleEliminarProducto = async (productoId) => {
     try {
-      await axios.delete(`http://localhost:3000/admin/productos/${productoId}`);
+      await axios.delete(`http://localhost:3000/api/productos/${productoId}`);
       setProductos(productos.filter((producto) => producto._id !== productoId));
     } catch (error) {
       console.error('Error al eliminar producto:', error.message);
@@ -149,9 +155,6 @@ const AdminPanel = () => {
     <div>
       <h2>Usuarios</h2>
       <Table dataSource={users} columns={columnsUsers} />
-
-      <h2>Pedidos Realizados</h2>
-      <Table dataSource={pedidos} columns={columnsPedidos} />
 
       <h2>Productos</h2>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2%' }}>
@@ -197,6 +200,8 @@ const AdminPanel = () => {
           </Form.Item>
         </Form>
       </Modal>
+      <h2>Pedidos Realizados</h2>
+      <Table dataSource={pedidos} columns={columnsPedidos} />
     </div>
   );
   // }, [history]);
