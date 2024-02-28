@@ -1,50 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Space, Modal, Button, Form, Input, Select } from 'antd';
+import CargarArchivo from '../../components/Customs/CargarArchivo';
 
 const { Option } = Select;
 
 const AdminPanel = () => {
-    const [users, setUsers] = useState([]);
-    const [pedidos, setPedidos] = useState([]);
-    const [productos, setProductos] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
-  
-    const [form] = Form.useForm();
-    // const history = useHistory();
-  
-    useEffect(() => {
-      const fetchUsers = async () => {
-        try {
-          const response = await axios.get('http://localhost:3000/api/users');
-          setUsers(response.data);
-        } catch (error) {
-          console.error('Error al obtener usuarios:', error.message);
-        }
-      };
-  
-      const fetchPedidos = async () => {
-        try {
-          const response = await axios.get('http://localhost:3000/api/pedidos');
-          setPedidos(response.data);
-        } catch (error) {
-          console.error('Error al obtener pedidos:', error.message);
-        }
-      };
-  
-      const fetchProductos = async () => {
-        try {
-          const response = await axios.get('http://localhost:3000/api/productos');
-          setProductos(response.data);
-        } catch (error) {
-          console.error('Error al obtener productos:', error.message);
-        }
-      };
-  
-      fetchUsers();
-      fetchPedidos();
-      fetchProductos();
-    }, []);
+  const [users, setUsers] = useState([]);
+  const [pedidos, setPedidos] = useState([]);
+  const [productos, setProductos] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [form] = Form.useForm();
+  // const history = useHistory();
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/users');
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error al obtener usuarios:', error.message);
+      }
+    };
+
+    const fetchPedidos = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/pedidos');
+        setPedidos(response.data);
+      } catch (error) {
+        console.error('Error al obtener pedidos:', error.message);
+      }
+    };
+
+    const fetchProductos = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/productos');
+        setProductos(response.data);
+      } catch (error) {
+        console.error('Error al obtener productos:', error.message);
+      }
+    };
+
+    fetchUsers();
+    fetchPedidos();
+    fetchProductos();
+  }, []);
 
   const columnsUsers = [
     {
@@ -137,13 +138,13 @@ const AdminPanel = () => {
     }
   };
 
-//   useEffect(() => {
-//     const userRole = obtenerElRolDelUsuario();
+  //   useEffect(() => {
+  //     const userRole = obtenerElRolDelUsuario();
 
-//     if (userRole !== 1) {
-//       history.push('/');
-//     }
- 
+  //     if (userRole !== 1) {
+  //       history.push('/');
+  //     }
+
   return (
     <div>
       <h2>Usuarios</h2>
@@ -153,10 +154,15 @@ const AdminPanel = () => {
       <Table dataSource={pedidos} columns={columnsPedidos} />
 
       <h2>Productos</h2>
-      <Button type="primary" onClick={handleAgregarProducto}>
-        Agregar Producto
-      </Button>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2%' }}>
+        <Button type="primary" onClick={handleAgregarProducto}>
+          Agregar Producto
+        </Button>
+        <div style={{ marginRight: '2%' }}></div>
+        <CargarArchivo />
+      </div>
       <Table dataSource={productos} columns={columnsProductos} />
+
 
       <Modal
         title="Agregar Producto"
@@ -193,8 +199,8 @@ const AdminPanel = () => {
       </Modal>
     </div>
   );
-// }, [history]);
-  
+  // }, [history]);
+
 };
 
 export default AdminPanel;
