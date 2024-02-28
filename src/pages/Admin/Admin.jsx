@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Space, Modal, Button, Form, Input, Select } from 'antd';
+import { Table, Space, Modal, Button, Form, Input, Select, notification } from 'antd';
 import CargarArchivo from '../../components/Customs/CargarArchivo';
 
 const { Option } = Select;
@@ -10,9 +10,9 @@ const AdminPanel = () => {
   const [pedidos, setPedidos] = useState([]);
   const [productos, setProductos] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-
   const [form] = Form.useForm();
-  // const history = useHistory();
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [editModalVisible, setEditModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -95,10 +95,10 @@ const AdminPanel = () => {
       title: 'Precio',
       dataIndex: 'precio',
       render: (precio) => (
-      <span>
-        {precio} €
-      </span>
-    ),
+        <span>
+          {precio} €
+        </span>
+      ),
     },
     {
       title: 'Imagen',
@@ -127,23 +127,53 @@ const AdminPanel = () => {
     },
   ];
 
-  const handleEditarUsuario = async (id) => {
-    try {
-      await axios.put(`http://localhost:3000/api/users/${id}`);
-      setUsers(users.filter((users) => users.id !== id));
-    } catch (error) {
-      console.error('Error al actualizar usuario:', error.message);
-    }
+  const openNotification = (type, message) => {
+    notification[type]({
+      message,
+    });
   };
 
   const handleEliminarUsuario = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/api/users/${id}`);
-      setUsers(users.filter((users) => users.id !== id));
+      setUsers(users.filter((user) => user.id !== id));
+      openNotification('success', 'Usuario eliminado correctamente');
     } catch (error) {
       console.error('Error al eliminar usuario:', error.message);
+      openNotification('error', 'Error al eliminar usuario');
     }
   };
+
+  const handleEditarUsuario = (user) => {
+    setSelectedUser(user);
+    setEditModalVisible(true);
+  };
+
+  const handleModalEditOk = () => {
+    form
+      .validateFields()
+      .then(async (values) => {
+        try {
+          await axios.put(`http://localhost:3000/api/users/${selectedUser._id}`, values);
+          setEditModalVisible(false);
+          form.resetFields();
+          setUsers(users.map((user) => (user._id === selectedUser._id ? { ...user, ...values } : user)));
+          openNotification('success', 'Usuario actualizado correctamente');
+        } catch (error) {
+          console.error('Error al actualizar usuario:', error.message);
+          openNotification('error', 'Error al actualizar usuario');
+        }
+      })
+      .catch((info) => {
+        console.error('Validación fallida:', info);
+      });
+  };
+
+  const handleModalEditCancel = () => {
+    setEditModalVisible(false);
+    form.resetFields();
+  };
+
 
   const handleAgregarProducto = () => {
     setModalVisible(true);
@@ -185,17 +215,33 @@ const AdminPanel = () => {
     }
   };
 
-  //   useEffect(() => {
-  //     const userRole = obtenerElRolDelUsuario();
-
-  //     if (userRole !== 1) {
-  //       history.push('/');
-  //     }
-
   return (
     <div>
       <h2>Usuarios</h2>
-      <Table dataSource={users} columns={columnsUsers} />
+      <Table dataSource={users} columns={columnsUsers} rowKey={(record) => record.id} />
+
+
+      <Modal
+        title="Editar Usuario"
+        open={editModalVisible}
+        onOk={handleModalEditOk}
+        onCancel={handleModalEditCancel}
+      >
+        <Form form={form} layout="vertical" name="edit-user-form">
+          <Form.Item label="Nombre" name="username" initialValue={selectedUser?.username}>
+            <Input />
+          </Form.Item>
+          <Form.Item label="Email" name="email" initialValue={selectedUser?.email}>
+            <Input />
+          </Form.Item>
+          <Form.Item label="Role" name="role">
+            <Select>
+              <Option value={1}>Admin</Option>
+              <Option value={2}>Usuario</Option>
+            </Select>
+          </Form.Item>
+        </Form>
+      </Modal>
 
       <h2>Productos</h2>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2%' }}>
@@ -245,7 +291,6 @@ const AdminPanel = () => {
       <Table dataSource={pedidos} columns={columnsPedidos} />
     </div>
   );
-  // }, [history]);
 
 };
 
