@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { UsbOutlined } from "@ant-design/icons";
-import { Modal, Button } from 'antd';
+import { Modal, Button, Menu, Dropdown, Typography } from 'antd';
 import Carrito from "../Carrito";
 import Login from "../../components/Auth/Login";
-import { Typography } from 'antd';
 import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
+const { SubMenu } = Menu;
 
 const HeaderComponent = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [logoutVisible, setLogoutVisible] = useState(false);
   const userData = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -29,6 +30,33 @@ const HeaderComponent = () => {
     setLogoutVisible(false);
   };
 
+  const menuItems = [
+    {
+      key: 'miPerfil',
+      label: 'Mi perfil',
+      path: '/miperfil',
+    },
+    {
+      key: 'misPedidos',
+      label: 'Mis pedidos',
+      path: '/mispedidos',
+    },
+  ];
+
+  const handleMenuItemClick = (path) => {
+    navigate(path);
+  };
+
+  const userMenu = (
+    <Menu>
+      {menuItems.map(item => (
+        <Menu.Item key={item.key} onClick={() => handleMenuItemClick(item.path)}>
+          {item.label}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   return (
     <>
       <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%' }}>
@@ -37,7 +65,12 @@ const HeaderComponent = () => {
         </Link>
         <UsbOutlined style={{ marginLeft: '2%' }} />Tu tienda de componentes
       </div>
-      <Text strong>{userData ? `Bienvenido, ${userData.nombre}!` : ''}</Text>
+      {userData ? (
+        <Dropdown menu={userMenu} placement="bottomRight" arrow>
+          <Text strong style={{ cursor: 'pointer' }}>{`Bienvenido, ${userData.nombre}!`}</Text>
+        </Dropdown>
+      ) : null}
+
       <Carrito />
 
       {userData ? (
@@ -46,11 +79,9 @@ const HeaderComponent = () => {
             Cerrar sesión
           </Button>
           {userData.role === 1 && (
-            <Link to="/admin">
-              <Button type="default" danger style={{ marginLeft: '2%' }}>
-                Panel Admin
-              </Button>
-            </Link>
+            <Button type="default" danger style={{ marginLeft: '2%' }} onClick={() => navigate('/admin')}>
+              Panel Admin
+            </Button>
           )}
         </>
       ) : (
@@ -70,7 +101,7 @@ const HeaderComponent = () => {
 
       <Modal
         title="Cerrar sesión"
-        open={logoutVisible}  // Change open to visible
+        open={logoutVisible}
         onCancel={() => setLogoutVisible(false)}
         footer={
           <Button type="primary" onClick={handleLogout}>
