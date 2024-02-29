@@ -3,11 +3,11 @@ import { Form, Input, Button, Modal, notification } from 'antd';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Register from '../Auth/Register';
-import { useDispatch } from 'react-redux'; // Import useDispatch
+import { useDispatch } from 'react-redux';
 import { setUserData } from '../../featues/userSlice ';
 
 const Login = () => {
-  const dispatch = useDispatch(); // Get the dispatch function
+  const dispatch = useDispatch();
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
 
   const showRegisterModal = () => {
