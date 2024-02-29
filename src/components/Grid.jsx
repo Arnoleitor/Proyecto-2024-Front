@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Col, Divider, Pagination, Row } from 'antd';
-import imagen from '../assets/img/placaBase3.png';
+// import imagen from '../assets/img/placaBase3.png';
 import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../featues/cartSlice';
+import axios from 'axios';
 
 const TipoArticulo = ({ id, imagenSrc, descripcion, precio, agregarAlCarrito }) => (
   <div style={{ borderRadius: '20px', textAlign: 'center' }}>
@@ -20,27 +21,27 @@ const TipoArticulo = ({ id, imagenSrc, descripcion, precio, agregarAlCarrito }) 
   </div>
 );
 
-const Grid = ( ) => {
+const Grid = () => {
   const dispatch = useDispatch();
   const [showSkeleton, setShowSkeleton] = useState(true);
+  const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => setShowSkeleton(false), 2000);
+    const fetchProductos = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/recibirProducto');
+        setProductos(response.data);
+        setShowSkeleton(false);
+      } catch (error) {
+        console.error('Error al obtener productos:', error.message);
+      }
+    };
+
+    fetchProductos();
   }, []);
 
-  const articulo = [
-    { id: 1, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: 100 },
-    { id: 2, imagenSrc: imagen, descripcion: 'Asus ml2td3', precio: 150 },
-    { id: 3, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: 120 },
-    { id: 4, imagenSrc: imagen, descripcion: 'Asus ml2td3', precio: 150 },
-    { id: 5, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: 400 },
-    { id: 6, imagenSrc: imagen, descripcion: 'Asus ml2td3', precio: 150 },
-    { id: 7, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: 200 },
-    { id: 8, imagenSrc: imagen, descripcion: 'Asus ge476',  precio: 350 },
-  ];
-
   const itemsPerPage = 4;
-  const totalItems = articulo.length;
+  const totalItems = productos.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,24 +52,24 @@ const Grid = ( ) => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentProducts = articulo.slice(startIndex, endIndex);
+  const currentProducts = productos.slice(startIndex, endIndex);
 
   return (
     <div className='Grid'>
-    <br />
-    <div>
-      {showSkeleton ? (
-        <SkeletonComponent />
-      ) : (
-        <div>
-          <Row gutter={[32, 32]}>
-            {currentProducts.map((articulo, index) => (
-              <Col span={6} key={index}>
-                <TipoArticulo {...articulo} agregarAlCarrito={() => dispatch(addItem(articulo))} />
-              </Col>
-            ))}
-          </Row>
-        </div>
+      <br />
+      <div>
+        {showSkeleton ? (
+          <SkeletonComponent />
+        ) : (
+          <div>
+            <Row gutter={[32, 32]}>
+              {currentProducts.map((producto, index) => (
+                <Col span={6} key={index}>
+                  <TipoArticulo {...producto} agregarAlCarrito={() => dispatch(addItem(producto))} />
+                </Col>
+              ))}
+            </Row>
+          </div>
         )}
       </div>
       <div>
@@ -85,5 +86,4 @@ const Grid = ( ) => {
     </div>
   );
 };
-
 export default Grid;
