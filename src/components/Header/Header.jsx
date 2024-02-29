@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UsbOutlined } from "@ant-design/icons";
+import { BarsOutlined, UsbOutlined } from "@ant-design/icons";
 import { Modal, Button, Menu, Dropdown, Typography } from 'antd';
 import Carrito from "../Carrito";
 import Login from "../../components/Auth/Login";
@@ -68,7 +68,10 @@ const HeaderComponent = () => {
       </div>
       {userData ? (
         <Dropdown overlay={userMenu} placement="bottomRight" arrow>
-          <Text strong style={{ cursor: 'pointer' }}>{`Bienvenido, ${userData.nombre}!`}</Text>
+          <Text strong style={{ cursor: 'pointer' }}>
+            {`Bienvenido, ${userData.nombre} `}
+            <BarsOutlined />
+          </Text>
         </Dropdown>
       ) : null}
 

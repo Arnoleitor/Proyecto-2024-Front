@@ -38,7 +38,7 @@ const FooterComponent  = () => {
           <a href="/comoComprar">Como comprar</a>
         </Col>
       </Row>
-      <p style={{ fontFamily: 'fantasy' }}>&copy;{new Date().getFullYear()} <span>PC Piezas. Creado por Arnold</span></p>
+      <p style={{ fontFamily: 'fantasy', marginTop:'5%' }}>&copy;{new Date().getFullYear()} <span>PC Piezas. Creado por Arnold</span></p>
     </Footer>
   );
 };
