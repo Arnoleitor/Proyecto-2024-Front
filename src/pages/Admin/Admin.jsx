@@ -118,7 +118,7 @@ const AdminPanel = () => {
       key: 'acciones',
       render: (text, record) => (
         <Space size="middle">
-          <Button onClick={() => handleEditarProducto(record)}>Editar</Button>
+          <Button onClick={() => handleEditarProducto(record._id)}>Editar</Button>
           <Button onClick={() => handleEliminarProducto(record._id)} type="default" danger>
             Eliminar
           </Button>
@@ -155,6 +155,11 @@ const AdminPanel = () => {
 
   const handleEditarUsuario = (user) => {
     setSelectedUser(user);
+    form.setFieldsValue({
+      username: user.username,
+      email: user.email,
+      Roles: user.Roles,
+    });
     setEditModalVisible(true);
   };
 
@@ -252,7 +257,7 @@ const AdminPanel = () => {
           <Form.Item label="Email" name="email" initialValue={selectedUser?.email}>
             <Input />
           </Form.Item>
-          <Form.Item label="Role" name="role">
+          <Form.Item label="Roles" name="Roles">
             <Select>
               <Option value={1}>Admin</Option>
               <Option value={2}>Usuario</Option>
