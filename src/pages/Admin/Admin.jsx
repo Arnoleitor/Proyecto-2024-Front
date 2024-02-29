@@ -134,14 +134,23 @@ const AdminPanel = () => {
   };
 
   const handleEliminarUsuario = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/api/users/${id}`);
-      setUsers(users.filter((user) => user.id !== id));
-      openNotification('success', 'Usuario eliminado correctamente');
-    } catch (error) {
-      console.error('Error al eliminar usuario:', error.message);
-      openNotification('error', 'Error al eliminar usuario');
-    }
+    Modal.confirm({
+      title: 'Confirmar Eliminación',
+      content: '¿Estás seguro de que quieres eliminar este usuario?',
+      okText: 'Eliminar',
+      okType: 'danger',
+      cancelText: 'Cancelar',
+      onOk: async () => {
+        try {
+          await axios.delete(`http://localhost:3000/api/users/${id}`);
+          setUsers(users.filter((user) => user._id !== id));
+          openNotification('success', 'Usuario eliminado correctamente');
+        } catch (error) {
+          console.error('Error al eliminar usuario:', error.message);
+          openNotification('error', 'Error al eliminar usuario');
+        }
+      },
+    });
   };
 
   const handleEditarUsuario = (user) => {
@@ -207,12 +216,21 @@ const AdminPanel = () => {
   };
 
   const handleEliminarProducto = async (productoId) => {
-    try {
-      await axios.delete(`http://localhost:3000/api/productos/${productoId}`);
-      setProductos(productos.filter((producto) => producto._id !== productoId));
-    } catch (error) {
-      console.error('Error al eliminar producto:', error.message);
-    }
+    Modal.confirm({
+      title: 'Confirmar Eliminación',
+      content: '¿Estás seguro de que quieres eliminar este producto?',
+      okText: 'Eliminar',
+      okType: 'danger',
+      cancelText: 'Cancelar',
+      onOk: async () => {
+        try {
+          await axios.delete(`http://localhost:3000/api/deleteProducto/${productoId}`);
+          setProductos(productos.filter((producto) => producto._id !== productoId));
+        } catch (error) {
+          console.error('Error al eliminar producto:', error.message);
+        }
+      },
+    });
   };
 
   return (

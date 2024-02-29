@@ -36,13 +36,13 @@ const HeaderComponent = () => {
         Iniciar sesión
       </Button>
 
-      {userData && userData.role === 1 && (
+      {/* {userData && userData.role === 1 && ( */}
         <Link to="/admin">
           <Button type="default" danger style={{ marginLeft: '2%' }}>
             Panel Admin
           </Button>
         </Link>
-      )}
+      {/* )} */}
 
       <Modal
         title="Iniciar sesión"

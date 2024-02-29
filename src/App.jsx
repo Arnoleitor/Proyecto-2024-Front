@@ -60,9 +60,9 @@ const App = () => {
                       <Route path="/" element={<Piezas />} />
                       <Route path="/Motherboards" element={<Motherboards />} />
                       <Route path="/Tgraficas" element={<Tgraficas />} />
-                      {userData && userData.role === 1 && (
+                      {/* {userData && userData.role === 1 && ( */}
                       <Route path="/Admin" element={<Admin userData={userData} />} />
-                       )}
+                      {/* //  )} */}
                     </Routes>
                   </Suspense>
                 </div>
