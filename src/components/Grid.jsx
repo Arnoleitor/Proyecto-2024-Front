@@ -4,7 +4,7 @@ import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../featues/cartSlice';
 import axios from 'axios';
-import imagenPorDefecto from'../assets/img/placaBase3.png'
+import imagenPorDefecto from'../assets/img/imagenrota.jpg'
 
 const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => {
   const [imagenError, setImagenError] = useState(false);
@@ -20,7 +20,7 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         onError={handleImagenError}
       />
-      {imagenError && <img src={imagenPorDefecto} alt="Imagen por defecto" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+      {imagenError && <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
       <p>{descripcion}</p>
       <p>Precio: {precio}€</p>
       <Button type='primary' ghost onClick={() => agregarAlCarrito({ id, descripcion, precio, imagen })}>

@@ -107,7 +107,7 @@ const AdminPanel = () => {
       render: (text, record) => (
         <img
           src={record.imagen}
-          alt={record.descripcion}
+          // alt={record.descripcion}
           style={{ maxWidth: '50px', border: '1px solid #ddd', padding: '5px' }}
           onError={(e) => console.log('Error al cargar imagen:', e)}
         />
