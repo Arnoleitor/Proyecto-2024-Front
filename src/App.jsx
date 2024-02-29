@@ -12,8 +12,9 @@ const Piezas = lazy(() => import('./pages/Piezas'));
 const Motherboards = lazy(() => import('./pages/Motherboards'));
 const Tgraficas = lazy(() => import('./pages/Tgraficas'));
 const Admin = lazy(() => import('./pages/Admin/Admin'));
+const Pedidos = lazy(() => import('./pages/Pedidos'));
+const Perfil = lazy(() => import('./pages/Perfil'));
 
- 
 const App = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -60,6 +61,8 @@ const App = () => {
                       <Route path="/" element={<Piezas />} />
                       <Route path="/motherboards" element={<Motherboards />} />
                       <Route path="/tgraficas" element={<Tgraficas />} />
+                      <Route path="/perfil" element={<Perfil />} />
+                      <Route path="/pedidos" element={<Pedidos />} />
                       {userData && userData.role === 1 && (
                       <Route path="/admin" element={<Admin userData={userData} />} />
                       )}

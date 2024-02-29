@@ -27,6 +27,7 @@ const HeaderComponent = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("items");
     setLogoutVisible(false);
   };
 
@@ -34,12 +35,12 @@ const HeaderComponent = () => {
     {
       key: 'miPerfil',
       label: 'Mi perfil',
-      path: '/miperfil',
+      path: '/perfil',
     },
     {
       key: 'misPedidos',
       label: 'Mis pedidos',
-      path: '/mispedidos',
+      path: '/pedidos',
     },
   ];
 
@@ -66,7 +67,7 @@ const HeaderComponent = () => {
         <UsbOutlined style={{ marginLeft: '2%' }} />Tu tienda de componentes
       </div>
       {userData ? (
-        <Dropdown menu={userMenu} placement="bottomRight" arrow>
+        <Dropdown overlay={userMenu} placement="bottomRight" arrow>
           <Text strong style={{ cursor: 'pointer' }}>{`Bienvenido, ${userData.nombre}!`}</Text>
         </Dropdown>
       ) : null}
@@ -79,7 +80,7 @@ const HeaderComponent = () => {
             Cerrar sesión
           </Button>
           {userData.role === 1 && (
-            <Button type="default" danger style={{ marginLeft: '2%' }} onClick={() => navigate('/admin')}>
+            <Button type="default" danger style={{ marginLeft: '1%' }} onClick={() => navigate('/admin')}>
               Panel Admin
             </Button>
           )}
