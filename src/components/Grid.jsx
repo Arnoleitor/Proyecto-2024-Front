@@ -4,21 +4,31 @@ import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../featues/cartSlice';
 import axios from 'axios';
+import imagenPorDefecto from'../assets/img/placaBase3.png'
 
-const TipoArticulo = ({ id, imagenSrc, descripcion, precio, agregarAlCarrito }) => (
-  <div style={{ borderRadius: '20px', textAlign: 'center' }}>
-    <img
-      src={imagenSrc}
-      alt="Descripción de la imagen"
-      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-    />
-    <p>{descripcion}</p>
-    <p>Precio: {precio}€</p>
-    <Button type='primary' ghost onClick={() => agregarAlCarrito({ id, descripcion, precio, imagenSrc })}>
-      Agregar al carrito
-    </Button>
-  </div>
-);
+const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => {
+  const [imagenError, setImagenError] = useState(false);
+
+  const handleImagenError = () => {
+    setImagenError(true);
+  };
+
+  return (
+    <div style={{ borderRadius: '20px', textAlign: 'center' }}>
+      <img
+        src={imagen}
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        onError={handleImagenError}
+      />
+      {imagenError && <img src={imagenPorDefecto} alt="Imagen por defecto" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+      <p>{descripcion}</p>
+      <p>Precio: {precio}€</p>
+      <Button type='primary' ghost onClick={() => agregarAlCarrito({ id, descripcion, precio, imagen })}>
+        Agregar al carrito
+      </Button>
+    </div>
+  );
+};
 
 const Grid = () => {
   const dispatch = useDispatch();
