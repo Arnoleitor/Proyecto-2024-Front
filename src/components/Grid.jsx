@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Col, Divider, Pagination, Row } from 'antd';
-// import imagen from '../assets/img/placaBase3.png';
 import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../featues/cartSlice';

@@ -25,8 +25,8 @@ export const cartSlice = createSlice({
       showSuccessMessage('Producto añadido al carrito');
     },
     removeItem: (state, action) => {
-      state.items = state.items.filter((item) => item._id !== action.payload);
-    },
+      state.items = state.items.filter((item) => item._id !== action.payload);  
+    },   
     clearCart: (state) => {
       state.items = [];
     },

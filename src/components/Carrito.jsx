@@ -17,7 +17,7 @@ const Carrito = () => {
   const [pasoActual, setPasoActual] = useState(0);
   const dispatch = useDispatch();
   const articulo = useSelector((state) => state.cart.items);
-
+  
   const incrementarCantidad = (itemId) => {
     dispatch(incrementItemQuantity(itemId));
   };
@@ -93,7 +93,7 @@ const Carrito = () => {
               />
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Button
-                  onClick={() => incrementarCantidad(item.id)}
+                  onClick={() => incrementarCantidad(item._id)}
                   type="primary"
                   ghost
                   size="small"
@@ -102,7 +102,7 @@ const Carrito = () => {
                   +
                 </Button>
                 <Button
-                  onClick={() => decrementarCantidad(item.id)}
+                  onClick={() => decrementarCantidad(item._id)}
                   type="primary"
                   ghost
                   size="small"
@@ -111,7 +111,7 @@ const Carrito = () => {
                   -
                 </Button>
                 <Button
-                  onClick={() => borrarArticulo(item.id)}
+                  onClick={() => borrarArticulo(item._id)}
                   type="primary"
                   danger
                   ghost
