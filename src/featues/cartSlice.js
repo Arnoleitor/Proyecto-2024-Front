@@ -15,7 +15,7 @@ export const cartSlice = createSlice({
 
   reducers: {
     addItem: (state, action) => {
-      const existingItem = state.items.find((item) => item.id === action.payload.id);
+      const existingItem = state.items.find((item) => item._id === action.payload._id);
 
       if (existingItem) {
         existingItem.quantity += 1;
@@ -25,20 +25,20 @@ export const cartSlice = createSlice({
       showSuccessMessage('Producto añadido al carrito');
     },
     removeItem: (state, action) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+      state.items = state.items.filter((item) => item._id !== action.payload);
     },
     clearCart: (state) => {
       state.items = [];
     },
     incrementItemQuantity: (state, action) => {
-      const existingItem = state.items.find((item) => item.id === action.payload);
+      const existingItem = state.items.find((item) => item._id === action.payload);
       if (existingItem) {
         existingItem.quantity += 1;
       }
     },
 
     decrementItemQuantity: (state, action) => {
-      const existingItem = state.items.find((item) => item.id === action.payload);
+      const existingItem = state.items.find((item) => item._id === action.payload);
       if (existingItem && existingItem.quantity > 1) {
         existingItem.quantity -= 1;
       }

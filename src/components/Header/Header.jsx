@@ -11,37 +11,52 @@ const { Text } = Typography;
 
 const HeaderComponent = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [logoutVisible, setLogoutVisible] = useState(false);
   const userData = useSelector((state) => state.user);
 
   const handleOpenModal = () => {
     setModalVisible(true);
+    setLogoutVisible(false);
   };
 
   const handleCloseModal = () => {
     setModalVisible(false);
+    setLogoutVisible(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setLogoutVisible(false);
   };
 
   return (
     <>
-      <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%'}}>
+      <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%' }}>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <span style={{ fontSize: '35px'}}>PC Piezas</span>
+          <span style={{ fontSize: '35px' }}>PC Piezas</span>
         </Link>
         <UsbOutlined style={{ marginLeft: '2%' }} />Tu tienda de componentes
       </div>
       <Text strong>{userData ? `Bienvenido, ${userData.nombre}!` : ''}</Text>
       <Carrito />
 
-      <Button style={{ marginLeft: '1%' }} type="primary" onClick={handleOpenModal}>
-        Iniciar sesión
-      </Button>
-
-      {userData && userData.role === 1 && (
-        <Link to="/admin">
-          <Button type="default" danger style={{ marginLeft: '2%' }}>
-            Panel Admin
+      {userData ? (
+        <>
+          <Button style={{ marginLeft: '1%' }} type="primary" onClick={() => setLogoutVisible(true)}>
+            Cerrar sesión
           </Button>
-        </Link>
+          {userData.role === 1 && (
+            <Link to="/admin">
+              <Button type="default" danger style={{ marginLeft: '2%' }}>
+                Panel Admin
+              </Button>
+            </Link>
+          )}
+        </>
+      ) : (
+        <Button style={{ marginLeft: '1%' }} type="primary" onClick={handleOpenModal}>
+          Iniciar sesión
+        </Button>
       )}
 
       <Modal
@@ -51,6 +66,19 @@ const HeaderComponent = () => {
         footer={null}
       >
         <Login />
+      </Modal>
+
+      <Modal
+        title="Cerrar sesión"
+        open={logoutVisible}  // Change open to visible
+        onCancel={() => setLogoutVisible(false)}
+        footer={
+          <Button type="primary" onClick={handleLogout}>
+            Confirmar
+          </Button>
+        }
+      >
+        ¿Estás seguro de que deseas cerrar sesión?
       </Modal>
     </>
   );

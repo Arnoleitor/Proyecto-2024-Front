@@ -58,10 +58,10 @@ const App = () => {
                   <Suspense fallback={<div>Cargando...</div>}>
                     <Routes>
                       <Route path="/" element={<Piezas />} />
-                      <Route path="/Motherboards" element={<Motherboards />} />
-                      <Route path="/Tgraficas" element={<Tgraficas />} />
+                      <Route path="/motherboards" element={<Motherboards />} />
+                      <Route path="/tgraficas" element={<Tgraficas />} />
                       {userData && userData.role === 1 && (
-                      <Route path="/Admin" element={<Admin userData={userData} />} />
+                      <Route path="/admin" element={<Admin userData={userData} />} />
                       )}
                     </Routes>
                   </Suspense>

@@ -42,7 +42,7 @@ const Grid = () => {
 
   const itemsPerPage = 4;
   const totalItems = productos.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  // const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const [currentPage, setCurrentPage] = useState(1);
 
