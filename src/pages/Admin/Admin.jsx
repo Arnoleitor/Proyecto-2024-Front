@@ -49,6 +49,11 @@ const AdminPanel = () => {
 
   const columnsUsers = [
     {
+      title: 'ID',
+      dataIndex: '_id',
+      key: '_id',
+    },
+    {
       title: 'Username',
       dataIndex: 'username',
       key: 'username',
@@ -57,6 +62,11 @@ const AdminPanel = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+    },
+    {
+      title: 'Dirección',
+      dataIndex: 'direccion',
+      key: 'direccion',
     },
     {
       title: 'Acciones',
@@ -81,6 +91,11 @@ const AdminPanel = () => {
   ];
 
   const columnsProductos = [
+    {
+      title: 'ID',
+      dataIndex: '_id',
+      key: '_id',
+    },
     {
       title: 'Nombre',
       dataIndex: 'descripcion',
