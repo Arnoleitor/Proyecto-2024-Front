@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Card, Select } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from '../featues/userSlice ';
@@ -7,22 +7,26 @@ import axios from "axios";
 const Perfil = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
+  const [tiposDevia, setTiposDevia] = useState([]);
+
+  useEffect(() => {
+    const fecthTipoVia = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/tiposdevias');
+        setTiposDevia(response.data);
+      } catch (error) {
+        console.error('Error al obtener tiposDevia:', error.message);
+      }
+    };
+
+    fecthTipoVia();
+  }, []);
+  
 
   const onFinish = async (values) => {
     if (userData && userData.id) {
-      // Combinar el tipo de vía con la dirección
-      const direccionCompleta = `${values.tipoVia} ${values.direccion}`;
-
-      const convertedValues = {
-        ...values,
-        username: values.nombre,
-        direccion: direccionCompleta,
-      };
-
-      dispatch(setUserData(convertedValues));
-
       try {
-        const response = await axios.put(`http://localhost:3000/api/users/${userData.id}`, convertedValues);
+        const response = await axios.put(`http://localhost:3000/api/users/${userData.id}`, values);
         dispatch(setUserData(response.data));
       } catch (error) {
         console.error('Error al actualizar usuario:', error.message);
@@ -31,6 +35,8 @@ const Perfil = () => {
       console.error('Error');
     }
   };
+  
+  
 
   return (
     <div style={{ display: 'flex' }}>
@@ -40,7 +46,7 @@ const Perfil = () => {
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 12 }}
           onFinish={onFinish}
-          initialValues={{ nombre: userData.nombre, tipoVia: '', direccion: userData.direccion }}
+          initialValues={{ nombre: userData.nombre, tipoVia: userData.tipoVia , direccion: userData.direccion }}
         >
           <Form.Item
             label="Nombre"
@@ -55,8 +61,11 @@ const Perfil = () => {
             rules={[{ required: true, message: 'Seleccione el tipo de vía' }]}
           >
             <Select>
-              <Option value="Av">Avenida</Option>
-              <Option value="C">Calle</Option>
+              {tiposDevia.map((tipo) => (
+                <Option key={tipo.id} value={tipo.tipo}>
+                  {tipo.tipo}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item
@@ -77,6 +86,7 @@ const Perfil = () => {
         <Card title="Tus datos" style={{ width: '300px' }}>
           <p>Nombre: {userData.nombre}</p>
           <p>Dirección: {userData.direccion}</p>
+          <p>Tipo de vía: {userData.tipoVia}</p>
           <p>Email: {userData.email}</p>
         </Card>
       </div>

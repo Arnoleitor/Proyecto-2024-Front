@@ -6,6 +6,7 @@ import Login from "../../components/Auth/Login";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { clearUserData } from '../../featues/userSlice ';
+import { clearCart } from '../../featues/cartSlice';
 
 const { Text } = Typography;
 // const { SubMenu } = Menu;
@@ -29,6 +30,7 @@ const HeaderComponent = () => {
 
   const handleLogout = () => {
     dispatch(clearUserData())
+    dispatch(clearCart())
     setLogoutVisible(false);
   };
 

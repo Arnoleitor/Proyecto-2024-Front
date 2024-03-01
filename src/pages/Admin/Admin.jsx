@@ -13,8 +13,23 @@ const AdminPanel = () => {
   const [form] = Form.useForm();
   const [selectedUser, setSelectedUser] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const [tiposDevia, setTiposDevia] = useState([]);
 
   useEffect(() => {
+    const fecthTipoVia = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/tiposdevias');
+        setTiposDevia(response.data);
+      } catch (error) {
+        console.error('Error al obtener tiposDevia:', error.message);
+      }
+    };
+
+    fecthTipoVia();
+  }, []);
+
+  useEffect(() => {
+
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/users');
@@ -67,6 +82,11 @@ const AdminPanel = () => {
       title: 'Dirección',
       dataIndex: 'direccion',
       key: 'direccion',
+    },
+    {
+      title: 'Tipo vía',
+      dataIndex: 'tipoVia',
+      key: 'tipoVia',
     },
     {
       title: 'Acciones',
@@ -197,6 +217,8 @@ const AdminPanel = () => {
       username: user.username,
       email: user.email,
       Roles: user.Roles,
+      direccion: user.direccion,
+      tipoVia: user.tipoVia
     });
     setEditModalVisible(true);
   };
@@ -294,6 +316,23 @@ const AdminPanel = () => {
           </Form.Item>
           <Form.Item label="Email" name="email" initialValue={selectedUser?.email}>
             <Input />
+          </Form.Item>
+          <Form.Item label="Dirección" name="direccion" initialValue={selectedUser?.direccion}>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Tipo de Vía"
+            name="tipoVia"
+            rules={[{ required: true, message: 'Seleccione el tipo de vía' }]}
+            initialValue={selectedUser?.tipoVia}
+          >
+            <Select>
+              {tiposDevia.map((tipo) => (
+                <Option key={tipo.id} value={tipo.tipo}>
+                  {tipo.tipo}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item label="Roles" name="Roles">
             <Select>

@@ -11,9 +11,7 @@ const Pedidos = () => {
     const fetchPedidos = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/pedidos');
-        console.log("🚀 ~ fetchPedidos ~ response:", response)
         setPedidos(response.data);
-        console.log(response.data)
       } catch (error) {
         console.error('Error al obtener pedidos:', error.message);
       }
@@ -27,11 +25,6 @@ const Pedidos = () => {
       title: "Nº de Pedido",
       dataIndex: "_id",
       key: "_id",
-    },
-    {
-      title: "ID Comprador",
-      dataIndex: "idUser",
-      key: "idUser",
     },
     {
       title: "Producto",
