@@ -3,12 +3,13 @@ import { Form, Input, Button, Card } from "antd";
 import { useSelector } from "react-redux";
 
 const Perfil = () => {
+  const userData = useSelector((state) => state.user);
+  
   const onFinish = (values) => {
     // Handle form submission logic here
     console.log("Received values:", values);
   };
 
-  const userData = useSelector((state) => state.user);
 
   return (
     <div style={{ display: "flex" }}>
