@@ -84,9 +84,33 @@ const AdminPanel = () => {
 
   const columnsPedidos = [
     {
-      title: 'ID del Pedido',
-      dataIndex: '_id',
-      key: '_id',
+      title: "Nº de Pedido",
+      dataIndex: "_id",
+      key: "_id",
+    },
+    {
+      title: "ID Comprador",
+      dataIndex: "idUser",
+      key: "idUser",
+    },
+    {
+      title: "Producto",
+      dataIndex: "producto",
+      key: "producto",
+    },
+    {
+      title: "Importe",
+      dataIndex: "totalImporte",
+      key: "totalImporte",
+    },
+    {
+      title: "Acciones",
+      key: "acciones",
+      render: (text, record) => (
+        <Button type="primary" ghost onClick={() => handleDownloadInvoice(record)}>
+          Descargar Factura
+        </Button>
+      ),
     },
   ];
 
@@ -122,8 +146,7 @@ const AdminPanel = () => {
       render: (text, record) => (
         <img
           src={record.imagen}
-          // alt={record.descripcion}
-          style={{ maxWidth: '50px', border: '1px solid #ddd', padding: '5px' }}
+          style={{ maxWidth: '50px', padding: '5px' }}
           onError={(e) => console.log('Error al cargar imagen:', e)}
         />
       ),

@@ -1,71 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button } from "antd";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Pedidos = () => {
   const userData = useSelector((state) => state.user);
+  const [pedidos, setPedidos] = useState([]);
 
-  const data = [
-    {
-      key: "1",
-      numeroPedido: "P001",
-      producto: "Producto 1",
-      direccion: "Calle A, Ciudad",
-      precio: "50.00€",
-    },
-    {
-      key: "2",
-      numeroPedido: "P002",
-      producto: "Producto 2",
-      direccion: "Calle B, Ciudad",
-      precio: "35.00€",
-    },
-    {
-      key: "1",
-      numeroPedido: "P001",
-      producto: "Producto 1",
-      direccion: "Calle A, Ciudad",
-      precio: "50.00€",
-    },
-    {
-      key: "2",
-      numeroPedido: "P002",
-      producto: "Producto 2",
-      direccion: "Calle B, Ciudad",
-      precio: "35.00€",
-    },{
-      key: "1",
-      numeroPedido: "P001",
-      producto: "Producto 1",
-      direccion: "Calle A, Ciudad",
-      precio: "50.00€",
-    },
-    {
-      key: "2",
-      numeroPedido: "P002",
-      producto: "Producto 2",
-      direccion: "Calle B, Ciudad",
-      precio: "35.00€",
-    },{
-      key: "1",
-      numeroPedido: "P001",
-      producto: "Producto 1",
-      direccion: "Calle A, Ciudad",
-      precio: "50.00€",
-    },
-    {
-      key: "2",
-      numeroPedido: "P002",
-      producto: "Producto 2",
-      direccion: "Calle B, Ciudad",
-      precio: "35.00€",
-    },  ];
+  useEffect(() => {
+    const fetchPedidos = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/pedidos');
+        console.log("🚀 ~ fetchPedidos ~ response:", response)
+        setPedidos(response.data);
+        console.log(response.data)
+      } catch (error) {
+        console.error('Error al obtener pedidos:', error.message);
+      }
+    };
+
+    fetchPedidos();
+  }, []);
 
   const columns = [
     {
       title: "Nº de Pedido",
-      dataIndex: "numeroPedido",
-      key: "numeroPedido",
+      dataIndex: "_id",
+      key: "_id",
+    },
+    {
+      title: "ID Comprador",
+      dataIndex: "idUser",
+      key: "idUser",
     },
     {
       title: "Producto",
@@ -73,14 +39,9 @@ const Pedidos = () => {
       key: "producto",
     },
     {
-      title: "Dirección",
-      dataIndex: "direccion",
-      key: "direccion",
-    },
-    {
-      title: "Precio",
-      dataIndex: "precio",
-      key: "precio",
+      title: "Importe",
+      dataIndex: "totalImporte",
+      key: "totalImporte",
     },
     {
       title: "Acciones",
@@ -100,7 +61,7 @@ const Pedidos = () => {
   return (
     <>
       <h1>Pedidos de {userData.nombre}</h1>
-      <Table dataSource={data} columns={columns} />
+      <Table dataSource={pedidos} columns={columns} />
     </>
   );
 };
