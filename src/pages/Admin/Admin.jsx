@@ -15,6 +15,12 @@ const AdminPanel = () => {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [tiposDevia, setTiposDevia] = useState([]);
 
+  const openNotification = (type, message) => {
+    notification[type]({
+      message,
+    });
+  };
+
   useEffect(() => {
     const fecthTipoVia = async () => {
       try {
@@ -185,12 +191,6 @@ const AdminPanel = () => {
     },
   ];
 
-  const openNotification = (type, message) => {
-    notification[type]({
-      message,
-    });
-  };
-
   const handleEliminarUsuario = async (id) => {
     Modal.confirm({
       title: 'Confirmar Eliminación',
@@ -291,6 +291,7 @@ const AdminPanel = () => {
         try {
           await axios.delete(`http://localhost:3000/api/deleteProducto/${productoId}`);
           setProductos(productos.filter((producto) => producto._id !== productoId));
+          openNotification('success', 'Producto eliminado correctamente');
         } catch (error) {
           console.error('Error al eliminar producto:', error.message);
         }

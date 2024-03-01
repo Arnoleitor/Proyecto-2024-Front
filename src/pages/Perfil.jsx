@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Card, Select } from "antd";
+import { Form, Input, Button, Card, Select, notification } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from '../featues/userSlice ';
 import axios from "axios";
@@ -8,6 +8,13 @@ const Perfil = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
   const [tiposDevia, setTiposDevia] = useState([]);
+
+  const openNotification = (type, message) => {
+    notification[type]({
+      message,
+      duration:2,
+    });
+  };
 
   useEffect(() => {
     const fecthTipoVia = async () => {
@@ -26,17 +33,20 @@ const Perfil = () => {
   const onFinish = async (values) => {
     if (userData && userData.id) {
       try {
-        const response = await axios.put(`http://localhost:3000/api/users/${userData.id}`, values);
+        const response = await axios.put(`http://localhost:3000/api/users/${userData.id}`, {
+          ...values,
+          username: values.nombre,
+        });
         dispatch(setUserData(response.data));
+        openNotification('success', 'Usuario actualizado correctamente');
       } catch (error) {
         console.error('Error al actualizar usuario:', error.message);
+        openNotification('error', 'Error al actualizar usuario');
       }
     } else {
       console.error('Error');
     }
   };
-  
-  
 
   return (
     <div style={{ display: 'flex' }}>
