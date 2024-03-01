@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Card } from "antd";
+import { Form, Input, Button, Card, Select } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from '../featues/userSlice ';
 import axios from "axios";
@@ -10,8 +10,14 @@ const Perfil = () => {
 
   const onFinish = async (values) => {
     if (userData && userData.id) {
-      // Realizar la conversión
-      const convertedValues = { ...values, username: values.nombre };
+      // Combinar el tipo de vía con la dirección
+      const direccionCompleta = `${values.tipoVia} ${values.direccion}`;
+
+      const convertedValues = {
+        ...values,
+        username: values.nombre,
+        direccion: direccionCompleta,
+      };
 
       dispatch(setUserData(convertedValues));
 
@@ -34,7 +40,7 @@ const Perfil = () => {
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 12 }}
           onFinish={onFinish}
-          initialValues={{ nombre: userData.nombre, direccion: userData.direccion }}
+          initialValues={{ nombre: userData.nombre, tipoVia: '', direccion: userData.direccion }}
         >
           <Form.Item
             label="Nombre"
@@ -44,9 +50,19 @@ const Perfil = () => {
             <Input />
           </Form.Item>
           <Form.Item
+            label="Tipo de Vía"
+            name="tipoVia"
+            rules={[{ required: true, message: 'Seleccione el tipo de vía' }]}
+          >
+            <Select>
+              <Option value="Av">Avenida</Option>
+              <Option value="C">Calle</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
             label="Dirección"
             name="direccion"
-            rules={[{ required: true, message: 'La direccón no puede estar vacía' }]}
+            rules={[{ required: true, message: 'La dirección no puede estar vacía' }]}
           >
             <Input />
           </Form.Item>

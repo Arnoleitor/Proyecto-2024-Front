@@ -4,7 +4,7 @@ import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../featues/cartSlice';
 import axios from 'axios';
-import imagenPorDefecto from'../assets/img/imagenrota.jpg'
+import imagenPorDefecto from '../assets/img/imagenrota.jpg'
 
 const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => {
   const [imagenError, setImagenError] = useState(false);
@@ -15,12 +15,14 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
 
   return (
     <div style={{ borderRadius: '20px', textAlign: 'center' }}>
-      <img
-        src={imagen}
-        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        onError={handleImagenError}
-      />
-      {imagenError && <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+      {imagenError ? 
+      <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> :
+        <img
+          src={imagen}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          onError={handleImagenError}
+        />
+      }
       <p>{descripcion}</p>
       <p>Precio: {precio}€</p>
       <Button type='primary' ghost onClick={() => agregarAlCarrito({ id, descripcion, precio, imagen })}>
@@ -40,6 +42,7 @@ const Grid = () => {
       try {
         const response = await axios.get('http://localhost:3000/api/recibirProducto');
         setProductos(response.data);
+        console.log(response.data)
         setShowSkeleton(false);
       } catch (error) {
         console.error('Error al obtener productos:', error.message);

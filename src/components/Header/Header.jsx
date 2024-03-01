@@ -3,17 +3,19 @@ import { BarsOutlined, UsbOutlined } from "@ant-design/icons";
 import { Modal, Button, Menu, Dropdown, Typography } from 'antd';
 import Carrito from "../Carrito";
 import Login from "../../components/Auth/Login";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { clearUserData } from '../../featues/userSlice ';
 
 const { Text } = Typography;
-const { SubMenu } = Menu;
+// const { SubMenu } = Menu;
 
 const HeaderComponent = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [logoutVisible, setLogoutVisible] = useState(false);
   const userData = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -26,8 +28,7 @@ const HeaderComponent = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("items");
+    dispatch(clearUserData())
     setLogoutVisible(false);
   };
 

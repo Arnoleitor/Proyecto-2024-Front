@@ -7,7 +7,6 @@ import {
   LoadingOutlined,
   SmileOutlined,
 } from '@ant-design/icons';
-import imagen from '../assets/img/placaBase3.png';
 import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../featues/cartSlice';
 
 const { Step } = Steps;
@@ -87,7 +86,7 @@ const Carrito = () => {
           renderItem={(item) => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Avatar src={imagen} />}
+                avatar={<Avatar src={item.imagen} />}
                 title={item.descripcion}
                 description={`Precio: ${item.precio} € x ${item.quantity} = ${item.precio * item.quantity} €`}
               />

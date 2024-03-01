@@ -20,8 +20,46 @@ const Pedidos = () => {
       direccion: "Calle B, Ciudad",
       precio: "35.00€",
     },
-    // Add more orders as needed
-  ];
+    {
+      key: "1",
+      numeroPedido: "P001",
+      producto: "Producto 1",
+      direccion: "Calle A, Ciudad",
+      precio: "50.00€",
+    },
+    {
+      key: "2",
+      numeroPedido: "P002",
+      producto: "Producto 2",
+      direccion: "Calle B, Ciudad",
+      precio: "35.00€",
+    },{
+      key: "1",
+      numeroPedido: "P001",
+      producto: "Producto 1",
+      direccion: "Calle A, Ciudad",
+      precio: "50.00€",
+    },
+    {
+      key: "2",
+      numeroPedido: "P002",
+      producto: "Producto 2",
+      direccion: "Calle B, Ciudad",
+      precio: "35.00€",
+    },{
+      key: "1",
+      numeroPedido: "P001",
+      producto: "Producto 1",
+      direccion: "Calle A, Ciudad",
+      precio: "50.00€",
+    },
+    {
+      key: "2",
+      numeroPedido: "P002",
+      producto: "Producto 2",
+      direccion: "Calle B, Ciudad",
+      precio: "35.00€",
+    },  ];
 
   const columns = [
     {
