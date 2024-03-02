@@ -57,7 +57,7 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
           imagenError ? (
             <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (
-            <img src={imagen} style={{ width: '350px', height: '300px' }} onError={handleImagenError} />
+            <img src={imagen} style={{ width: '350px', height: '350px' }} onError={handleImagenError} />
           )
         }
       >
@@ -102,7 +102,7 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
           alt="imagen"
           style={{ width: '50%', height: 'auto', marginBottom: 'auto', marginLeft: '25%' }}
         />
-        <p>Precio: {precio}€</p>
+        <p><span style={{fontWeight:'bold'}} >Precio:</span> {precio}€</p>
         <Input.TextArea
           placeholder="Añade tu comentario..."
           value={comentarios}
