@@ -1,34 +1,138 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Col, Divider, Pagination, Row } from 'antd';
+import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Tooltip, List } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../featues/cartSlice';
 import axios from 'axios';
-import imagenPorDefecto from '../assets/img/imagenrota.jpg'
+import imagenPorDefecto from '../assets/img/imagenrota.jpg';
 
 const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => {
   const [imagenError, setImagenError] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [comentarios, setComentarios] = useState('');
+  const [valoracion, setValoracion] = useState(0);
+  const [valoracionesUsuarios, setValoracionesUsuarios] = useState([
+    { usuario: 'Usuario1', valoracion: 4, comentario: 'Buen producto' },
+    { usuario: 'Usuario2', valoracion: 5, comentario: 'Excelente calidad' },
+  ]);
 
   const handleImagenError = () => {
     setImagenError(true);
   };
 
+  const handleAgregarAlCarrito = () => {
+    agregarAlCarrito({ id, descripcion, precio, imagen });
+  };
+
+  const handleVerDetalles = () => {
+    setModalVisible(true);
+  };
+
+  const handleModalCancel = () => {
+    setModalVisible(false);
+  };
+
+  const handlePublicarComentario = () => {
+    console.log('Comentario publicado:', comentarios);
+    setComentarios('');
+  };
+
+  const calcularMediaValoraciones = () => {
+    const totalValoraciones = valoracionesUsuarios.length;
+    const sumaValoraciones = valoracionesUsuarios.reduce((suma, { valoracion }) => suma + valoracion, 0);
+    return totalValoraciones > 0 ? sumaValoraciones / totalValoraciones : 0;
+  };
+  
+  const [showTooltip, setShowTooltip] = useState(false);
+
   return (
-    <div style={{ borderRadius: '20px', textAlign: 'center' }}>
-      {imagenError ? 
-      <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> :
+    <>
+      <Card
+        style={{ borderRadius: '20px', textAlign: 'center', height: '100%' }}
+        cover={
+          imagenError ? (
+            <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            <img src={imagen} style={{ width: '350px', height: '300px' }} onError={handleImagenError} />
+          )
+        }
+      >
+        <Tooltip title="Ver detalles">
+          <InfoCircleOutlined
+            style={{
+              position: 'absolute',
+              top: 10,
+              right: 10,
+              color: '#1890ff',
+              fontSize: '20px',
+              cursor: 'pointer',
+            }}
+            onClick={handleVerDetalles}
+          />
+        </Tooltip>
+        <Card.Meta title={descripcion} description={`Precio: ${precio}€`} />
+        <Button
+          type='primary'
+          ghost
+          onClick={handleAgregarAlCarrito}
+          style={{ marginTop: '10px' }}
+        >
+          Agregar al carrito
+        </Button>
+      </Card>
+      <Modal
+        title={descripcion}
+        open={modalVisible}
+        onCancel={handleModalCancel}
+        footer={[
+          <Button key="publicar" type="primary" onClick={handlePublicarComentario}>
+            Publicar Comentario
+          </Button>,
+          <Button key="back" onClick={handleModalCancel}>
+            Cerrar
+          </Button>,
+        ]}
+      >
         <img
-          src={imagen}
-          style={{ width: '370px', height: '300px', objectFit: 'cover' }}
-          onError={handleImagenError}
+          src={imagenError ? imagenPorDefecto : imagen}
+          alt="imagen"
+          style={{ width: '50%', height: 'auto', marginBottom: 'auto', marginLeft: '25%' }}
         />
-      }
-      <p>{descripcion}</p>
-      <p>Precio: {precio}€</p>
-      <Button type='primary' ghost onClick={() => agregarAlCarrito({ id, descripcion, precio, imagen })}>
-        Agregar al carrito
-      </Button>
-    </div>
+        <p>Precio: {precio}€</p>
+        <Input.TextArea
+          placeholder="Añade tu comentario..."
+          value={comentarios}
+          onChange={(e) => setComentarios(e.target.value)}
+        />
+        <Tooltip title="Valora el producto" placement="right" visible={showTooltip}>
+          <Rate
+            allowHalf
+            value={valoracion}
+            onChange={(value) => setValoracion(value)}
+            style={{ marginTop: '10px' }}
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          />
+        </Tooltip>
+        <div style={{ marginTop: '20px' }}>
+          <h3>Comentarios de otros usuarios</h3>
+          <List
+            dataSource={valoracionesUsuarios}
+            renderItem={(item) => (
+              <List.Item>
+                <Rate disabled allowHalf value={item.valoracion} style={{ marginRight: '8px' }} />
+                <strong>{item.usuario}:</strong> {item.comentario}
+              </List.Item>
+            )}
+          />
+        </div>
+        <Divider />
+        <div>
+          <h3>Media de valoraciones: {calcularMediaValoraciones().toFixed(1)}</h3>
+        </div>
+      </Modal>
+    </>
   );
 };
 
@@ -42,7 +146,6 @@ const Grid = () => {
       try {
         const response = await axios.get('http://localhost:3000/api/recibirProducto');
         setProductos(response.data);
-        console.log(response.data)
         setShowSkeleton(false);
       } catch (error) {
         console.error('Error al obtener productos:', error.message);
@@ -54,7 +157,6 @@ const Grid = () => {
 
   const itemsPerPage = 4;
   const totalItems = productos.length;
-  // const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -98,4 +200,5 @@ const Grid = () => {
     </div>
   );
 };
+
 export default Grid;

@@ -16,3 +16,9 @@ html{
     font-size: 12px;
     margin-left:5px;
   }
+
+  :where(.css-dev-only-do-not-override-1k979oh).ant-card-bordered .ant-card-cover {
+    margin-top: 10%;
+    margin-inline-start: -1px;
+    margin-inline-end: -1px;
+}
