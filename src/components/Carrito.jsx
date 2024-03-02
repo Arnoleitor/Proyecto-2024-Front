@@ -8,8 +8,8 @@ import {
   SmileOutlined,
 } from '@ant-design/icons';
 import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../featues/cartSlice';
-import { setUserData } from '../featues/userSlice ';
 import axios from 'axios';
+import { clearCart } from '../featues/cartSlice';
 
 const { Step } = Steps;
 
@@ -53,6 +53,7 @@ const Carrito = () => {
   
       if (response.status === 200) {
         showSuccessMessage('Pedido realizado con éxito');
+        dispatch(clearCart())
       } else {
         console.error('Error creating order:', response.statusText);
       }
