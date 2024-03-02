@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../featues/cartSlice';
 import { setUserData } from '../featues/userSlice ';
+import axios from 'axios';
 
 const { Step } = Steps;
 
@@ -38,10 +39,30 @@ const Carrito = () => {
     setModalVisible(true);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     setPasoActual(2);
     setModalVisible(true);
+    try {
+      const productosSinImagen = articulo.map(({ imagen, ...rest }) => rest);
+  
+      const response = await axios.post('http://localhost:3000/api/pedidos', {
+        id: userData.id,
+        productos: productosSinImagen,
+        totalImporte: Number(precioTotal.toFixed(2)),
+      });
+  
+      if (response.status === 200) {
+        showSuccessMessage('Pedido realizado con éxito');
+      } else {
+        console.error('Error creating order:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error creating order:', error.message);
+    } finally {
+      setModalVisible(false);
+    }
   };
+  
 
   const handleCancel = () => {
     setModalVisible(false);
@@ -50,6 +71,7 @@ const Carrito = () => {
   const showSuccessMessage = (text) => {
     message.success(text);
   };
+  
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>

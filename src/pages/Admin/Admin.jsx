@@ -126,7 +126,7 @@ const AdminPanel = () => {
       render: (productos) => (
         <span>
           {productos.map((producto) => (
-            <div key={producto._id}>{producto.id}</div>
+            <div key={producto._id}>{producto._id}</div>
           ))}
         </span>
       ),
