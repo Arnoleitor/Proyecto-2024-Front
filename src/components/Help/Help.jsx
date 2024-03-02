@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { FloatButton, Modal } from 'antd';
+import { FloatButton, Modal, Tooltip } from 'antd';
 
 const Help = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -15,18 +15,20 @@ const Help = () => {
 
   return (
     <>
-      <FloatButton
-        icon={<QuestionCircleOutlined />}
-        type="default"
-        style={{
-          right: 60,
-          bottom: 30
-        }}
-        onClick={handleButtonClick}
-      />
+      <Tooltip title="Necesitas ayuda?" placement="left" open={true}>
+        <FloatButton
+          icon={<QuestionCircleOutlined />}
+          type="default"
+          style={{
+            right: 60,
+            bottom: 30
+          }}
+          onClick={handleButtonClick}
+        />
+      </Tooltip>
       <Modal
         title="¿Necesitas ayuda?"
-        open={modalVisible}
+        visible={modalVisible}
         onCancel={cerrarModal}
         footer={null}
         closable={false}

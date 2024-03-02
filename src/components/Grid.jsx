@@ -19,7 +19,7 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
       <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> :
         <img
           src={imagen}
-          style={{ width: '400px', height: '300px', objectFit: 'cover' }}
+          style={{ width: '370px', height: '300px', objectFit: 'cover' }}
           onError={handleImagenError}
         />
       }

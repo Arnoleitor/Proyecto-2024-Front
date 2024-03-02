@@ -12,7 +12,7 @@ const Perfil = () => {
   const openNotification = (type, message) => {
     notification[type]({
       message,
-      duration:2,
+      duration:1.5,
     });
   };
 
