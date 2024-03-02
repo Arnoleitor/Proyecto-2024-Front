@@ -116,13 +116,20 @@ const AdminPanel = () => {
     },
     {
       title: "ID Comprador",
-      dataIndex: "idUser",
-      key: "idUser",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: "Producto",
-      dataIndex: "producto",
-      key: "producto",
+      title: 'idProducto',
+      dataIndex: 'productos',
+      key: 'productos',
+      render: (productos) => (
+        <span>
+          {productos.map((producto) => (
+            <div key={producto._id}>{producto.id}</div>
+          ))}
+        </span>
+      ),
     },
     {
       title: "Importe",

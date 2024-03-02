@@ -10,15 +10,16 @@ const Pedidos = () => {
   useEffect(() => {
     const fetchPedidos = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/pedidos');
+        const response = await axios.get(`http://localhost:3000/api/pedidosid?id=${userData.id}`);
         setPedidos(response.data);
       } catch (error) {
         console.error('Error al obtener pedidos:', error.message);
       }
     };
-
+  
     fetchPedidos();
   }, []);
+  
 
   const columns = [
     {

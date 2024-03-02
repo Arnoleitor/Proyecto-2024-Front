@@ -8,6 +8,7 @@ import {
   SmileOutlined,
 } from '@ant-design/icons';
 import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../featues/cartSlice';
+import { setUserData } from '../featues/userSlice ';
 
 const { Step } = Steps;
 
@@ -16,7 +17,8 @@ const Carrito = () => {
   const [pasoActual, setPasoActual] = useState(0);
   const dispatch = useDispatch();
   const articulo = useSelector((state) => state.cart.items);
-  
+  const userData = useSelector((state) => state.user);
+
   const incrementarCantidad = (itemId) => {
     dispatch(incrementItemQuantity(itemId));
   };
