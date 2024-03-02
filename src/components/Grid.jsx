@@ -16,7 +16,6 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
     { usuario: 'Usuario1', valoracion: 4, comentario: 'Buen producto' },
     { usuario: 'Usuario2', valoracion: 5, comentario: 'Excelente calidad' },
   ]);
-
   const desc = ['Terrible', 'Malo', 'Normal', 'Bueno', 'Excelente'];
   const [value, setValue] = useState(3);
 
@@ -57,7 +56,7 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
           imagenError ? (
             <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (
-            <img src={imagen} style={{ width: '350px', height: '350px' }} onError={handleImagenError} />
+            <img src={imagen} style={{ width: '350px', height: '320px' }} onError={handleImagenError} />
           )
         }
       >
@@ -85,16 +84,14 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
         </Button>
       </Card>
       <Modal
+        closable={false}
         title={descripcion}
         open={modalVisible}
         onCancel={handleModalCancel}
         footer={[
           <Button key="publicar" type="primary" onClick={handlePublicarComentario}>
             Publicar Comentario
-          </Button>,
-          <Button key="back" onClick={handleModalCancel}>
-            Cerrar
-          </Button>,
+          </Button>
         ]}
       >
         <img
