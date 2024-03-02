@@ -17,6 +17,9 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
     { usuario: 'Usuario2', valoracion: 5, comentario: 'Excelente calidad' },
   ]);
 
+  const desc = ['Terrible', 'Malo', 'Normal', 'Bueno', 'Excelente'];
+  const [value, setValue] = useState(3);
+
   const handleImagenError = () => {
     setImagenError(true);
   };
@@ -43,7 +46,7 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
     const sumaValoraciones = valoracionesUsuarios.reduce((suma, { valoracion }) => suma + valoracion, 0);
     return totalValoraciones > 0 ? sumaValoraciones / totalValoraciones : 0;
   };
-  
+
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
@@ -105,17 +108,17 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
           value={comentarios}
           onChange={(e) => setComentarios(e.target.value)}
         />
-        <Tooltip title="Valora el producto" placement="right" visible={showTooltip}>
-          <Rate
-            allowHalf
-            value={valoracion}
-            onChange={(value) => setValoracion(value)}
-            style={{ marginTop: '10px' }}
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
-          />
-        </Tooltip>
-        <div style={{ marginTop: '20px' }}>
+        <Rate
+          tooltips={desc} onChange={setValoracion} value={valoracion}
+          allowHalf
+          {...value ? <span>{desc[value - 1]}</span> : null}
+          style={{ marginTop: '10px' }}
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        />
+        <div style={{ marginTop: '20px' }} >
+          <h4>Valora el producto!</h4>
+          <Divider/>
           <h3>Comentarios de otros usuarios</h3>
           <List
             dataSource={valoracionesUsuarios}
