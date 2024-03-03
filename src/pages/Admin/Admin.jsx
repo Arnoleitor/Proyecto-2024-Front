@@ -397,7 +397,7 @@ const AdminPanel = () => {
         onCancel={handleModalCancel}
       >
         <Form form={form} layout="vertical" name="producto-form">
-          <Form.Item label="Imagen" name="imagen">
+          <Form.Item name="imagen">
             <Upload
               beforeUpload={(file) => {
                 const isImage = file.type.startsWith('image/');
@@ -415,7 +415,7 @@ const AdminPanel = () => {
                 }
               }}
             >
-              <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
+              <Button style={{marginTop:'10%'}}icon={<UploadOutlined />}>Cargar Imagen</Button>
             </Upload>
           </Form.Item>
           <Form.Item
