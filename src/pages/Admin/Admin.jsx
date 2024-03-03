@@ -298,7 +298,6 @@ const AdminPanel = () => {
       .validateFields()
       .then(async (values) => {
         try {
-          values.imagen = imagen || "";
           await axios.post('http://localhost:3000/api/anadirProducto', values);
           setModalVisible(false);
           form.resetFields();
@@ -405,6 +404,7 @@ const AdminPanel = () => {
         <Form form={form} layout="vertical" name="producto-form">
           <Form.Item name="imagen">
             <Upload
+            listType='picture-card'
               beforeUpload={(file) => {
                 const isImage = file.type.startsWith('image/');
                 if (!isImage) {
@@ -414,7 +414,7 @@ const AdminPanel = () => {
               }}
               onChange={(info) => {
                 if (info.file.status === 'done') {
-                  setImagen(info.file.originFileObj);
+                  setImagen(info.file.thumbUrl);
                   message.success(`${info.file.name} loaded successfully`);
                 } else if (info.file.status === 'error') {
                   message.error(`${info.file.name} upload failed.`);

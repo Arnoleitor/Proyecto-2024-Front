@@ -16,6 +16,7 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
     { usuario: 'Usuario1', valoracion: 4, comentario: 'Buen producto' },
     { usuario: 'Usuario2', valoracion: 5, comentario: 'Excelente calidad' },
   ]);
+
   const desc = ['Terrible', 'Malo', 'Normal', 'Bueno', 'Excelente'];
   const [value, setValue] = useState(3);
 

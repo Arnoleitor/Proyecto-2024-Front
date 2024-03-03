@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { EyeOutlined } from "@ant-design/icons";
 import FechaFormateada from "../components/Customs/FechaFormateada";
+import { saveAs } from 'file-saver';
 
 const Pedidos = () => {
   const userData = useSelector((state) => state.user);
@@ -76,7 +77,19 @@ const Pedidos = () => {
   ];
 
   const handleDownloadInvoice = (record) => {
-    console.log("Downloading invoice for order:", record.numeroPedido);
+    const fetchFactura = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/factura?id=${record.id}`,{responseType:"blob"})
+    
+          const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+
+        saveAs(pdfBlob, 'newPdf.pdf');
+        
+      } catch (error) {
+        console.error('Error al obtener factura:', error.message);
+      }
+    };
+    fetchFactura()
   };
 
   return (
