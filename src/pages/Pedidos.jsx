@@ -69,14 +69,14 @@ const Pedidos = () => {
       title: "Acciones",
       key: "acciones",
       render: (text, record) => (
-        <Button type="primary" ghost onClick={() => handleDownloadInvoice(record)}>
+        <Button type="primary" ghost onClick={() => handleDescargarFactura(record)}>
           Descargar Factura
         </Button>
       ),
     },
   ];
 
-  const handleDownloadInvoice = (record) => {
+  const handleDescargarFactura = (record) => {
     const fetchFactura = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/factura?id=${record.id}`,{responseType:"blob"})
