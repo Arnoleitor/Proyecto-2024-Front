@@ -12,7 +12,6 @@ const Pedidos = () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/pedidosid?id=${userData.id}`);
         setPedidos(response.data);
-        console.log("🚀 ~ fetchPedidos ~ response:", response)
       } catch (error) {
         console.error('Error al obtener pedidos:', error.message);
       }
@@ -34,7 +33,10 @@ const Pedidos = () => {
       render: (productos) => (
         <span>
           {productos.map((producto) => (
-            <div key={producto._id}>{producto._id}</div>
+            <div key={producto._id}>
+              {producto._id}
+              <span style={{ marginLeft: '2%', fontWeight: 'bolder' }}>x{producto.cantidad} unidades</span>
+            </div>
           ))}
         </span>
       ),

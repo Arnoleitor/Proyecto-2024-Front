@@ -43,17 +43,20 @@ const Carrito = () => {
     setPasoActual(2);
     setModalVisible(true);
     try {
-      const productosSinImagen = articulo.map(({ imagen, ...rest }) => rest);
+      const productosConCantidad = articulo.map(({ imagen, ...rest }) => ({
+        ...rest,
+        cantidad: rest.quantity,  
+      }));
   
       const response = await axios.post('http://localhost:3000/api/pedidos', {
         id: userData.id,
-        productos: productosSinImagen,
+        productos: productosConCantidad,
         totalImporte: Number(precioTotal.toFixed(2)),
       });
   
       if (response.status === 200) {
         showSuccessMessage('Pedido realizado con éxito');
-        dispatch(clearCart())
+        dispatch(clearCart());
       } else {
         console.error('Error creating order:', response.statusText);
       }
@@ -63,7 +66,6 @@ const Carrito = () => {
       setModalVisible(false);
     }
   };
-  
 
   const handleCancel = () => {
     setModalVisible(false);

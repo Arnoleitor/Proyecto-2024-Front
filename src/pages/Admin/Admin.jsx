@@ -126,7 +126,10 @@ const AdminPanel = () => {
       render: (productos) => (
         <span>
           {productos.map((producto) => (
-            <div key={producto._id}>{producto._id}</div>
+            <div key={producto._id}>
+              {producto._id}
+              <span style={{ marginLeft: '2%', fontWeight: 'bolder' }}>x{producto.cantidad} unidades</span>
+            </div>
           ))}
         </span>
       ),
