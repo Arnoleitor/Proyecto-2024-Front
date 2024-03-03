@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Space, Modal, Button, Form, Input, Select, notification } from 'antd';
+import { Table, Space, Modal, Button, Form, Input, Select, notification, Tooltip } from 'antd';
 import CargarArchivo from '../../components/Customs/CargarArchivo';
+import { EyeOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
@@ -128,7 +129,11 @@ const AdminPanel = () => {
           {productos.map((producto) => (
             <div key={producto._id}>
               {producto._id}
-              <span style={{ marginLeft: '2%', fontWeight: 'bolder' }}>x{producto.cantidad} unidades</span>
+              <Tooltip title={`${producto.cantidad} Unidad/es`} placement="right">
+                <span style={{ marginLeft: '2%', fontWeight: 'bolder', cursor: 'pointer', color:'blue'  }}>
+                  <EyeOutlined />
+                </span>
+              </Tooltip>
             </div>
           ))}
         </span>

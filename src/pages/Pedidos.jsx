@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button } from "antd";
+import { Table, Button, Tooltip } from "antd";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { EyeOutlined } from "@ant-design/icons";
 
 const Pedidos = () => {
   const userData = useSelector((state) => state.user);
@@ -35,7 +36,11 @@ const Pedidos = () => {
           {productos.map((producto) => (
             <div key={producto._id}>
               {producto._id}
-              <span style={{ marginLeft: '2%', fontWeight: 'bolder' }}>x{producto.cantidad} unidades</span>
+              <Tooltip title={`${producto.cantidad} Unidad/es`} placement="right">
+                <span style={{ marginLeft: '2%', fontWeight: 'bolder', cursor: 'pointer', color:'blue' }}>
+                  <EyeOutlined />
+                </span>
+              </Tooltip>
             </div>
           ))}
         </span>
