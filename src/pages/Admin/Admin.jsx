@@ -16,6 +16,7 @@ const AdminPanel = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [tiposDevia, setTiposDevia] = useState([]);
+  const [tiposProductos, setTiposProductos] = useState([]);
 
   const openNotification = (type, message) => {
     notification[type]({
@@ -65,9 +66,19 @@ const AdminPanel = () => {
       }
     };
 
+    const fetchTiposProductos = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/tiposproducto');
+        setTiposProductos(response.data);
+      } catch (error) {
+        console.error('Error al obtener tipos de productos:', error.message);
+      }
+    };
+
     fetchUsers();
     fetchPedidos();
     fetchProductos();
+    fetchTiposProductos();
   }, []);
 
   const columnsUsers = [
@@ -131,7 +142,7 @@ const AdminPanel = () => {
             <div key={producto._id}>
               {producto._id}
               <Tooltip title={`${producto.cantidad} Unidad/es`} placement="right">
-                <span style={{ marginLeft: '2%', fontWeight: 'bolder', cursor: 'pointer', color:'blue'  }}>
+                <span style={{ marginLeft: '2%', fontWeight: 'bolder', cursor: 'pointer', color: 'blue' }}>
                   <EyeOutlined />
                 </span>
               </Tooltip>
@@ -398,8 +409,11 @@ const AdminPanel = () => {
             rules={[{ required: true, message: 'Selecciona el tipo del producto' }]}
           >
             <Select>
-              <Option value="Tipo1">Tipo 1</Option>
-              <Option value="Tipo2">Tipo 2</Option>
+              {tiposProductos.map((tipo) => (
+                <Option key={tipo.id} value={tipo.tipo}>
+                  {tipo.tipo}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item
