@@ -169,6 +169,19 @@ const AdminPanel = () => {
       ),
     },
     {
+      title: "Descripción",
+      dataIndex: "productos",
+      render: (productos) => (
+        <span>
+          {productos.map((producto) => (
+            <div key={producto._id}>
+              {producto.descripcion}
+            </div>
+          ))}
+        </span>
+      ),
+    },
+    {
       title: "Fecha",
       dataIndex: "fecha",
       key: "fecha",

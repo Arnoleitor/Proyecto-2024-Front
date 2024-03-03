@@ -55,6 +55,7 @@ const Carrito = () => {
         productos: productosConCantidad,
         totalImporte: Number(precioTotal.toFixed(2)),
         direccion,
+        descripcion: articulo.descripcion
       });
   
       if (response.status === 200) {

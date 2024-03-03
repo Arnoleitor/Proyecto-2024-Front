@@ -19,10 +19,10 @@ const Pedidos = () => {
         console.error('Error al obtener pedidos:', error.message);
       }
     };
-  
+
     fetchPedidos();
   }, []);
-  
+
 
   const columns = [
     {
@@ -39,10 +39,23 @@ const Pedidos = () => {
             <div key={producto._id}>
               {producto._id}
               <Tooltip title={`${producto.cantidad} Unidad/es`} placement="right">
-                <span style={{ marginLeft: '2%', fontWeight: 'bolder', cursor: 'pointer', color:'blue' }}>
+                <span style={{ marginLeft: '2%', fontWeight: 'bolder', cursor: 'pointer', color: 'blue' }}>
                   <EyeOutlined />
                 </span>
               </Tooltip>
+            </div>
+          ))}
+        </span>
+      ),
+    },
+    {
+      title: "Descripción",
+      dataIndex: "productos",
+      render: (productos) => (
+        <span>
+          {productos.map((producto) => (
+            <div key={producto._id}>
+              {producto.descripcion}
             </div>
           ))}
         </span>
@@ -79,12 +92,10 @@ const Pedidos = () => {
   const handleDescargarFactura = (record) => {
     const fetchFactura = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/factura?id=${record.id}`,{responseType:"blob"})
-    
-          const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
-
+        const response = await axios.get(`http://localhost:3000/api/factura?id=${record.id}`, { responseType: "blob" })
+        const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
         saveAs(pdfBlob, 'newPdf.pdf');
-        
+
       } catch (error) {
         console.error('Error al obtener factura:', error.message);
       }
