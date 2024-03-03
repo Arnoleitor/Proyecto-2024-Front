@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Space, Modal, Button, Form, Input, Select, notification, Tooltip } from 'antd';
+import { Table, Space, Modal, Button, Form, Input, Select, notification, Tooltip, Upload, message } from 'antd';
 import CargarArchivo from '../../components/Customs/CargarArchivo';
-import { EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined, UploadOutlined } from '@ant-design/icons';
 import FechaFormateada from '../../components/Customs/FechaFormateada';
 
 const { Option } = Select;
@@ -17,6 +17,7 @@ const AdminPanel = () => {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [tiposDevia, setTiposDevia] = useState([]);
   const [tiposProductos, setTiposProductos] = useState([]);
+  const [imagen, setImagen] = useState(null);
 
   const openNotification = (type, message) => {
     notification[type]({
@@ -396,6 +397,27 @@ const AdminPanel = () => {
         onCancel={handleModalCancel}
       >
         <Form form={form} layout="vertical" name="producto-form">
+          <Form.Item label="Imagen" name="imagen">
+            <Upload
+              beforeUpload={(file) => {
+                const isImage = file.type.startsWith('image/');
+                if (!isImage) {
+                  message.error('Solo se permiten archivos de imagen');
+                }
+                return isImage;
+              }}
+              onChange={(info) => {
+                if (info.file.status === 'done') {
+                  setImagen(info.file.originFileObj);
+                  message.success(`${info.file.name} cargado correctamente`);
+                } else if (info.file.status === 'error') {
+                  message.error(`${info.file.name} carga fallida.`);
+                }
+              }}
+            >
+              <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
+            </Upload>
+          </Form.Item>
           <Form.Item
             label="Nombre"
             name="nombre"
@@ -410,7 +432,7 @@ const AdminPanel = () => {
           >
             <Select>
               {tiposProductos.map((tipo) => (
-                <Option key={tipo.id} value={tipo.tipo}>
+                <Option key={tipo.id} value={tipo.id}>
                   {tipo.tipo}
                 </Option>
               ))}
