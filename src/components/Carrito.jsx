@@ -19,22 +19,22 @@ const Carrito = () => {
   const dispatch = useDispatch();
   const articulo = useSelector((state) => state.cart.items);
   const userData = useSelector((state) => state.user);
-
+  
   const incrementarCantidad = (itemId) => {
     dispatch(incrementItemQuantity(itemId));
   };
-
+  
   const decrementarCantidad = (itemId) => {
     dispatch(decrementItemQuantity(itemId));
   };
-
+  
   const borrarArticulo = (itemId) => {
     dispatch(removeItem(itemId));
     showSuccessMessage('Producto eliminado del carrito');
   };
-
+  
   const precioTotal = articulo.reduce((total, item) => total + parseFloat(item.precio) * item.quantity, 0);
-
+  
   const showModal = () => {
     setModalVisible(true);
   };
@@ -47,11 +47,14 @@ const Carrito = () => {
         ...rest,
         cantidad: rest.quantity,  
       }));
-  
+
+      const direccion = `${userData.direccion}  ${userData.tipoVia}`
+      
       const response = await axios.post('http://localhost:3000/api/pedidos', {
         id: userData.id,
         productos: productosConCantidad,
         totalImporte: Number(precioTotal.toFixed(2)),
+        direccion,
       });
   
       if (response.status === 200) {

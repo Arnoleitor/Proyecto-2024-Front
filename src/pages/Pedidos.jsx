@@ -48,6 +48,11 @@ const Pedidos = () => {
       ),
     },
     {
+      title: "Dirección",
+      dataIndex: "direccion",
+      key: "direccion",
+    },
+    {
       title: "Fecha",
       dataIndex: "fecha",
       key: "fecha",

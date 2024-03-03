@@ -159,6 +159,11 @@ const AdminPanel = () => {
       render: (fecha) => <FechaFormateada timestamp={fecha} />
     },
     {
+      title: "Dirección",
+      dataIndex: "direccion",
+      key: "direccion",
+    },
+    {
       title: "Importe",
       dataIndex: "totalImporte",
       key: "totalImporte",
@@ -293,7 +298,8 @@ const AdminPanel = () => {
       .validateFields()
       .then(async (values) => {
         try {
-          await axios.post('http://localhost:3000/api/productos', values);
+          values.imagen = imagen || "";
+          await axios.post('http://localhost:3000/api/anadirProducto', values);
           setModalVisible(false);
           form.resetFields();
           setProductos([...productos, values]);
@@ -409,11 +415,12 @@ const AdminPanel = () => {
               onChange={(info) => {
                 if (info.file.status === 'done') {
                   setImagen(info.file.originFileObj);
-                  message.success(`${info.file.name} cargado correctamente`);
+                  message.success(`${info.file.name} loaded successfully`);
                 } else if (info.file.status === 'error') {
-                  message.error(`${info.file.name} carga fallida.`);
+                  message.error(`${info.file.name} upload failed.`);
                 }
               }}
+              
             >
               <Button style={{marginTop:'10%'}}icon={<UploadOutlined />}>Cargar Imagen</Button>
             </Upload>
