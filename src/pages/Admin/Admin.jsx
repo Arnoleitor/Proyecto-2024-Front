@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Table, Space, Modal, Button, Form, Input, Select, notification, Tooltip } from 'antd';
 import CargarArchivo from '../../components/Customs/CargarArchivo';
 import { EyeOutlined } from '@ant-design/icons';
+import FechaFormateada from '../../components/Customs/FechaFormateada';
 
 const { Option } = Select;
 
@@ -140,9 +141,16 @@ const AdminPanel = () => {
       ),
     },
     {
+      title: "Fecha",
+      dataIndex: "fecha",
+      key: "fecha",
+      render: (fecha) => <FechaFormateada timestamp={fecha} />
+    },
+    {
       title: "Importe",
       dataIndex: "totalImporte",
       key: "totalImporte",
+      render: (totalImporte) => <span>{totalImporte} €</span>,
     },
     {
       title: "Acciones",

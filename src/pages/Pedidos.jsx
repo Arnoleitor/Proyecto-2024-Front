@@ -3,6 +3,7 @@ import { Table, Button, Tooltip } from "antd";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { EyeOutlined } from "@ant-design/icons";
+import FechaFormateada from "../components/Customs/FechaFormateada";
 
 const Pedidos = () => {
   const userData = useSelector((state) => state.user);
@@ -47,9 +48,16 @@ const Pedidos = () => {
       ),
     },
     {
+      title: "Fecha",
+      dataIndex: "fecha",
+      key: "fecha",
+      render: (fecha) => <FechaFormateada timestamp={fecha} />
+    },
+    {
       title: "Importe",
       dataIndex: "totalImporte",
       key: "totalImporte",
+      render: (totalImporte) => <span>{totalImporte} €</span>,
     },
     {
       title: "Acciones",
