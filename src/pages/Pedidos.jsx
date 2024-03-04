@@ -56,6 +56,8 @@ const Pedidos = () => {
           {productos.map((producto) => (
             <div key={producto._id}>
               {producto.descripcion}
+              &nbsp;&nbsp;
+              <strong>{producto.precio} €</strong>
             </div>
           ))}
         </span>
@@ -76,7 +78,7 @@ const Pedidos = () => {
       title: "Importe",
       dataIndex: "totalImporte",
       key: "totalImporte",
-      render: (totalImporte) => <span>{totalImporte} €</span>,
+      render: (totalImporte) => <strong>{totalImporte} €</strong>,
     },
     {
       title: "Acciones",

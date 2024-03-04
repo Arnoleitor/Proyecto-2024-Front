@@ -18,6 +18,7 @@ const Carrito = () => {
   const [pasoActual, setPasoActual] = useState(0);
   const dispatch = useDispatch();
   const articulo = useSelector((state) => state.cart.items);
+  console.log("🚀 ~ Carrito ~ articulo:", articulo)
   const userData = useSelector((state) => state.user);
   
   const incrementarCantidad = (itemId) => {
@@ -55,7 +56,8 @@ const Carrito = () => {
         productos: productosConCantidad,
         totalImporte: Number(precioTotal.toFixed(2)),
         direccion,
-        descripcion: articulo.descripcion
+        descripcion: articulo.descripcion,
+        precio: articulo.precio
       });
   
       if (response.status === 200) {
