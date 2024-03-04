@@ -7,6 +7,7 @@ import FooterComponent from './components/Footer/FooterComponent';
 import Help from './components/Help/Help';
 import { useSelector } from 'react-redux';
 
+
 const { Header, Content, Sider } = Layout;
 const Piezas = lazy(() => import('./pages/Piezas'));
 const Motherboards = lazy(() => import('./pages/Motherboards'));
@@ -14,6 +15,9 @@ const Tgraficas = lazy(() => import('./pages/Tgraficas'));
 const Admin = lazy(() => import('./pages/Admin/Admin'));
 const Pedidos = lazy(() => import('./pages/Pedidos'));
 const Perfil = lazy(() => import('./pages/Perfil'));
+const Faq = lazy(() => import('./pages/Faq'));
+const QuienSomos = lazy(() => import('./pages/QuienSomos'));
+const Contacto = lazy(() => import('./pages/Contacto'));
 
 const App = () => {
   const {
@@ -63,6 +67,9 @@ const App = () => {
                       <Route path="/tgraficas" element={<Tgraficas />} />
                       <Route path="/perfil" element={<Perfil />} />
                       <Route path="/pedidos" element={<Pedidos />} />
+                      <Route path="/quiensomos" element={<QuienSomos />} />
+                      <Route path="/faq" element={<Faq />} />
+                      <Route path="/contactanos" element={<Contacto />} />
                       {userData && userData.role === 1 && (
                       <Route path="/admin" element={<Admin userData={userData} />} />
                       )}

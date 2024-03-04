@@ -26,16 +26,13 @@ const FooterComponent  = () => {
       </Row>
       <Row justify="center" style={{ marginTop: '20px' }}>
         <Col span={4}>
-          <a href="/quienes-somos">Quiénes somos</a>
+          <a href="/quiensomos">Quiénes somos</a>
         </Col>
         <Col span={4}>
           <a href="/faq">FAQ</a>
         </Col>
         <Col span={4}>
           <a href="/contactanos">Contáctanos</a>
-        </Col>
-        <Col span={4}>
-          <a href="/comoComprar">Como comprar</a>
         </Col>
       </Row>
       <p style={{ fontFamily: 'fantasy', marginTop:'5%' }}>&copy;{new Date().getFullYear()} <span>PC Piezas. Creado por Arnold</span></p>

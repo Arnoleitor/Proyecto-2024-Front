@@ -22,3 +22,27 @@ html{
     margin-inline-start: -1px;
     margin-inline-end: -1px;
 }
+
+.question {
+  cursor: pointer;
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.answer {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.about-us-container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
