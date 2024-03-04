@@ -18,7 +18,6 @@ const Carrito = () => {
   const [pasoActual, setPasoActual] = useState(0);
   const dispatch = useDispatch();
   const articulo = useSelector((state) => state.cart.items);
-  console.log("🚀 ~ Carrito ~ articulo:", articulo)
   const userData = useSelector((state) => state.user);
   
   const incrementarCantidad = (itemId) => {

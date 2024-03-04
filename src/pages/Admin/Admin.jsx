@@ -85,12 +85,10 @@ const AdminPanel = () => {
   const handleDescargarFactura = (record) => {
     const fetchFactura = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/factura?id=${record.id}`,{responseType:"blob"})
-    
-          const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
-
+        const response = await axios.get(`http://localhost:3000/api/factura?id=${record._id}`, { responseType: "blob" })
+        const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
         saveAs(pdfBlob, 'newPdf.pdf');
-        
+
       } catch (error) {
         console.error('Error al obtener factura:', error.message);
       }
