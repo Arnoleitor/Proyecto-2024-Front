@@ -325,7 +325,8 @@ const AdminPanel = () => {
       .validateFields()
       .then(async (values) => {
         try {
-          await axios.post('http://localhost:3000/api/anadirProducto', values);
+          const response = await axios.post('http://localhost:3000/api/agregarproducto', values);
+          setImagen(response.data.imagen);
           setModalVisible(false);
           form.resetFields();
           setProductos([...productos, values]);
@@ -337,6 +338,8 @@ const AdminPanel = () => {
         console.error('Validación fallida:', info);
       });
   };
+  
+  
 
   const handleModalCancel = () => {
     setModalVisible(false);
@@ -431,25 +434,25 @@ const AdminPanel = () => {
         <Form form={form} layout="vertical" name="producto-form">
           <Form.Item name="imagen">
             <Upload
-            listType='picture-card'
+              listType='picture-card'
               beforeUpload={(file) => {
-                const isImage = file.type.startsWith('image/');
+                const isImage = file.type === 'image/png';
                 if (!isImage) {
-                  message.error('Solo se permiten archivos de imagen');
+                  message.error('Solo se permiten archivos PNG');
                 }
                 return isImage;
               }}
               onChange={(info) => {
                 if (info.file.status === 'done') {
-                  setImagen(info.file.thumbUrl);
+                  setImagen(info.file.response.url);
                   message.success(`${info.file.name} loaded successfully`);
                 } else if (info.file.status === 'error') {
                   message.error(`${info.file.name} upload failed.`);
                 }
               }}
-              
             >
-              <Button style={{marginTop:'10%'}}icon={<UploadOutlined />}>Cargar Imagen</Button>
+
+              <Button style={{ marginTop: '10%' }} icon={<UploadOutlined />}></Button>
             </Upload>
           </Form.Item>
           <Form.Item
