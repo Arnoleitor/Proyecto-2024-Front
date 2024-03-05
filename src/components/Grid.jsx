@@ -51,15 +51,14 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
             nombreUsuario: userData.nombre,
             idUsuario: userData.id
           });
-
-          console.log('Comentario publicado:', response.data);
+          if(response.data.error){
+            message.error(response.data.error)
+            return
+          }
           setComentarioRequerido(false);
           setValoracionRequerida(false);
           setComentarios([...comentarios, response.data]);
           dispatch(agregarComentario({ productoId: _id, usuarioId: userData.id }));
-        } else {
-          console.log('Este usuario ya ha publicado un comentario para este producto.');
-          message.error("Ya has valorado este producto!")
         }
       } catch (error) {
         console.error('Error al publicar comentario:', error.message);
