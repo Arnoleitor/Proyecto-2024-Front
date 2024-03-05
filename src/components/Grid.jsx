@@ -69,6 +69,8 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
           setValoracionRequerida(false);
           setComentarios([...comentarios, response.data]);
           dispatch(agregarComentario({ productoId: _id, usuarioId: userData.id }));
+          
+          setNuevoComentario("");
         }
       } catch (error) {
         console.error('Error al publicar comentario:', error.message);
@@ -79,7 +81,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
     }
   };
   
-
+  
 
   const calcularMediaValoraciones = () => {
     const totalValoraciones = comentarios.length;
