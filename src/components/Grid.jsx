@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { addItem } from '../featues/cartSlice';
 import axios from 'axios';
 import imagenPorDefecto from '../assets/img/imagenrota.jpg';
+import { useSelector } from "react-redux";
 
 const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) => {
 
@@ -16,6 +17,8 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
   const [nuevoComentario, setNuevoComentario] = useState("");
   const [comentarioRequerido, setComentarioRequerido] = useState(false);
   const [valoracionRequerida, setValoracionRequerida] = useState(false);
+  const userData = useSelector((state) => state.user);
+
   const desc = ['Terrible', 'Malo', 'Normal', 'Bueno', 'Excelente'];
 
   const handleImagenError = () => {
@@ -34,17 +37,30 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
     setModalVisible(false);
   };
 
-  const handlePublicarComentario = () => {
+  const handlePublicarComentario = async () => {
     if (nuevoComentario && valoracion) {
-      console.log('Comentario publicado:', comentarios);
-      setComentarioRequerido(false);
-      setValoracionRequerida(false);
-      setComentarios(comentarios);
+      try {
+        const response = await axios.post('http://localhost:3000/api/comentarios', {
+          idProducto: _id,
+          comentario: nuevoComentario,
+          valoracion: valoracion,
+          nombreUsuario: userData.nombre,
+          idUsuario: userData.id
+        });
+  
+        console.log('Comentario publicado:', response.data);
+        setComentarioRequerido(false);
+        setValoracionRequerida(false);
+        setComentarios([...comentarios, response.data]);
+      } catch (error) {
+        console.error('Error al publicar comentario:', error.message);
+      }
     } else {
       setComentarioRequerido(!nuevoComentario);
       setValoracionRequerida(!valoracion);
     }
   };
+  
 
 
   const calcularMediaValoraciones = () => {
@@ -59,7 +75,6 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
       try {
         const response = await axios.get(`http://localhost:3000/api/comentariosPorId/?idProducto=${_id}`);
         setComentarios(response.data);
-        console.log("🚀 ~ fetchComentarios ~ response:", response.data)
       } catch (error) {
         console.error('Error al obtener comentarios:', error.message);
       }
