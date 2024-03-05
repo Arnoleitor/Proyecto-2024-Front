@@ -30,6 +30,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
   };
 
   const handleVerDetalles = () => {
+    fetchComentarios()
     setModalVisible(true);
   };
 
@@ -38,7 +39,16 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
   };
 
   const dispatch = useDispatch();
-  const comentariosPublicados = useSelector((state) => state.comentarios[_id] || new Set());
+  const comentariosPublicados = useSelector((state) => state.comentarios?.[_id] || new Set());
+
+  const fetchComentarios = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/comentariosPorId/?idProducto=${_id}`);
+      setComentarios(response.data);
+    } catch (error) {
+      console.error('Error al obtener comentarios:', error.message);
+    }
+  };
 
   const handlePublicarComentario = async () => {
     if (nuevoComentario && valoracion) {
@@ -77,19 +87,6 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
     return totalValoraciones > 0 ? sumaValoraciones / totalValoraciones : 0;
   };
 
-
-  useEffect(() => {
-    const fetchComentarios = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/comentariosPorId/?idProducto=${_id}`);
-        setComentarios(response.data);
-      } catch (error) {
-        console.error('Error al obtener comentarios:', error.message);
-      }
-    };
-  
-    fetchComentarios();
-  }, []);
   
   return (
     <>
