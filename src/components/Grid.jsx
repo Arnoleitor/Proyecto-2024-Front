@@ -10,15 +10,12 @@ import imagenPorDefecto from '../assets/img/imagenrota.jpg';
 const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => {
   const [imagenError, setImagenError] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [comentarios, setComentarios] = useState('');
   const [valoracion, setValoracion] = useState(0);
-  const [valoracionesUsuarios, setValoracionesUsuarios] = useState([
-    { usuario: 'Usuario1', valoracion: 4, comentario: 'Buen producto' },
-    { usuario: 'Usuario2', valoracion: 5, comentario: 'Excelente calidad' },
-  ]);
-
-  const desc = ['Terrible', 'Malo', 'Normal', 'Bueno', 'Excelente'];
+  const [comentarios, setComentarios] = useState([]);
+  const [nuevoComentario, setNuevoComentario] = useState("");
+  const [showTooltip, setShowTooltip] = useState(false);
   const [value, setValue] = useState(3);
+  const desc = ['Terrible', 'Malo', 'Normal', 'Bueno', 'Excelente'];
 
   const handleImagenError = () => {
     setImagenError(true);
@@ -38,16 +35,28 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
 
   const handlePublicarComentario = () => {
     console.log('Comentario publicado:', comentarios);
-    setComentarios('');
+    setComentarios(comentarios);
   };
 
   const calcularMediaValoraciones = () => {
-    const totalValoraciones = valoracionesUsuarios.length;
-    const sumaValoraciones = valoracionesUsuarios.reduce((suma, { valoracion }) => suma + valoracion, 0);
+    const totalValoraciones = comentarios.length;
+    const sumaValoraciones = comentarios.reduce((suma, { valoracion }) => suma + valoracion, 0);
     return totalValoraciones > 0 ? sumaValoraciones / totalValoraciones : 0;
   };
+  
 
-  const [showTooltip, setShowTooltip] = useState(false);
+  useEffect(() => {
+  const fetchComentarios = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/comentarios`);
+      setComentarios(response.data);
+    } catch (error) {
+      console.error('Error al obtener comentarios:', error.message);
+    }
+  };
+
+  fetchComentarios();
+}, []);
 
   return (
     <>
@@ -103,8 +112,8 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
         <p><span style={{fontWeight:'bold'}} >Precio:</span> {precio}€</p>
         <Input.TextArea
           placeholder="Añade tu comentario..."
-          value={comentarios}
-          onChange={(e) => setComentarios(e.target.value)}
+          value={nuevoComentario}
+          onChange={(e) => setNuevoComentario(e.target.value)}
         />
         <Rate
           tooltips={desc} onChange={setValoracion} value={valoracion}
@@ -119,11 +128,11 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
           <Divider/>
           <h3>Comentarios de otros usuarios</h3>
           <List
-            dataSource={valoracionesUsuarios}
+            dataSource={comentarios}
             renderItem={(item) => (
               <List.Item>
                 <Rate disabled allowHalf value={item.valoracion} style={{ marginRight: '8px' }} />
-                <strong>{item.usuario}:</strong> {item.comentario}
+                <strong>{item.nombreUsuario}:</strong> {item.comentario}
               </List.Item>
             )}
           />

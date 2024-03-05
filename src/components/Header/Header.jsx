@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { clearUserData } from '../../featues/userSlice ';
 import { clearCart } from '../../featues/cartSlice';
+import logo from '../../assets/img/LogoFactura-removebg-preview.png';
+
 
 const { Text } = Typography;
 // const { SubMenu } = Menu;
@@ -63,11 +65,16 @@ const HeaderComponent = () => {
 
   return (
     <>
-      <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%' }}>
+      {/* <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%' }}>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <span style={{ fontSize: '35px' }}>PC Piezas</span>
         </Link>
         <UsbOutlined style={{ marginLeft: '2%' }} />Tu tienda de componentes
+      </div> */}
+      <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%' }}>
+        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <img src={logo}  style={{width:'20%', marginTop:'1%', marginLeft:'12%'}} alt="Logo" />
+        </Link>
       </div>
       {userData ? (
         <Dropdown overlay={userMenu} placement="bottomRight" arrow>

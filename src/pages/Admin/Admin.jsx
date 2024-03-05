@@ -5,6 +5,8 @@ import CargarArchivo from '../../components/Customs/CargarArchivo';
 import { EyeOutlined, UploadOutlined } from '@ant-design/icons';
 import FechaFormateada from '../../components/Customs/FechaFormateada';
 
+const {Dragger} = Upload
+
 const { Option } = Select;
 
 const AdminPanel = () => {
@@ -315,32 +317,6 @@ const AdminPanel = () => {
     form.resetFields();
   };
 
-
-  const handleAgregarProducto = () => {
-    setModalVisible(true);
-  };
-
-  const handleModalOk = () => {
-    form
-      .validateFields()
-      .then(async (values) => {
-        try {
-          const response = await axios.post('http://localhost:3000/api/agregarproducto', values);
-          setImagen(response.data.imagen);
-          setModalVisible(false);
-          form.resetFields();
-          setProductos([...productos, values]);
-        } catch (error) {
-          console.error('Error al agregar producto:', error.message);
-        }
-      })
-      .catch((info) => {
-        console.error('Validación fallida:', info);
-      });
-  };
-  
-  
-
   const handleModalCancel = () => {
     setModalVisible(false);
     form.resetFields();
@@ -369,6 +345,38 @@ const AdminPanel = () => {
     });
   };
 
+  const handleAgregarProducto = () => {
+    setModalVisible(true);
+  };
+
+  const handleModalOk = () => {
+    form
+      .validateFields()
+      .then(async (values) => {
+        try {
+          const response = await axios.post('http://localhost:3000/api/agregarproducto', values);
+          setModalVisible(false);
+          form.resetFields();
+          setProductos([...productos, values]);
+        } catch (error) {
+          console.error('Error al agregar producto:', error.message);
+        }
+      })
+      .catch((info) => {
+        console.error('Validación fallida:', info);
+      });
+  };
+
+  const dummyRequest = ({ file, onSuccess }) => {
+    console.log("🚀 ~ dummyRequest ~ file:", file)
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
+
+  const handlerPreview = ({ file, onSuccess }) => {
+    console.log(file)
+  };
   return (
     <div>
       <h2>Usuarios</h2>
@@ -432,29 +440,39 @@ const AdminPanel = () => {
         onCancel={handleModalCancel}
       >
         <Form form={form} layout="vertical" name="producto-form">
-          <Form.Item name="imagen">
-            <Upload
-              listType='picture-card'
-              beforeUpload={(file) => {
-                const isImage = file.type === 'image/png';
-                if (!isImage) {
-                  message.error('Solo se permiten archivos PNG');
-                }
-                return isImage;
-              }}
-              onChange={(info) => {
-                if (info.file.status === 'done') {
-                  setImagen(info.file.response.url);
-                  message.success(`${info.file.name} loaded successfully`);
-                } else if (info.file.status === 'error') {
-                  message.error(`${info.file.name} upload failed.`);
-                }
-              }}
-            >
+        <Form.Item label="Imagen" name="imagen">
+  <Upload
+    customRequest={dummyRequest}
+    beforeUpload={(file) => {
+      const isImage = file.type.startsWith('image/');
+      if (!isImage) {
+        message.error('Solo se permiten archivos de imagen');
+      }
+      return isImage;
+    }}
+    onChange={(info) => {
+      const { status, name, response } = info.file;
+    
+      if (status === 'done') {
+        if (response && typeof response === 'object' && 'imageBase64' in response) {
+          const { imageBase64 } = response;
+          form.setFieldsValue({ imagen: imageBase64 });
+          message.success(`${name} cargado exitosamente`);
+        } else {
+          console.error('Estructura de respuesta no válida:', response);
+          message.error('Error al obtener la imagen base64 de la respuesta del servidor.');
+        }
+      } else if (status === 'error') {
+        message.error(`${name} carga fallida.`);
+      }
+    }}
+    
+    
+  >
+    <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
+  </Upload>
+</Form.Item>
 
-              <Button style={{ marginTop: '10%' }} icon={<UploadOutlined />}></Button>
-            </Upload>
-          </Form.Item>
           <Form.Item
             label="Nombre"
             name="nombre"
