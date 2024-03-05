@@ -23,7 +23,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
   };
 
   const handleAgregarAlCarrito = () => {
-    agregarAlCarrito({ id, descripcion, precio, imagen });
+    agregarAlCarrito({ _id, descripcion, precio, imagen });
   };
 
   const handleVerDetalles = () => {
