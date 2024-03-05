@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Tooltip, List } from 'antd';
+import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Tooltip, List, message } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
@@ -37,21 +37,30 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
     setModalVisible(false);
   };
 
+  const dispatch = useDispatch();
+  const comentariosPublicados = useSelector((state) => state.comentarios[_id] || new Set());
+
   const handlePublicarComentario = async () => {
     if (nuevoComentario && valoracion) {
       try {
-        const response = await axios.post('http://localhost:3000/api/comentarios', {
-          idProducto: _id,
-          comentario: nuevoComentario,
-          valoracion: valoracion,
-          nombreUsuario: userData.nombre,
-          idUsuario: userData.id
-        });
-  
-        console.log('Comentario publicado:', response.data);
-        setComentarioRequerido(false);
-        setValoracionRequerida(false);
-        setComentarios([...comentarios, response.data]);
+        if (!comentariosPublicados.has(userData.id)) {
+          const response = await axios.post('http://localhost:3000/api/comentarios', {
+            idProducto: _id,
+            comentario: nuevoComentario,
+            valoracion: valoracion,
+            nombreUsuario: userData.nombre,
+            idUsuario: userData.id
+          });
+
+          console.log('Comentario publicado:', response.data);
+          setComentarioRequerido(false);
+          setValoracionRequerida(false);
+          setComentarios([...comentarios, response.data]);
+          dispatch(agregarComentario({ productoId: _id, usuarioId: userData.id }));
+        } else {
+          console.log('Este usuario ya ha publicado un comentario para este producto.');
+          message.error("Ya has valorado este producto!")
+        }
       } catch (error) {
         console.error('Error al publicar comentario:', error.message);
       }
