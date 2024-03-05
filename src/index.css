@@ -46,3 +46,11 @@ html{
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
+
+:where(.css-dev-only-do-not-override-1k979oh).ant-col-6 {
+  --ant-display: block;
+  display: block;
+  display: var(--ant-display);
+  flex: 0 0 25%;
+  max-width: 100%;
+}

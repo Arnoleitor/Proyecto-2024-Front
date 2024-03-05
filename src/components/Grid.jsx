@@ -7,14 +7,15 @@ import { addItem } from '../featues/cartSlice';
 import axios from 'axios';
 import imagenPorDefecto from '../assets/img/imagenrota.jpg';
 
-const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => {
+const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) => {
+
   const [imagenError, setImagenError] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [valoracion, setValoracion] = useState(0);
   const [comentarios, setComentarios] = useState([]);
   const [nuevoComentario, setNuevoComentario] = useState("");
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [value, setValue] = useState(3);
+  const [comentarioRequerido, setComentarioRequerido] = useState(false);
+  const [valoracionRequerida, setValoracionRequerida] = useState(false);
   const desc = ['Terrible', 'Malo', 'Normal', 'Bueno', 'Excelente'];
 
   const handleImagenError = () => {
@@ -34,30 +35,39 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
   };
 
   const handlePublicarComentario = () => {
-    console.log('Comentario publicado:', comentarios);
-    setComentarios(comentarios);
+    if (nuevoComentario && valoracion) {
+      console.log('Comentario publicado:', comentarios);
+      setComentarioRequerido(false);
+      setValoracionRequerida(false);
+      setComentarios(comentarios);
+    } else {
+      setComentarioRequerido(!nuevoComentario);
+      setValoracionRequerida(!valoracion);
+    }
   };
+
 
   const calcularMediaValoraciones = () => {
     const totalValoraciones = comentarios.length;
     const sumaValoraciones = comentarios.reduce((suma, { valoracion }) => suma + valoracion, 0);
     return totalValoraciones > 0 ? sumaValoraciones / totalValoraciones : 0;
   };
-  
+
 
   useEffect(() => {
-  const fetchComentarios = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/api/comentarios`);
-      setComentarios(response.data);
-    } catch (error) {
-      console.error('Error al obtener comentarios:', error.message);
-    }
-  };
-
-  fetchComentarios();
-}, []);
-
+    const fetchComentarios = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/comentariosPorId/?idProducto=${_id}`);
+        setComentarios(response.data);
+        console.log("🚀 ~ fetchComentarios ~ response:", response.data)
+      } catch (error) {
+        console.error('Error al obtener comentarios:', error.message);
+      }
+    };
+  
+    fetchComentarios();
+  }, []);
+  
   return (
     <>
       <Card
@@ -109,33 +119,36 @@ const TipoArticulo = ({ id, imagen, descripcion, precio, agregarAlCarrito }) => 
           alt="imagen"
           style={{ width: '50%', height: 'auto', marginBottom: 'auto', marginLeft: '25%' }}
         />
-        <p><span style={{fontWeight:'bold'}} >Precio:</span> {precio}€</p>
+        <p><span style={{ fontWeight: 'bold' }} >Precio:</span> {precio}€</p>
         <Input.TextArea
           placeholder="Añade tu comentario..."
           value={nuevoComentario}
           onChange={(e) => setNuevoComentario(e.target.value)}
+          style={{ borderColor: comentarioRequerido ? 'red' : '' }}
         />
         <Rate
           tooltips={desc} onChange={setValoracion} value={valoracion}
           allowHalf
-          {...value ? <span>{desc[value - 1]}</span> : null}
-          style={{ marginTop: '10px' }}
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
+          style={{ marginTop: '10px', borderColor: valoracionRequerida ? 'red' : '' }}
         />
+        {comentarioRequerido && <p style={{ color: 'red' }}>El comentario es obligatorio.</p>}
+        {valoracionRequerida && <p style={{ color: 'red' }}>La valoración es obligatoria.</p>}
+
         <div style={{ marginTop: '20px' }} >
           <h4>Valora el producto!</h4>
-          <Divider/>
+          <Divider />
           <h3>Comentarios de otros usuarios</h3>
-          <List
-            dataSource={comentarios}
-            renderItem={(item) => (
-              <List.Item>
-                <Rate disabled allowHalf value={item.valoracion} style={{ marginRight: '8px' }} />
-                <strong>{item.nombreUsuario}:</strong> {item.comentario}
-              </List.Item>
-            )}
-          />
+          <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+            <List
+              dataSource={comentarios}
+              renderItem={(item) => (
+                <List.Item>
+                  <Rate disabled allowHalf value={item.valoracion} style={{ marginRight: '8px' }} />
+                  <strong>{item.nombreUsuario}:</strong> {item.comentario}
+                </List.Item>
+              )}
+            />
+          </div>
         </div>
         <Divider />
         <div>
