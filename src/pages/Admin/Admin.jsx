@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Space, Modal, Button, Form, Input, Select, notification, Tooltip, Upload, message } from 'antd';
 import CargarArchivo from '../../components/Customs/CargarArchivo';
 import { EyeOutlined, UploadOutlined } from '@ant-design/icons';
 import FechaFormateada from '../../components/Customs/FechaFormateada';
-
-const {Dragger} = Upload
 
 const { Option } = Select;
 
@@ -72,7 +70,7 @@ const AdminPanel = () => {
     const fetchTiposProductos = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/tiposproducto');
-        setTiposProductos(response.data);
+        setTiposProductos(response);
       } catch (error) {
         console.error('Error al obtener tipos de productos:', error.message);
       }
@@ -354,7 +352,8 @@ const AdminPanel = () => {
       .validateFields()
       .then(async (values) => {
         try {
-          const response = await axios.post('http://localhost:3000/api/agregarproducto', values);
+          const body = {...values, imagen: values?.imagen?.file?.thumbUrl}
+           await axios.post('http://localhost:3000/api/agregarproducto', body);
           setModalVisible(false);
           form.resetFields();
           setProductos([...productos, values]);
@@ -374,9 +373,6 @@ const AdminPanel = () => {
     }, 0);
   };
 
-  const handlerPreview = ({ file, onSuccess }) => {
-    console.log(file)
-  };
   return (
     <div>
       <h2>Usuarios</h2>
@@ -440,38 +436,46 @@ const AdminPanel = () => {
         onCancel={handleModalCancel}
       >
         <Form form={form} layout="vertical" name="producto-form">
-        <Form.Item label="Imagen" name="imagen">
-  <Upload
-    customRequest={dummyRequest}
-    beforeUpload={(file) => {
-      const isImage = file.type.startsWith('image/');
-      if (!isImage) {
-        message.error('Solo se permiten archivos de imagen');
-      }
-      return isImage;
-    }}
-    onChange={(info) => {
-      const { status, name, response } = info.file;
-    
-      if (status === 'done') {
-        if (response && typeof response === 'object' && 'imageBase64' in response) {
-          const { imageBase64 } = response;
-          form.setFieldsValue({ imagen: imageBase64 });
-          message.success(`${name} cargado exitosamente`);
-        } else {
-          console.error('Estructura de respuesta no válida:', response);
-          message.error('Error al obtener la imagen base64 de la respuesta del servidor.');
-        }
-      } else if (status === 'error') {
-        message.error(`${name} carga fallida.`);
-      }
-    }}
-    
-    
-  >
-    <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
-  </Upload>
-</Form.Item>
+          <Form.Item label="Imagen" name="imagen">
+            <Upload
+              maxCount={1}
+              multiple={false}
+              listType='picture-card'
+              customRequest={dummyRequest}
+              beforeUpload={(file) => {
+                const isImage = file.type.startsWith('image/');
+                if (!isImage) {
+                  message.error('Solo se permiten archivos de imagen');
+                }
+                return isImage;
+              }}
+              onChange={(info) => {
+                
+                let { status, name, response } = info.file;
+                if (status === 'done') {
+                  console.log("aaaaa", info.file);
+                  console.log("name", info.file.name);
+                  if (response === 'ok') {
+                    console.log("LO que guardo", info.file.thumbUrl );
+                    if (info.file.thumbUrl) {
+                      form.setFieldsValue({ imagen: info.file.thumbUrl  });
+                    }
+                   
+                    message.success(`${name} cargado exitosamente`);
+                  } else {
+                    console.error('Estructura de respuesta no válida:', response);
+                    message.error('Error al obtener la imagen base64 de la respuesta del servidor.');
+                  }
+                } else if (status === 'error') {
+                  message.error(`${name} carga fallida.`);
+                }
+              }}
+
+
+            >
+              <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
+            </Upload>
+          </Form.Item>
 
           <Form.Item
             label="Nombre"
