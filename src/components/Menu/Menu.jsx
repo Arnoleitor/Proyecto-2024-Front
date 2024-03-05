@@ -28,10 +28,12 @@ const items = [
             {
                 key: 6,
                 label: `Discos duros`,
+                path: '/DiscosDuros'
             },
             {
                 key: 7,
                 label: `Procesadores`,
+                path: '/Procesadores'
             }
     ]
     },
@@ -48,10 +50,12 @@ const items = [
             {
                 key: 9,
                 label: `Ratones`,
+                path: '/Ratones'
             },
             {
                 key: 10,
                 label: `Pantallas`,
+                path: '/Pantallas'
             },
     ]
     },{
@@ -62,14 +66,17 @@ const items = [
             {
                 key: 11,
                 label: `Usb`,
+                path: '/Usb'
             },
             {
                 key: 12,
                 label: `Cables`,
+                path: '/Cables'
             },
             {
                 key: 13,
                 label: `Impresoras`,
+                path: '/Impresoras'
             }
     ]
     },

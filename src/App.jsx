@@ -18,6 +18,14 @@ const Perfil = lazy(() => import('./pages/Perfil'));
 const Faq = lazy(() => import('./pages/Faq'));
 const QuienSomos = lazy(() => import('./pages/QuienSomos'));
 const Contacto = lazy(() => import('./pages/Contacto'));
+const Cables = lazy(() => import('./pages/Cables'));
+const DiscosDuros = lazy(() => import('./pages/DiscosDuros'));
+const Impresoras = lazy(() => import('./pages/Impresoras'));
+const Pantallas = lazy(() => import('./pages/Pantallas'));
+const Procesadores = lazy(() => import('./pages/Procesadores'));
+const Ratones = lazy(() => import('./pages/Ratones'));
+const Usb = lazy(() => import('./pages/Usb'));
+const Teclados = lazy(() => import('./pages/Teclados'));
 
 const App = () => {
   const {
@@ -69,7 +77,15 @@ const App = () => {
                       <Route path="/pedidos" element={<Pedidos />} />
                       <Route path="/quiensomos" element={<QuienSomos />} />
                       <Route path="/faq" element={<Faq />} />
+                      <Route path="/Cables" element={<Cables />} />
                       <Route path="/contactanos" element={<Contacto />} />
+                      <Route path="/DiscosDuros" element={<DiscosDuros />} />
+                      <Route path="/Impresoras" element={<Impresoras />} />
+                      <Route path="/Pantallas" element={<Pantallas />} />
+                      <Route path="/Procesadores" element={<Procesadores />} />
+                      <Route path="/Ratones" element={<Ratones />} />
+                      <Route path="/Usb" element={<Usb />} />
+                      <Route path="/Teclados" element={<Teclados />} />
                       {userData && userData.role === 1 && (
                       <Route path="/admin" element={<Admin userData={userData} />} />
                       )}
