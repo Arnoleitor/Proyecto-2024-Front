@@ -13,7 +13,11 @@ const Register = () => {
       notification.success({ message: 'Usuario registrado!' });
     } catch (error) {
       console.error('Error de registro:', error.message);
-      notification.error({ message: 'Error al registrar usuario' });
+      if (error.response && error.response.status === 400) {
+        notification.error({ message: error.response.data.message });
+      } else {
+        notification.error({ message: 'Error al registrar usuario' });
+      }
     } finally {
       setLoading(false);
     }

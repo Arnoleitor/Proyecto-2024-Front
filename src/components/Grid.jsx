@@ -80,8 +80,6 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
       setValoracionRequerida(!valoracion);
     }
   };
-  
-  
 
   const calcularMediaValoraciones = () => {
     const totalValoraciones = comentarios.length;
