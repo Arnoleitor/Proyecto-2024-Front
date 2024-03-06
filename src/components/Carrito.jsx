@@ -48,13 +48,14 @@ const Carrito = () => {
         cantidad: rest.quantity,  
       }));
 
-      const direccion = `${userData.direccion}  ${userData.tipoVia}`
+      const direccion = `${userData.direccion}`
       
       const response = await axios.post('http://localhost:3000/api/pedidos', {
         id: userData.id,
         productos: productosConCantidad,
         totalImporte: Number(precioTotal.toFixed(2)),
         direccion,
+        tipoVia: userData.tipoVia,
         descripcion: articulo.descripcion,
         precio: articulo.precio
       });

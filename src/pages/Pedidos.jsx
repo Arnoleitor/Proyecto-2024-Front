@@ -67,8 +67,10 @@ const Pedidos = () => {
       title: "Dirección",
       dataIndex: "direccion",
       key: "direccion",
-      render: (direccion) => userData.direccion? userData.direccion : <strong style={{'color':'red'}}>Tienes que actualizar la dirección en tu perfil</strong>,
-    },
+      render: (direccion, tipoVia) => userData.tipoVia && userData.direccion
+      ? `${userData.tipoVia} ${userData.direccion}`
+      : <strong style={{ color: 'red' }}>Tienes que actualizar la dirección en tu perfil</strong>,
+        },
     {
       title: "Fecha",
       dataIndex: "fecha",
