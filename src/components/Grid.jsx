@@ -38,7 +38,6 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
     setModalVisible(false);
   };
 
-  const dispatch = useDispatch();
   const comentariosPublicados = useSelector((state) => state.comentarios?.[_id] || new Set());
 
   const fetchComentarios = async () => {
@@ -67,9 +66,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
           }
           setComentarioRequerido(false);
           setValoracionRequerida(false);
-          setComentarios([...comentarios, response.data]);
-          dispatch(agregarComentario({ productoId: _id, usuarioId: userData.id }));
-          
+          setComentarios([...comentarios, response.data]);          
           setNuevoComentario("");
         }
       } catch (error) {
