@@ -454,10 +454,9 @@ const AdminPanel = () => {
                 
                 let { status, name, response } = info.file;
                 if (status === 'done') {
-                  console.log("aaaaa", info.file);
                   console.log("name", info.file.name);
                   if (response === 'ok') {
-                    console.log("LO que guardo", info.file.thumbUrl );
+                    console.log("Lo que guardo", info.file.thumbUrl );
                     if (info.file.thumbUrl) {
                       form.setFieldsValue({ imagen: info.file.thumbUrl  });
                     }

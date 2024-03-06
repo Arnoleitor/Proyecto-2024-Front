@@ -177,15 +177,11 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
 };
 
 const Grid = ({productos}) => {
-  console.log("🚀 ~ Grid ~ productos:", productos)
   const totalItems = productos.length;
-  console.log("🚀 ~ Grid ~ productos.length:", productos.length)
   const dispatch = useDispatch();
   const [showSkeleton, setShowSkeleton] = useState(false);
- 
-  const itemsPerPage = 4;
-
   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   const handleChangePage = (page) => {
     setCurrentPage(page);
