@@ -93,7 +93,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
           imagenError ? (
             <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (
-            <img src={imagen} style={{ width: '350px', height: '320px' }} onError={handleImagenError} />
+            <img src={imagen} style={{ width: '280px', height: '250px' }} onError={handleImagenError} />
           )
         }
       >
@@ -115,7 +115,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
           type='primary'
           ghost
           onClick={handleAgregarAlCarrito}
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: '20px' }}
         >
           Agregar al carrito
         </Button>
@@ -181,7 +181,7 @@ const Grid = ({productos}) => {
   const dispatch = useDispatch();
   const [showSkeleton, setShowSkeleton] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 8;
 
   const handleChangePage = (page) => {
     setCurrentPage(page);
