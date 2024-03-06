@@ -1,12 +1,29 @@
-import Grid from '../components/Grid'
+import React, { useEffect, useState } from 'react';
+import Grid from '../components/Grid';
+import fetchProductos from '../services/getProductosTipo';
 
 const Tgraficas = () => {
-  return (
-      <div>
-      <h1 style={{fontFamily:'fantasy'}}>Tarjetas Gráficas</h1>
-      <Grid/>
-    </div>
-  )
-}
+    const [productos, setProductos] = useState([]);
 
-export default Tgraficas
+    useEffect(() => {
+        const getProductos = async () => {
+            try {
+                const productosData = await fetchProductos(3);
+                setProductos(productosData);
+            } catch (error) {
+                console.error("Error fetching productos:", error);
+            }
+        };
+
+        getProductos();
+    }, []);
+
+    return (
+        <div>
+            <h1>Tarjetas gráficas</h1>
+            <Grid productos={productos} />
+        </div>
+    );
+};
+
+export default Tgraficas;

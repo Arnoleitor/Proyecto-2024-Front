@@ -1,12 +1,29 @@
-import Grid from "../components/Grid";
+import React, { useEffect, useState } from 'react';
+import Grid from '../components/Grid';
+import fetchProductos from '../services/getProductosTipo';
 
-const DiscosDuros = () => {
-  return (
-    <>
-      <h1 style={{ fontFamily: 'fantasy' }}>Discos duros</h1>
-      <Grid />
-    </>
-  );
+const Teclados = () => {
+    const [productos, setProductos] = useState([]);
+
+    useEffect(() => {
+        const getProductos = async () => {
+            try {
+                const productosData = await fetchProductos(5);
+                setProductos(productosData);
+            } catch (error) {
+                console.error("Error fetching productos:", error);
+            }
+        };
+
+        getProductos();
+    }, []);
+
+    return (
+        <div>
+            <h1>Discos duros</h1>
+            <Grid productos={productos} />
+        </div>
+    );
 };
 
-export default DiscosDuros;
+export default Teclados;

@@ -1,12 +1,29 @@
-import Grid from '../components/Grid'
+import React, { useEffect, useState } from 'react';
+import Grid from '../components/Grid';
+import fetchProductos from '../services/getProductosTipo';
 
 const Motherboards = () => {
-  return (
-      <div>
-      <h1 style={{fontFamily:'fantasy'}}>Placas base</h1>
-      <Grid/>
-    </div>
-  )
-}
+    const [productos, setProductos] = useState([]);
 
-export default Motherboards
+    useEffect(() => {
+        const getProductos = async () => {
+            try {
+                const productosData = await fetchProductos(2);
+                setProductos(productosData);
+            } catch (error) {
+                console.error("Error fetching productos:", error);
+            }
+        };
+
+        getProductos();
+    }, []);
+
+    return (
+        <div>
+            <h1>Placas base</h1>
+            <Grid productos={productos} />
+        </div>
+    );
+};
+
+export default Motherboards;

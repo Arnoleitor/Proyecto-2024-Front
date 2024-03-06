@@ -176,27 +176,14 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
   );
 };
 
-const Grid = () => {
-  const dispatch = useDispatch();
-  const [showSkeleton, setShowSkeleton] = useState(true);
-  const [productos, setProductos] = useState([]);
-
-  useEffect(() => {
-    const fetchProductos = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/recibirProducto');
-        setProductos(response.data);
-        setShowSkeleton(false);
-      } catch (error) {
-        console.error('Error al obtener productos:', error.message);
-      }
-    };
-
-    fetchProductos();
-  }, []);
-
-  const itemsPerPage = 4;
+const Grid = ({productos}) => {
+  console.log("🚀 ~ Grid ~ productos:", productos)
   const totalItems = productos.length;
+  console.log("🚀 ~ Grid ~ productos.length:", productos.length)
+  const dispatch = useDispatch();
+  const [showSkeleton, setShowSkeleton] = useState(false);
+ 
+  const itemsPerPage = 4;
 
   const [currentPage, setCurrentPage] = useState(1);
 
