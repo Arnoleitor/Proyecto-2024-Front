@@ -21,7 +21,7 @@ const Piezas = () => {
 
   return (
     <div>
-      <h1>Tarjetas Gráficas</h1>
+      <h1>Todos los productos</h1>
       <Grid productos={productos} />
     </div>
   );

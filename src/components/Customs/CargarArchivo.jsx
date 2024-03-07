@@ -4,7 +4,7 @@ import { Button, message, Upload } from 'antd';
 
 const props = {
   name: 'file',
-  action: 'http://localhost:3000/api/productos',
+  action: 'http://localhost:3000/api/agregarproductoExcel',
   headers: {
     authorization: 'authorization-text',
   },
@@ -16,10 +16,7 @@ const props = {
     return isExcel;
   },
   onChange(info) {
-    if (info.file.status !== 'Cargando...') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'Correcto') {
+    if (info.file.status === 'done') {
       message.success(`${info.file.name} archivo cargado correctamente`);
     } else if (info.file.status === 'error') {
       message.error(`${info.file.name} fallo al cargar el archivo.`);
@@ -28,8 +25,8 @@ const props = {
 };
 
 const CargarArchivo = () => (
-  <Upload {...props}>
-    <Button type="primary" ghost icon={<UploadOutlined />}>
+  <Upload {...props} showUploadList={false} disabled={props.fileList && props.fileList.length > 0}>
+    <Button type="primary" ghost icon={<UploadOutlined />} disabled={props.fileList && props.fileList.length > 0}>
       Insertar excel productos
     </Button>
   </Upload>

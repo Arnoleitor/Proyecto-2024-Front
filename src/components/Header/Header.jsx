@@ -65,12 +65,6 @@ const HeaderComponent = () => {
 
   return (
     <>
-      {/* <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%' }}>
-        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <span style={{ fontSize: '35px' }}>PC Piezas</span>
-        </Link>
-        <UsbOutlined style={{ marginLeft: '2%' }} />Tu tienda de componentes
-      </div> */}
       <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%' }}>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
         <img src={logo}  style={{width:'20%', marginTop:'1%', marginLeft:'12%'}} alt="Logo" />
