@@ -12,7 +12,7 @@ const { Header, Content, Sider } = Layout;
 const Piezas = lazy(() => import('./pages/productos/Piezas'));
 const Motherboards = lazy(() => import('./pages/productos/Motherboards'));
 const Tgraficas = lazy(() => import('./pages/productos/Tgraficas'));
-const Admin = lazy(() => import('./pages/admin/Admin'));
+const Admin = lazy(() => import('./pages/admin/AdminPage'));
 const Pedidos = lazy(() => import('./pages/Pedidos'));
 const Perfil = lazy(() => import('./pages/Perfil'));
 const Faq = lazy(() => import('./pages/Faq'));
