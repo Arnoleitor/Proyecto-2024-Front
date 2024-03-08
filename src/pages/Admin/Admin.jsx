@@ -15,9 +15,11 @@ const AdminPanel = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [selectedUser, setSelectedUser] = useState(null);
-  const [editModalVisible, setEditModalVisible] = useState(false);
   const [tiposDevia, setTiposDevia] = useState([]);
   const [tiposProductos, setTiposProductos] = useState([]);
+  const [editUserModalVisible, setEditUserModalVisible] = useState(false);
+  const [editProductModalVisible, setEditProductModalVisible] = useState(false);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   const openNotification = (type, message) => {
     notification[type]({
@@ -287,16 +289,16 @@ const AdminPanel = () => {
       direccion: user.direccion,
       tipoVia: user.tipoVia
     });
-    setEditModalVisible(true);
+    setEditUserModalVisible(true);
   };
 
-  const handleModalEditOk = () => {
+  const handleModalEditOkUsuario = () => {
     form
       .validateFields()
       .then(async (values) => {
         try {
           await axios.put(`http://localhost:3000/api/users/${selectedUser._id}`, values);
-          setEditModalVisible(false);
+          setEditUserModalVisible(false);
           form.resetFields();
           setUsers(users.map((user) => (user._id === selectedUser._id ? { ...user, ...values } : user)));
           openNotification('success', 'Usuario actualizado correctamente');
@@ -311,7 +313,7 @@ const AdminPanel = () => {
   };
 
   const handleModalEditCancel = () => {
-    setEditModalVisible(false);
+    setEditUserModalVisible(false);
     form.resetFields();
   };
 
@@ -320,8 +322,40 @@ const AdminPanel = () => {
     form.resetFields();
   };
 
-  const handleEditarProducto = (producto) => {
-    console.log('Editar producto:', producto);
+  const handleEditarProducto = (productoSeleccionado) => {
+    setProductoSeleccionado(productoSeleccionado);
+    form.setFieldsValue({
+      tipo: productoSeleccionado.tipo,
+      descripcion: productoSeleccionado.descripcion,
+      precio: productoSeleccionado.precio,
+      imagen: productoSeleccionado.imagen,
+    });
+    setEditProductModalVisible(true);
+  };
+
+  const handleModalEditCancelProducto = () => {
+    setEditProductModalVisible(false);
+    form.resetFields();
+  };
+
+  const handleModalEditOkProducto = () => {
+    form
+      .validateFields()
+      .then(async (values) => {
+        try {
+          await axios.put(`http://localhost:3000/api/actualizaproducto/${productoSeleccionado}`, values);
+          setEditProductModalVisible(false);
+          form.resetFields();
+          fetchProductos();
+          openNotification('success', 'Producto actualizado correctamente');
+        } catch (error) {
+          console.error('Error al actualizar producto:', error.message);
+          openNotification('error', 'Error al actualizar producto');
+        }
+      })
+      .catch((info) => {
+        console.error('Validación fallida:', info);
+      });
   };
 
   const handleEliminarProducto = async (productoId) => {
@@ -353,8 +387,8 @@ const AdminPanel = () => {
       .then(async (values) => {
         try {
           const imagen = values?.imagen.file.thumbUrl.split(',')[1]
-          const body = {...values, imagen}
-           await axios.post('http://localhost:3000/api/agregarproducto', body);
+          const body = { ...values, imagen }
+          await axios.post('http://localhost:3000/api/agregarproducto', body);
           setModalVisible(false);
           form.resetFields();
           fetchProductos()
@@ -381,8 +415,8 @@ const AdminPanel = () => {
 
       <Modal
         title="Editar Usuario"
-        open={editModalVisible}
-        onOk={handleModalEditOk}
+        open={editUserModalVisible}
+        onOk={handleModalEditOkUsuario}
         onCancel={handleModalEditCancel}
       >
         <Form form={form} layout="vertical" name="edit-user-form">
@@ -428,6 +462,82 @@ const AdminPanel = () => {
       </div>
       <Table dataSource={productos} columns={columnsProductos} />
 
+      <Modal
+        title="Editar Producto"
+        open={editProductModalVisible}
+        onOk={handleModalEditOkProducto}
+        onCancel={handleModalEditCancelProducto}
+      >
+        <Form form={form} layout="vertical" name="edit-product-form">
+          <Form.Item label="Imagen" name="imagen">
+            <Upload
+              maxCount={1}
+              multiple={false}
+              listType='picture-card'
+              customRequest={dummyRequest}
+              beforeUpload={(file) => {
+                const isImage = file.type.startsWith('image/');
+                if (!isImage) {
+                  message.error('Solo se permiten archivos de imagen');
+                }
+                return isImage;
+              }}
+              onChange={(info) => {
+
+                let { status, name, response } = info.file;
+                if (status === 'done') {
+                  console.log("name", info.file.name);
+                  if (response === 'ok') {
+                    console.log(info.file.thumbUrl);
+                    if (info.file.thumbUrl) {
+                      form.setFieldsValue({ imagen: info.file.thumbUrl });
+                    }
+
+                    message.success(`${name} cargado exitosamente`);
+                  } else {
+                    console.error('Estructura de respuesta no válida:', response);
+                    message.error('Error al obtener la imagen base64 de la respuesta del servidor.');
+                  }
+                } else if (status === 'error') {
+                  message.error(`${name} carga fallida.`);
+                }
+              }}
+
+
+            >
+              <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
+            </Upload>
+          </Form.Item>
+
+          <Form.Item
+            label="Nombre"
+            name="descripcion"
+            rules={[{ required: true, message: 'Ingresa el nombre del producto' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Tipo"
+            name="tipo"
+            rules={[{ required: true, message: 'Selecciona el tipo del producto' }]}
+          >
+            <Select>
+              {tiposProductos.map((tipo) => (
+                <Option key={tipo.id} value={tipo.id}>
+                  {tipo.tipo}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Precio"
+            name="precio"
+            rules={[{ required: true, message: 'Ingresa el precio del producto' }]}
+          >
+            <Input type="number" />
+          </Form.Item>
+        </Form>
+      </Modal>
 
       <Modal
         title="Agregar Producto"
@@ -450,16 +560,16 @@ const AdminPanel = () => {
                 return isImage;
               }}
               onChange={(info) => {
-                
+
                 let { status, name, response } = info.file;
                 if (status === 'done') {
                   console.log("name", info.file.name);
                   if (response === 'ok') {
-                    console.log(info.file.thumbUrl );
+                    console.log(info.file.thumbUrl);
                     if (info.file.thumbUrl) {
-                      form.setFieldsValue({ imagen: info.file.thumbUrl  });
+                      form.setFieldsValue({ imagen: info.file.thumbUrl });
                     }
-                   
+
                     message.success(`${name} cargado exitosamente`);
                   } else {
                     console.error('Estructura de respuesta no válida:', response);
