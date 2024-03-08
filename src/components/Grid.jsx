@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Tooltip, List, message } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
-import { addItem } from '../store/cartSlice';
+import { addItem } from '../store/cart/cartSlice';
 import axios from 'axios';
 import imagenPorDefecto from '../assets/img/imagenrota.jpg';
 import { useSelector } from "react-redux";

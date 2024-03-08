@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, List, Modal, Avatar, Tooltip, Steps, message } from 'antd';
 import {
   ShoppingCartOutlined,
@@ -7,9 +7,11 @@ import {
   LoadingOutlined,
   SmileOutlined,
 } from '@ant-design/icons';
-import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../store/cartSlice';
+import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../store/cart/cartSlice';
 import axios from 'axios';
-import { clearCart } from '../store/cartSlice';
+import { clearCart } from '../store/cart/cartSlice';
+import { useGetCart } from '../store/cart/cartSelectors';
+import { useGetUser } from '../store/user/userSelectors';
 
 const { Step } = Steps;
 
@@ -17,8 +19,8 @@ const Carrito = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pasoActual, setPasoActual] = useState(0);
   const dispatch = useDispatch();
-  const articulo = useSelector((state) => state.cart.items);
-  const userData = useSelector((state) => state.user);
+  const articulo = useGetCart();
+  const userData = useGetUser()
   
   const incrementarCantidad = (itemId) => {
     dispatch(incrementItemQuantity(itemId));

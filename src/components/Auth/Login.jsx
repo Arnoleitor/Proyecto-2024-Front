@@ -4,7 +4,7 @@ import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Register from '../Auth/Register';
 import { useDispatch } from 'react-redux';
-import { setUserData } from '../../store/userSlice ';
+import { setUserData } from '../../store/user/userSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
