@@ -3,7 +3,7 @@ import Grid from "../components/Grid";
 const Home = () => {
   return (
     <>
-      <h1 style={{ fontFamily: 'fantasy' }}>Placas base</h1>
+      <h1 style={{ fontFamily: 'fantasy' }}>Pagina principal</h1>
       <Grid />
     </>
   );

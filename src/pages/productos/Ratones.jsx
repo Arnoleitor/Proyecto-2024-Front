@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Grid from '../components/Grid';
-import fetchProductos from '../services/getProductosTipo';
+import Grid from '../../components/Grid';
+import fetchProductos from '../../services/getProductosTipo';
 
 const Ratones = () => {
     const [productos, setProductos] = useState([]);

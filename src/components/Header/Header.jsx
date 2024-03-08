@@ -5,8 +5,8 @@ import Carrito from "../Carrito";
 import Login from "../../components/Auth/Login";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { clearUserData } from '../../featues/userSlice ';
-import { clearCart } from '../../featues/cartSlice';
+import { clearUserData } from '../../store/userSlice ';
+import { clearCart } from '../../store/cartSlice';
 import logo from '../../assets/img/LogoFactura-removebg-preview.png';
 
 

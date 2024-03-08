@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Grid from '../components/Grid';
-import fetchProductos from '../services/getProductosTipo';
+import Grid from '../../components/Grid';
+import fetchProductos from '../../services/getProductosTipo';
 
-const Procesadores = () => {
+const Teclados = () => {
     const [productos, setProductos] = useState([]);
 
     useEffect(() => {
         const getProductos = async () => {
             try {
-                const productosData = await fetchProductos(1);
+                const productosData = await fetchProductos(20);
                 setProductos(productosData);
             } catch (error) {
                 console.error("Error fetching productos:", error);
@@ -20,10 +20,10 @@ const Procesadores = () => {
 
     return (
         <div>
-            <h1>Procesadores</h1>
+            <h1>Cables</h1>
             <Grid productos={productos} />
         </div>
     );
 };
 
-export default Procesadores;
+export default Teclados;

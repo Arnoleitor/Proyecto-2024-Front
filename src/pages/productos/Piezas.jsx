@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Grid from '../components/Grid';
+import Grid from '../../components/Grid';
 import axios from 'axios';
 
 const Piezas = () => {

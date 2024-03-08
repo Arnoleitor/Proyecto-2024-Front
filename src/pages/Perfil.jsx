@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Card, Select, notification } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { setUserData } from '../featues/userSlice ';
+import { setUserData } from '../store/userSlice ';
 import axios from "axios";
 
 const Perfil = () => {

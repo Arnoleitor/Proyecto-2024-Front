@@ -3,7 +3,7 @@ import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Toolti
 import { InfoCircleOutlined } from '@ant-design/icons';
 import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
-import { addItem } from '../featues/cartSlice';
+import { addItem } from '../store/cartSlice';
 import axios from 'axios';
 import imagenPorDefecto from '../assets/img/imagenrota.jpg';
 import { useSelector } from "react-redux";

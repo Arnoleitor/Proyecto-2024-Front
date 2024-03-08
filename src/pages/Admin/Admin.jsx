@@ -5,6 +5,7 @@ import CargarArchivo from '../../components/Customs/CargarArchivo';
 import { EyeOutlined, UploadOutlined } from '@ant-design/icons';
 import FechaFormateada from '../../components/Customs/FechaFormateada';
 import { saveAs } from 'file-saver';
+import { useFetch } from '../../useHooks/useFetch';
 
 const { Option } = Select;
 
@@ -27,62 +28,31 @@ const AdminPanel = () => {
     });
   };
 
+  const { data: tiposDeviaData } = useFetch("http://localhost:3000/api/tiposdevias");
   useEffect(() => {
-    const fecthTipoVia = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/tiposdevias');
-        setTiposDevia(response.data);
-      } catch (error) {
-        console.error('Error al obtener tiposDevia:', error.message);
-      }
-    };
+    if (tiposDeviaData) setTiposDevia(tiposDeviaData);
+  }, [tiposDeviaData]);
 
-    fecthTipoVia();
-  }, []);
-
-  const fetchProductos = async () => {
-    try {
-      const response = await axios.get('http://localhost:3000/api/recibirProducto');
-      setProductos(response.data);
-    } catch (error) {
-      console.error('Error al obtener productos:', error.message);
-    }
-  };
-
+  const { data: productosData } = useFetch("http://localhost:3000/api/recibirProducto");
   useEffect(() => {
+    if (productosData) setProductos(productosData);
+  }, [productosData]);
 
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/users');
-        setUsers(response.data);
-      } catch (error) {
-        console.error('Error al obtener usuarios:', error.message);
-      }
-    };
+  const { data: responseUsersData } = useFetch("http://localhost:3000/api/users");
+  useEffect(() => {
+    if (responseUsersData) setUsers(responseUsersData);
+  }, [responseUsersData]);
 
-    const fetchPedidos = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/pedidos');
-        setPedidos(response.data);
-      } catch (error) {
-        console.error('Error al obtener pedidos:', error.message);
-      }
-    };
+  const { data: responsePedidosData } = useFetch("http://localhost:3000/api/pedidos");
+  useEffect(() => {
+    if (responsePedidosData) setPedidos(responsePedidosData);
+  }, [responsePedidosData]);
 
-    const fetchTiposProductos = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/tiposproducto');
-        setTiposProductos(response.data);
-      } catch (error) {
-        console.error('Error al obtener tipos de productos:', error.message);
-      }
-    };
+  const { data: responseTiposProductoData } = useFetch("http://localhost:3000/api/tiposproducto");
+  useEffect(() => {
+    if (responseTiposProductoData) setTiposProductos(responseTiposProductoData);
+  }, [responseTiposProductoData]);
 
-    fetchUsers();
-    fetchPedidos();
-    fetchProductos();
-    fetchTiposProductos();
-  }, []);
 
   const handleDescargarFactura = (record) => {
     const fetchFactura = async () => {
@@ -407,12 +377,11 @@ const AdminPanel = () => {
     }, 0);
   };
 
+
   return (
     <div>
       <h2>Usuarios</h2>
       <Table dataSource={users} columns={columnsUsers} rowKey={(record) => record.id} />
-
-
       <Modal
         title="Editar Usuario"
         open={editUserModalVisible}

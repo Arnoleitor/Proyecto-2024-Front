@@ -9,23 +9,23 @@ import { useSelector } from 'react-redux';
 
 
 const { Header, Content, Sider } = Layout;
-const Piezas = lazy(() => import('./pages/Piezas'));
-const Motherboards = lazy(() => import('./pages/Motherboards'));
-const Tgraficas = lazy(() => import('./pages/Tgraficas'));
-const Admin = lazy(() => import('./pages/Admin/Admin'));
+const Piezas = lazy(() => import('./pages/productos/Piezas'));
+const Motherboards = lazy(() => import('./pages/productos/Motherboards'));
+const Tgraficas = lazy(() => import('./pages/productos/Tgraficas'));
+const Admin = lazy(() => import('./pages/admin/Admin'));
 const Pedidos = lazy(() => import('./pages/Pedidos'));
 const Perfil = lazy(() => import('./pages/Perfil'));
 const Faq = lazy(() => import('./pages/Faq'));
 const QuienSomos = lazy(() => import('./pages/QuienSomos'));
-const Contacto = lazy(() => import('./pages/Contacto'));
-const Cables = lazy(() => import('./pages/Cables'));
-const DiscosDuros = lazy(() => import('./pages/DiscosDuros'));
-const Impresoras = lazy(() => import('./pages/Impresoras'));
-const Pantallas = lazy(() => import('./pages/Pantallas'));
-const Procesadores = lazy(() => import('./pages/Procesadores'));
-const Ratones = lazy(() => import('./pages/Ratones'));
-const Usb = lazy(() => import('./pages/Usb'));
-const Teclados = lazy(() => import('./pages/Teclados'));
+const Contacto = lazy(() => import('./pages/productos/Contacto'));
+const Cables = lazy(() => import('./pages/productos/Cables'));
+const DiscosDuros = lazy(() => import('./pages/productos/DiscosDuros'));
+const Impresoras = lazy(() => import('./pages/productos/Impresoras'));
+const Pantallas = lazy(() => import('./pages/productos/Pantallas'));
+const Procesadores = lazy(() => import('./pages/productos/Procesadores'));
+const Ratones = lazy(() => import('./pages/productos/Ratones'));
+const Usb = lazy(() => import('./pages/productos/Usb'));
+const Teclados = lazy(() => import('./pages/productos/Teclados'));
 
 const App = () => {
   const {

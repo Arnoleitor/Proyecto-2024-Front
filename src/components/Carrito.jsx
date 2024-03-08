@@ -7,9 +7,9 @@ import {
   LoadingOutlined,
   SmileOutlined,
 } from '@ant-design/icons';
-import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../featues/cartSlice';
+import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../store/cartSlice';
 import axios from 'axios';
-import { clearCart } from '../featues/cartSlice';
+import { clearCart } from '../store/cartSlice';
 
 const { Step } = Steps;
 
