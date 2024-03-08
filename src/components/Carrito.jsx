@@ -40,8 +40,15 @@ const Carrito = () => {
   };
 
   const handleOk = async () => {
+    if (!userData) {
+      message.warning('Debes iniciar sesión o registrarte para realizar el pago.');
+      setModalVisible(false);
+      return;
+    }
+
     setPasoActual(2);
     setModalVisible(true);
+    
     try {
       const productosConCantidad = articulo.map(({ imagen, ...rest }) => ({
         ...rest,

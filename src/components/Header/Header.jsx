@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BarsOutlined, UsbOutlined } from "@ant-design/icons";
+import { BarsOutlined } from "@ant-design/icons";
 import { Modal, Button, Menu, Dropdown, Typography } from 'antd';
 import Carrito from "../Carrito";
 import Login from "../../components/Auth/Login";
@@ -11,7 +11,6 @@ import logo from '../../assets/img/LogoFactura-removebg-preview.png';
 
 
 const { Text } = Typography;
-// const { SubMenu } = Menu;
 
 const HeaderComponent = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,9 +30,10 @@ const HeaderComponent = () => {
   };
 
   const handleLogout = () => {
-    dispatch(clearUserData())
-    dispatch(clearCart())
+    dispatch(clearUserData());
+    dispatch(clearCart());
     setLogoutVisible(false);
+    navigate('/');
   };
 
   const menuItems = [

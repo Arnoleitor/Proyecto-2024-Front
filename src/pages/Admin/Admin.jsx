@@ -18,7 +18,6 @@ const AdminPanel = () => {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [tiposDevia, setTiposDevia] = useState([]);
   const [tiposProductos, setTiposProductos] = useState([]);
-  const [imagen, setImagen] = useState(null);
 
   const openNotification = (type, message) => {
     notification[type]({
