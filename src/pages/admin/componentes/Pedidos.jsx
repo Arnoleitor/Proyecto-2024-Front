@@ -117,9 +117,11 @@ const columnsPedidos = [
             <Button type="primary" ghost onClick={() => handleDescargarFactura(record)}>
               Descargar Factura
             </Button>
-            <Button style={{ marginLeft:'3%', borderColor:'orange'}}type="default" onClick={() => handlePreviewFactura(record)}>
-              Ver Factura
+            <Tooltip title="Ver Factura" placement="bottom">
+            <Button style={{ marginLeft: '3%', borderColor: 'orange' }} type="default" onClick={() => handlePreviewFactura(record)}>
+              <EyeOutlined />
             </Button>
+          </Tooltip>
 
           </div>
           </>
