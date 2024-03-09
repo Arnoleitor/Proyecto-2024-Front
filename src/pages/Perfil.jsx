@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Card, Select, notification } from "antd";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUserData } from '../store/user/userSlice';
 import { useFetch } from "../useHooks/useFetch";
+import { useGetUser } from '../store/user/userSelectors';
+
 import axios from "axios";
 
 const Perfil = () => {
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.user);
+  const userData = useGetUser()
   const [tiposDevia, setTiposDevia] = useState([]);
 
   const openNotification = (type, message) => {
