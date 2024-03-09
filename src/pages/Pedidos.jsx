@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Tooltip } from "antd";
+import { Table, Button, Tooltip, Modal } from "antd";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { EyeOutlined } from "@ant-design/icons";
@@ -10,6 +10,8 @@ import { useFetch } from "../useHooks/useFetch";
 const Pedidos = () => {
   const userData = useSelector((state) => state.user);
   const [pedidos, setPedidos] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState("");
 
   const { data: pedidosData } = useFetch(`http://localhost:3000/api/pedidosid?id=${userData.id}`);
     useEffect(() => {
@@ -79,9 +81,14 @@ const Pedidos = () => {
       title: "Acciones",
       key: "acciones",
       render: (text, record) => (
-        <Button type="primary" ghost onClick={() => handleDescargarFactura(record)}>
-          Descargar Factura
-        </Button>
+        <>
+          <Button type="primary" ghost onClick={() => handleDescargarFactura(record)}>
+            Descargar Factura
+          </Button>
+          <Button style={{ marginLeft:'3%', borderColor:'orange'}}type="default" onClick={() => handlePreviewFactura(record)}>
+            Ver Factura
+          </Button>
+        </>
       ),
     },
   ];
@@ -100,10 +107,35 @@ const Pedidos = () => {
     fetchFactura()
   };
 
+  const handlePreviewFactura = async (record) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/factura?id=${record._id}`, { responseType: "blob" });
+      const pdfUrl = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+      setPdfUrl(pdfUrl);
+      setModalVisible(true);
+    } catch (error) {
+      console.error('Error al obtener factura:', error.message);
+    }
+  };
+
+  const cerrarModal = () => {
+    setPdfUrl("");
+    setModalVisible(false);
+  };
+
+
   return (
     <>
       <h1>Pedidos de {userData.nombre}</h1>
       <Table dataSource={pedidos} columns={columns} />
+      <Modal
+        title="Previsualizar Factura"
+        open={modalVisible}
+        onCancel={cerrarModal}
+        footer={null}
+      >
+        {pdfUrl && <iframe src={pdfUrl} width="100%" height="500px" title="Factura PDF" />}
+      </Modal>
     </>
   );
 };
