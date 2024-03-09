@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import { Layout, theme } from 'antd';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import HeaderComponent from './components/Header/Header';
 import MenuComponent from './components/Menu/Menu';
 import FooterComponent from './components/Footer/FooterComponent';
 import Help from './components/Help/Help';
-import { useSelector } from 'react-redux';
+import { useGetUser } from './store/user/userSelectors';
 
 
 const { Header, Content, Sider } = Layout;
@@ -31,7 +31,7 @@ const App = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  const userData = useSelector((state) => state.user);
+  const userData = useGetUser()
 
   return (
     <>
@@ -86,8 +86,13 @@ const App = () => {
                       <Route path="/Ratones" element={<Ratones />} />
                       <Route path="/Usb" element={<Usb />} />
                       <Route path="/Teclados" element={<Teclados />} />
-                      {userData && userData.role === 1 && (
-                      <Route path="/admin" element={<Admin userData={userData} />} />
+                      {userData && userData.role === 1 ? (
+                        <Route path="/admin" element={<Admin userData={userData} />} />
+                      ) : (
+                        <Route
+                          path="/admin"
+                          element={<Navigate to="/" replace />}
+                        />
                       )}
                     </Routes>
                   </Suspense>
