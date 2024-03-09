@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { setUserData } from '../store/user/userSlice';
 import { useFetch } from "../useHooks/useFetch";
 import { useGetUser } from '../store/user/userSelectors';
-
 import axios from "axios";
 
 const Perfil = () => {

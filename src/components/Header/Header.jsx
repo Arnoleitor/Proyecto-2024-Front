@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { clearUserData } from '../../store/user/userSlice';
 import { clearCart } from '../../store/cart/cartSlice';
 import logo from '../../assets/img/LogoFactura-removebg-preview.png';
+import TicketForm from '../Tickets/Tickets';
 
 
 const { Text } = Typography;
@@ -15,6 +16,7 @@ const { Text } = Typography;
 const HeaderComponent = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [logoutVisible, setLogoutVisible] = useState(false);
+  const [ticketFormVisible, setTicketFormVisible] = useState(false);
   const userData = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,6 +37,15 @@ const HeaderComponent = () => {
     setLogoutVisible(false);
     navigate('/');
   };
+
+  const handleOpenTicketForm = () => {
+    setTicketFormVisible(true);
+  };
+
+  const handleCloseTicketForm = () => {
+    setTicketFormVisible(false);
+  };
+
 
   const menuItems = [
     {
@@ -67,7 +78,7 @@ const HeaderComponent = () => {
     <>
       <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%' }}>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <img src={logo}  style={{width:'20%', marginTop:'1%', marginLeft:'12%'}} alt="Logo" />
+          <img src={logo} style={{ width: '20%', marginTop: '1%', marginLeft: '12%' }} alt="Logo" />
         </Link>
       </div>
       {userData ? (
@@ -97,6 +108,17 @@ const HeaderComponent = () => {
           Iniciar sesión
         </Button>
       )}
+      <Button style={{ marginLeft: '1%' }} type="primary" onClick={handleOpenTicketForm}>
+        Soporte
+      </Button>
+
+      <TicketForm
+        visible={ticketFormVisible}
+        onCreate={(values) => {
+          console.log('Ticket creado:', values);
+        }}
+        onCancel={handleCloseTicketForm}
+      />
 
       <Modal
         title="Iniciar sesión"
