@@ -30,10 +30,6 @@ const Productos = () => {
         if (responseTiposProductoData) setTiposProductos(responseTiposProductoData);
     }, [responseTiposProductoData]);
 
-    const fetchProductos = async () => {
-        const { data } = await axios.get("http://localhost:3000/api/recibirProducto");
-        setProductos(data);
-    };
 
     const dummyRequest = ({ file, onSuccess }) => {
         setTimeout(() => {
@@ -61,26 +57,24 @@ const Productos = () => {
         setEditProductModalVisible(false);
         form.resetFields();
     };
-
-    const handleModalEditOkProducto = () => {
-        form
-            .validateFields()
-            .then(async (values) => {
-                try {
-                    await axios.put(`http://localhost:3000/api/actualizaproducto/${productoSeleccionado}`, values);
-                    setEditProductModalVisible(false);
-                    form.resetFields();
-                    fetchProductos();
-                    openNotification('success', 'Producto actualizado correctamente');
-                } catch (error) {
-                    console.error('Error al actualizar producto:', error.message);
-                    openNotification('error', 'Error al actualizar producto');
-                }
-            })
-            .catch((info) => {
-                console.error('Validación fallida:', info);
-            });
+    const handleModalEditOkProducto = async () => {
+        try {
+            const values = await form.validateFields();
+            await axios.put(`http://localhost:3000/api/actualizaproducto/${productoSeleccionado}`, values);
+    
+            // Después de actualizar el producto, se obtiene la lista actualizada de productos
+            const { data: nuevosProductos } = await axios.get("http://localhost:3000/api/recibirProducto");
+            setProductos(nuevosProductos);
+    
+            setEditProductModalVisible(false);
+            form.resetFields();
+            openNotification('success', 'Producto actualizado correctamente');
+        } catch (error) {
+            console.error('Error al actualizar producto:', error.message);
+            openNotification('error', 'Error al actualizar producto');
+        }
     };
+    
 
     const handleEliminarProducto = async (productoId) => {
         Modal.confirm({
@@ -105,26 +99,26 @@ const Productos = () => {
         setModalVisible(true);
     };
 
-    const handleModalOk = () => {
-        form
-            .validateFields()
-            .then(async (values) => {
-                try {
-                    const imagen = values?.imagen.file.thumbUrl.split(',')[1];
-                    const body = { ...values, imagen };
-                    await axios.post('http://localhost:3000/api/agregarproducto', body);
-                    openNotification('success', 'Producto añadido correctamente');
-                    setModalVisible(false);
-                    form.resetFields();
-                    fetchProductos();
-                } catch (error) {
-                    console.error('Error al agregar producto:', error.message);
-                }
-            })
-            .catch((info) => {
-                console.error('Validación fallida:', info);
-            });
+    const handleModalOk = async () => {
+        try {
+            const values = await form.validateFields();
+            const imagen = values?.imagen.file.thumbUrl.split(',')[1];
+            const body = { ...values, imagen };
+            
+            await axios.post('http://localhost:3000/api/agregarproducto', body);
+            
+            // Después de agregar el producto, actualiza la lista de productos
+            const { data: nuevosProductos } = await axios.get("http://localhost:3000/api/recibirProducto");
+            setProductos(nuevosProductos);
+    
+            openNotification('success', 'Producto añadido correctamente');
+            setModalVisible(false);
+            form.resetFields();
+        } catch (error) {
+            console.error('Error al agregar producto:', error.message);
+        }
     };
+    
 
     const columnsProductos = [
         {
@@ -176,6 +170,7 @@ const Productos = () => {
             ),
         },
     ];
+    
     return (
     <>
     <h2>Productos disponibles</h2>

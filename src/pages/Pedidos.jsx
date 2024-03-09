@@ -5,24 +5,16 @@ import axios from "axios";
 import { EyeOutlined } from "@ant-design/icons";
 import FechaFormateada from "../components/Customs/FechaFormateada";
 import { saveAs } from 'file-saver';
+import { useFetch } from "../useHooks/useFetch";
 
 const Pedidos = () => {
   const userData = useSelector((state) => state.user);
   const [pedidos, setPedidos] = useState([]);
 
-  useEffect(() => {
-    const fetchPedidos = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/pedidosid?id=${userData.id}`);
-        setPedidos(response.data);
-      } catch (error) {
-        console.error('Error al obtener pedidos:', error.message);
-      }
-    };
-
-    fetchPedidos();
-  }, []);
-
+  const { data: pedidosData } = useFetch(`http://localhost:3000/api/pedidosid?id=${userData.id}`);
+    useEffect(() => {
+        if (pedidosData) setPedidos(pedidosData);
+    }, [pedidosData]);
 
   const columns = [
     {

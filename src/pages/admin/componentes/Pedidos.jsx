@@ -11,7 +11,6 @@ const Pedidos = () => {
 
 const [pedidos, setPedidos] = useState([]);
 const { data: responsePedidosData } = useFetch("http://localhost:3000/api/pedidos");
-
 useEffect(() => {
     if (responsePedidosData) setPedidos(responsePedidosData);
 }, [responsePedidosData]);
