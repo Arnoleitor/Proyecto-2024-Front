@@ -1,28 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Card, Select, notification } from "antd";
+import { Form, Input, Button, Card, Select, notification, Modal } from "antd";
 import { useDispatch } from "react-redux";
 import { setUserData } from '../store/user/userSlice';
 import { useFetch } from "../useHooks/useFetch";
 import { useGetUser } from '../store/user/userSelectors';
 import axios from "axios";
+import FechaFormateada from "../components/Customs/FechaFormateada";
+import EstadoTicket from "../components/Tickets/EstadoTickets";
 
 const Perfil = () => {
   const dispatch = useDispatch();
-  const userData = useGetUser()
+  const userData = useGetUser();
   const [tiposDevia, setTiposDevia] = useState([]);
+  const [tickets, setTickets] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null);
 
   const openNotification = (type, message) => {
     notification[type]({
       message,
-      duration:1.5,
+      duration: 1.5,
     });
   };
 
   const { data: tipoViaData } = useFetch(`http://localhost:3000/api/tiposdevias`);
-    useEffect(() => {
-        if (tipoViaData) setTiposDevia(tipoViaData);
-    }, [tipoViaData]);
-  
+  useEffect(() => {
+    if (tipoViaData) setTiposDevia(tipoViaData);
+  }, [tipoViaData]);
+
+  const { data: ticketsData } = useFetch(`http://localhost:3000/api/recibirTicket`);
+  useEffect(() => {
+    if (ticketsData) setTickets(ticketsData);
+  }, [ticketsData]);
+
 
   const onFinish = async (values) => {
     if (userData && userData.id) {
@@ -42,6 +52,16 @@ const Perfil = () => {
     }
   };
 
+  const handleOpenModal = (ticket) => {
+    setSelectedTicket(ticket);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectedTicket(null);
+  };
+
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ flex: 1, marginRight: '20px' }}>
@@ -50,7 +70,7 @@ const Perfil = () => {
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 12 }}
           onFinish={onFinish}
-          initialValues={{ nombre: userData.nombre, tipoVia: userData.tipoVia , direccion: userData.direccion }}
+          initialValues={{ nombre: userData.nombre, tipoVia: userData.tipoVia, direccion: userData.direccion }}
         >
           <Form.Item
             label="Nombre"
@@ -86,14 +106,43 @@ const Perfil = () => {
           </Form.Item>
         </Form>
       </div>
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, display: 'flex', justifyContent: 'space-evenly' }}>
         <Card title="Tus datos" style={{ width: '300px' }}>
           <p>Nombre: {userData.nombre}</p>
           <p>Dirección: {userData.direccion}</p>
           <p>Tipo de vía: {userData.tipoVia}</p>
           <p>Email: {userData.email}</p>
         </Card>
+        <Card title="Tus tickets de soporte" style={{ width: '300px' }}>
+          {tickets.map((ticket) => (
+            <div key={ticket.id} style={{ marginBottom: '10px' }}>
+              <p><FechaFormateada timestamp={ticket.fecha} /></p>
+              <Button type="primary" onClick={() => handleOpenModal(ticket)}>
+                Ver Detalles
+              </Button>
+            </div>
+          ))}
+        </Card>
       </div>
+      <Modal
+        title="Detalles del Ticket"
+        open={modalVisible}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        {selectedTicket && (
+          <>
+            <p>
+              <EstadoTicket estado={selectedTicket.estado} />
+              {selectedTicket.estado}
+            </p>
+            <p>Fecha: <FechaFormateada timestamp={selectedTicket.fecha} /></p>
+            <p>Titulo: {selectedTicket.titulo}</p>
+            <p>Descripcion: {selectedTicket.descripcion}</p>
+            <p>Respuesta: {selectedTicket.respuesta? selectedTicket.respuesta : <span style={{color:'red'}}>El agente de soporte aun no ha respondido</span>}</p>
+          </>
+        )}
+      </Modal>
     </div>
   );
 };
