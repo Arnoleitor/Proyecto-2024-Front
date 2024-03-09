@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Grid from '../../components/Grid';
 import fetchProductos from '../../services/getProductosTipo';
 
-const Teclados = () => {
+const Cables = () => {
     const [productos, setProductos] = useState([]);
 
     useEffect(() => {
@@ -26,4 +26,4 @@ const Teclados = () => {
     );
 };
 
-export default Teclados;
+export default Cables;

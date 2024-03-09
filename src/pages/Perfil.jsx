@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Card, Select, notification } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from '../store/user/userSlice';
+import { useFetch } from "../useHooks/useFetch";
 import axios from "axios";
 
 const Perfil = () => {
@@ -16,18 +17,10 @@ const Perfil = () => {
     });
   };
 
-  useEffect(() => {
-    const fecthTipoVia = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/tiposdevias');
-        setTiposDevia(response.data);
-      } catch (error) {
-        console.error('Error al obtener tiposDevia:', error.message);
-      }
-    };
-
-    fecthTipoVia();
-  }, []);
+  const { data: tipoViaData } = useFetch(`http://localhost:3000/api/tiposdevias`);
+    useEffect(() => {
+        if (tipoViaData) setTiposDevia(tipoViaData);
+    }, [tipoViaData]);
   
 
   const onFinish = async (values) => {
