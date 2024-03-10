@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, message, Modal, Input, Select } from 'antd';
-import { useFetch } from '../../useHooks/useFetch';
+import { useFetch } from '../../../useHooks/useFetch';
 import axios from 'axios';
 
 const TicketsAdmin = () => {
