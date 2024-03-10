@@ -78,3 +78,16 @@ html{
 .tarjeta2 .ant-card-body::before {
   content: none;
 }
+
+.row-abierto {
+  background-color: #c2e0c6;
+}
+
+.row-cerrado {
+  background-color: #f88f88;
+}
+
+.row-en_progreso {
+  background-color: #f7a233;
+}
+

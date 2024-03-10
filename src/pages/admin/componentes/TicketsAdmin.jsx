@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Space, message, Modal, Input, Select } from 'antd';
 import { useFetch } from '../../../useHooks/useFetch';
 import axios from 'axios';
+import FechaFormateada from '../../../components/Customs/FechaFormateada';
 
 const TicketsAdmin = () => {
   const [tickets, setTickets] = useState([]);
@@ -17,6 +18,12 @@ const TicketsAdmin = () => {
   }, [ticketsData]);
 
   const columns = [
+    {
+      title: 'Fecha',
+      dataIndex: 'fecha',
+      key: 'fecha',
+      render: (fecha) => <FechaFormateada timestamp={fecha} />
+    },
     {
       title: 'Título',
       dataIndex: 'titulo',
@@ -107,9 +114,14 @@ const TicketsAdmin = () => {
     }
   };
 
+  const rowClassName = (record) => {
+    const estadoClass = record.estado.toLowerCase().replace(/\s+/g, '_');
+    return `row-${estadoClass}`;
+  };
+
   return (
     <div>
-      <Table dataSource={tickets} columns={columns} />
+      <Table dataSource={tickets} columns={columns} rowClassName={rowClassName} />
       <Modal
         title={`Responder a ${ticketSeleccionado?.titulo || ''}`}
         open={modalVisible}
