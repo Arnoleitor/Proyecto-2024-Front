@@ -108,14 +108,16 @@ const HeaderComponent = () => {
           Iniciar sesión
         </Button>
       )}
-      <Button style={{ marginLeft: '1%', backgroundColor:'orange' }} type="primary" onClick={handleOpenTicketForm}>
+      {userData && userData.role === 2 ? 
+      <Button style={{ marginLeft: '1%', backgroundColor:'#FF993A' }} type="primary" onClick={handleOpenTicketForm}>
         Soporte
       </Button>
-
+       :<></>}
       <TicketForm
         visible={ticketFormVisible}
         onCreate={(values) => {
           console.log('Ticket creado:', values);
+          setTicketFormVisible(false)
         }}
         onCancel={handleCloseTicketForm}
       />
