@@ -55,21 +55,21 @@ const Login = () => {
           placeholder="Contraseña"
         />
       </Form.Item>
-      <Form.Item>
+      {/* <Form.Item>
         <Form.Item name="remember" valuePropName="checked" noStyle>
         </Form.Item>
 
         <a className="login-form-forgot" href="/">
           Contraseña olvidada
         </a>
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
           Inicia sesión
         </Button>
         <span style={{ marginLeft: '1%' }}>O</span>
-        <Button style={{ marginLeft: '1%' }} type='primary' ghost onClick={showRegisterModal}>regístrate aquí!</Button>
+        <Button style={{ marginLeft: '1%' }} type='primary' ghost onClick={showRegisterModal}>Regístrate aquí!</Button>
       </Form.Item>
 
       <Modal
