@@ -21,7 +21,7 @@ const Login = () => {
   const onFinish = async (values) => {
     try {
       const response = await axios.post('http://localhost:3000/auth/login', values);
-      notification.success({duration:1.5,  message: 'Inicio de sesión correcto!' });
+      notification.success({duration:1,  message: 'Inicio de sesión correcto!' });
       dispatch(setUserData(response.data));
     } catch (error) {
       console.error('Login failed:', error);

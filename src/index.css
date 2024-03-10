@@ -62,3 +62,19 @@ html{
   display: flex;
   justify-content: center;
 }
+
+.tarjeta2 .ant-card-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.tarjeta2 .ant-card-body::after {
+  content: none;
+  
+}
+
+.tarjeta2 .ant-card-body::before {
+  content: none;
+}

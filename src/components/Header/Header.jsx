@@ -108,7 +108,7 @@ const HeaderComponent = () => {
           Iniciar sesión
         </Button>
       )}
-      <Button style={{ marginLeft: '1%' }} type="primary" onClick={handleOpenTicketForm}>
+      <Button style={{ marginLeft: '1%', backgroundColor:'orange' }} type="primary" onClick={handleOpenTicketForm}>
         Soporte
       </Button>
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Card, Select, notification, Modal } from "antd";
+import { Form, Input, Button, Card, Select, notification, Modal, Divider } from "antd";
 import { useDispatch } from "react-redux";
 import { setUserData } from '../store/user/userSlice';
 import { useFetch } from "../useHooks/useFetch";
@@ -15,23 +15,27 @@ const Perfil = () => {
   const [tickets, setTickets] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  
 
   const openNotification = (type, message) => {
     notification[type]({
       message,
-      duration: 1.5,
+      duration: 1,
     });
   };
-
+const idUsuario = userData.id;
   const { data: tipoViaData } = useFetch(`http://localhost:3000/api/tiposdevias`);
   useEffect(() => {
     if (tipoViaData) setTiposDevia(tipoViaData);
   }, [tipoViaData]);
 
-  const { data: ticketsData } = useFetch(`http://localhost:3000/api/recibirTicket`);
-  useEffect(() => {
-    if (ticketsData) setTickets(ticketsData);
-  }, [ticketsData]);
+  const { data: datosTicket } = useFetch('http://localhost:3000/api/recibirTicket');
+  useEffect(() => {    
+    if (datosTicket) {
+      const userTickets = datosTicket.filter(ticket => ticket.idUsuario === idUsuario);
+      setTickets(userTickets);
+    }
+  }, [datosTicket, idUsuario]);
 
 
   const onFinish = async (values) => {
@@ -107,12 +111,15 @@ const Perfil = () => {
         </Form>
       </div>
       <div style={{ flex: 1, display: 'flex', justifyContent: 'space-evenly' }}>
+        <div className="tarjeta1">
         <Card title="Tus datos" style={{ width: '300px' }}>
           <p>Nombre: {userData.nombre}</p>
           <p>Dirección: {userData.direccion}</p>
           <p>Tipo de vía: {userData.tipoVia}</p>
           <p>Email: {userData.email}</p>
         </Card>
+        </div>
+        <div className="tarjeta2">
         <Card title="Tus tickets de soporte" style={{ width: '300px' }}>
           {tickets.map((ticket) => (
             <div key={ticket.id} style={{ marginBottom: '10px' }}>
@@ -120,9 +127,11 @@ const Perfil = () => {
               <Button type="primary" onClick={() => handleOpenModal(ticket)}>
                 Ver Detalles
               </Button>
+              <Divider/>
             </div>
           ))}
         </Card>
+        </div>
       </div>
       <Modal
         title="Detalles del Ticket"
@@ -137,9 +146,12 @@ const Perfil = () => {
               {selectedTicket.estado}
             </p>
             <p>Fecha: <FechaFormateada timestamp={selectedTicket.fecha} /></p>
+            <Divider/>
             <p>Titulo: {selectedTicket.titulo}</p>
             <p>Descripcion: {selectedTicket.descripcion}</p>
-            <p>Respuesta: {selectedTicket.respuesta? selectedTicket.respuesta : <span style={{color:'red'}}>El agente de soporte aun no ha respondido</span>}</p>
+            <Divider/>
+            <strong>Respuesta soporte técnico: <FechaFormateada timestamp={selectedTicket.fecha}/> </strong>
+            <p>{selectedTicket.respuesta? selectedTicket.respuesta : <span style={{color:'red'}}>El agente de soporte aun no ha respondido</span>}</p>
           </>
         )}
       </Modal>
