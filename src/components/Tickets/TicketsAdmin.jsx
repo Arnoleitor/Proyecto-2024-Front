@@ -71,7 +71,7 @@ const TicketsAdmin = () => {
       const response = await axios.post(`http://localhost:3000/api/responderTicket/${record._id}`, { estado: nuevoEstado });
 
       if (response.status === 200) {
-        message.success('Estado del ticket actualizado exitosamente');
+        message.success('Estado del ticket actualizado');
         setTickets((prevTickets) =>
           prevTickets.map((ticket) =>
             ticket._id === record._id ? { ...ticket, estado: nuevoEstado } : ticket

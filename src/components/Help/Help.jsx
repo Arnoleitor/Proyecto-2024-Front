@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { FloatButton, Modal, Tooltip } from 'antd';
 import TicketForm from '../../components/Tickets/Tickets';
+import { useGetUser } from '../../store/user/userSelectors';
 
 const Help = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [ticketFormVisible, setTicketFormVisible] = useState(false);
+  const userData = useGetUser();
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -48,6 +50,7 @@ const Help = () => {
           <a href="mailto:pcpiezas@gmail.com">pcpiezas@gmail.com</a>
         </p>
         <p>En 24/48h tendrás una respuesta.</p>
+        {userData && userData.role === 2 && (
         <p style={{ fontWeight: 'bolder' }}>
           También puedes mandar un
           <span
@@ -58,6 +61,7 @@ const Help = () => {
             Ticket
           </span>
         </p>
+      )}
       </Modal>
       <TicketForm
         visible={ticketFormVisible}
