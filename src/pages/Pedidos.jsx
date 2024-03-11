@@ -14,9 +14,9 @@ const Pedidos = () => {
   const [pdfUrl, setPdfUrl] = useState("");
 
   const { data: pedidosData } = useFetch(`http://localhost:3000/api/pedidosid?id=${userData.id}`);
-    useEffect(() => {
-        if (pedidosData) setPedidos(pedidosData);
-    }, [pedidosData]);
+  useEffect(() => {
+    if (pedidosData) setPedidos(pedidosData);
+  }, [pedidosData]);
 
   const columns = [
     {
@@ -62,9 +62,9 @@ const Pedidos = () => {
       dataIndex: "direccion",
       key: "direccion",
       render: (direccion, tipoVia) => userData.tipoVia && userData.direccion
-      ? `${userData.tipoVia} ${userData.direccion}`
-      : <strong style={{ color: 'red' }}>Tienes que actualizar la dirección en tu perfil</strong>,
-        },
+        ? `${userData.tipoVia} ${userData.direccion}`
+        : <strong style={{ color: 'red' }}>Tienes que actualizar la dirección en tu perfil</strong>,
+    },
     {
       title: "Fecha",
       dataIndex: "fecha",
@@ -85,7 +85,7 @@ const Pedidos = () => {
           <Button type="primary" ghost onClick={() => handleDescargarFactura(record)}>
             Descargar Factura
           </Button>
-          <Button style={{ marginLeft:'3%', borderColor:'orange'}}type="default" onClick={() => handlePreviewFactura(record)}>
+          <Button style={{ marginLeft: '3%', borderColor: 'orange' }} type="default" onClick={() => handlePreviewFactura(record)}>
             Ver Factura
           </Button>
         </>
@@ -127,7 +127,11 @@ const Pedidos = () => {
   return (
     <>
       <h1>Pedidos de {userData.nombre}</h1>
-      <Table dataSource={pedidos} columns={columns} />
+      {pedidos.length === 0 ? (
+        <p>No tienes pedidos actualmente.</p>
+      ) : (
+        <Table dataSource={pedidos} columns={columns} />
+      )}
       <Modal
         title="Previsualizar Factura"
         open={modalVisible}

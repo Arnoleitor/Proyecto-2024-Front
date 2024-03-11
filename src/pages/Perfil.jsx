@@ -15,7 +15,7 @@ const Perfil = () => {
   const [tickets, setTickets] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
-  
+
 
   const openNotification = (type, message) => {
     notification[type]({
@@ -23,14 +23,14 @@ const Perfil = () => {
       duration: 1,
     });
   };
-const idUsuario = userData.id;
+  const idUsuario = userData.id;
   const { data: tipoViaData } = useFetch(`http://localhost:3000/api/tiposdevias`);
   useEffect(() => {
     if (tipoViaData) setTiposDevia(tipoViaData);
   }, [tipoViaData]);
 
   const { data: datosTicket } = useFetch('http://localhost:3000/api/recibirTicket');
-  useEffect(() => {    
+  useEffect(() => {
     if (datosTicket) {
       const userTickets = datosTicket.filter(ticket => ticket.idUsuario === idUsuario);
       setTickets(userTickets);
@@ -112,25 +112,29 @@ const idUsuario = userData.id;
       </div>
       <div style={{ flex: 1, display: 'flex', justifyContent: 'space-evenly' }}>
         <div className="tarjeta1">
-        <Card title="Tus datos" style={{ width: '300px' }}>
-          <p>Nombre: {userData.nombre}</p>
-          <p>Dirección: {userData.direccion}</p>
-          <p>Tipo de vía: {userData.tipoVia}</p>
-          <p>Email: {userData.email}</p>
-        </Card>
+          <Card title="Tus datos" style={{ width: '300px' }}>
+            <p>Nombre: {userData.nombre}</p>
+            <p>Dirección: {userData.direccion}</p>
+            <p>Tipo de vía: {userData.tipoVia}</p>
+            <p>Email: {userData.email}</p>
+          </Card>
         </div>
         <div className="tarjeta2">
-        <Card title="Tus tickets de soporte" style={{ width: '300px' }}>
-          {tickets.map((ticket) => (
-            <div key={ticket.id} style={{ marginBottom: '10px' }}>
-              <p><FechaFormateada timestamp={ticket.fecha} /></p>
-              <Button type="primary" onClick={() => handleOpenModal(ticket)}>
-                Ver Detalles
-              </Button>
-              <Divider/>
-            </div>
-          ))}
-        </Card>
+          <Card title="Tus tickets de soporte" style={{ width: '300px' }}>
+            {tickets.length === 0 ? (
+              <p>No tienes ningún ticket actualmente.</p>
+            ) : (
+              tickets.map((ticket) => (
+                <div key={ticket.id} style={{ marginBottom: '10px' }}>
+                  <p><FechaFormateada timestamp={ticket.fecha} /></p>
+                  <Button type="primary" onClick={() => handleOpenModal(ticket)}>
+                    Ver Detalles
+                  </Button>
+                  <Divider />
+                </div>
+              ))
+            )}
+          </Card>
         </div>
       </div>
       <Modal
@@ -146,12 +150,12 @@ const idUsuario = userData.id;
               {selectedTicket.estado}
             </p>
             <p>Fecha: <FechaFormateada timestamp={selectedTicket.fecha} /></p>
-            <Divider/>
+            <Divider />
             <p>Titulo: {selectedTicket.titulo}</p>
             <p>Descripcion: {selectedTicket.descripcion}</p>
-            <Divider/>
-            <strong>Respuesta soporte técnico: <FechaFormateada timestamp={selectedTicket.fecha}/> </strong>
-            <p>{selectedTicket.respuesta? selectedTicket.respuesta : <span style={{color:'red'}}>El agente de soporte aun no ha respondido</span>}</p>
+            <Divider />
+            <strong>Respuesta soporte técnico: <FechaFormateada timestamp={selectedTicket.fecha} /> </strong>
+            <p>{selectedTicket.respuesta ? selectedTicket.respuesta : <span style={{ color: 'red' }}>El agente de soporte aun no ha respondido</span>}</p>
           </>
         )}
       </Modal>
