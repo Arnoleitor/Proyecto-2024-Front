@@ -19,7 +19,7 @@ const pasos = [
       },
       {
         id: 'respuesta-nombre',
-        message: 'Hola {previousValue}, encantado de poder ayudarte.',
+        message: 'Hola {previousValue}, encantada de poder ayudarte.',
         trigger: 'pregunta-need',
       },
       {
