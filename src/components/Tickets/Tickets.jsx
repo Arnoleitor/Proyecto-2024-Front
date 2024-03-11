@@ -36,7 +36,7 @@ const TicketForm = ({ visible, onCreate, onCancel }) => {
         message.error('Error al crear el ticket:', response.status, response.statusText);
       }
     } catch (error) {
-      message.error('Error al crear el ticket, inténtalo más tarde');
+      message.error('Error al crear el ticket, debes iniciar sesión');
     }
   };
 

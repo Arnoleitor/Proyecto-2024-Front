@@ -6,6 +6,7 @@ import MenuComponent from './components/Menu/Menu';
 import FooterComponent from './components/Footer/FooterComponent';
 import Help from './components/Help/Help';
 import { useGetUser } from './store/user/userSelectors';
+import ChatBotPersonal from './components/Asistente/ChatBotPersonal';
 
 
 const { Header, Content, Sider } = Layout;
@@ -98,6 +99,7 @@ const App = () => {
                   </Suspense>
                 </div>
                 <Help />
+                <ChatBotPersonal/>
               </Content>
               <FooterComponent />
             </Layout>
