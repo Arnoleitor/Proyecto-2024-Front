@@ -36,7 +36,7 @@ const pasos = [
       },
       {
         id: 'mensaje-need-a',
-        message: 'Ok, tendras que mandar un ticket a soporte, en la parte inferior derecha encontraras un boton que dice "Necesitas ayuda?", si tienes una sesión activa puedes tambien usar el boton superior que pone "Soporte".',
+        message: 'Ok, tendras que mandar un ticket a soporte, en la parte inferior derecha encontraras un botón que dice "Necesitas ayuda?", si tienes una sesión activa puedes tambien usar el botón superior que pone "Soporte".',
         end: true,
       },
       {
