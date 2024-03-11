@@ -2,7 +2,7 @@
 const pasos = [
     {
         id: 'intro',
-        message: 'Hola soy Paco, ¿cuál es tu nombre?',
+        message: 'Hola soy Alexia, ¿cuál es tu nombre?',
         trigger: 'pregunta-nombre',
       },
       {
@@ -36,7 +36,7 @@ const pasos = [
       },
       {
         id: 'mensaje-need-a',
-        message: 'Ok, mandamos un ticket a soporte.',
+        message: 'Ok, tendras que mandar un ticket a soporte, en la parte inferior derecha encontraras un boton que dice "Necesitas ayuda?", si tienes una sesión activa puedes tambien usar el boton superior que pone "Soporte".',
         end: true,
       },
       {
@@ -85,7 +85,7 @@ const pasos = [
       },
       {
         id: 'mensaje-need-b3',
-        message: 'Ok, si tienes otras dudas, tendrás que enviar un ticket a soporte. Te redirijo...',
+        message: 'Ok, si tienes otras dudas, tendrás que enviar un ticket a soporte, en la parte inferior derecha encontraras un boton que dice "Necesitas ayuda?", si tienes una sesión activa puedes tambien usar el boton superior que pone "Soporte".',
         end: true,
       },
       
