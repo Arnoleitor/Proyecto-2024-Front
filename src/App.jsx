@@ -7,7 +7,7 @@ import FooterComponent from './components/Footer/FooterComponent';
 import Help from './components/Help/Help';
 import { useGetUser } from './store/user/userSelectors';
 import ChatBotPersonal from './components/Asistente/ChatBotPersonal';
-
+import Localizacion from './components/Localizacion/Localizacion';
 
 const { Header, Content, Sider } = Layout;
 const Piezas = lazy(() => import('./pages/productos/Piezas'));
@@ -98,6 +98,7 @@ const App = () => {
                     </Routes>
                   </Suspense>
                 </div>
+                <Localizacion/>
                 <Help />
                 <ChatBotPersonal/>
               </Content>

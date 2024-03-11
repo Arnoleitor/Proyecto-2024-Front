@@ -6,7 +6,7 @@ import Register from '../Auth/Register';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../../store/user/userSlice';
 
-const Login = () => {
+const Login = ({handleCloseModal}) => {
   const dispatch = useDispatch();
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
 
@@ -23,6 +23,7 @@ const Login = () => {
       const response = await axios.post('http://localhost:3000/auth/login', values);
       notification.success({duration:1,  message: 'Inicio de sesión correcto!' });
       dispatch(setUserData(response.data));
+      handleCloseModal()
     } catch (error) {
       console.error('Login failed:', error);
       notification.error({ message: 'Correo o contraseña invalido!' });
@@ -55,21 +56,12 @@ const Login = () => {
           placeholder="Contraseña"
         />
       </Form.Item>
-      {/* <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-        </Form.Item>
-
-        <a className="login-form-forgot" href="/">
-          Contraseña olvidada
-        </a>
-      </Form.Item> */}
-
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
           Inicia sesión
         </Button>
         <span style={{ marginLeft: '1%' }}>O</span>
-        <Button style={{ marginLeft: '1%' }} type='primary' ghost onClick={showRegisterModal}>Regístrate aquí!</Button>
+        <Button style={{ marginLeft: '1%' }} type='primary' ghost onClick={setRegisterModalVisible}>Regístrate aquí!</Button>
       </Form.Item>
 
       <Modal
@@ -78,7 +70,7 @@ const Login = () => {
         onCancel={handleCancel}
         footer={null}
       >
-        <Register />
+        <Register setRegisterModalVisible={setRegisterModalVisible}/>
       </Modal>
     </Form>
   );

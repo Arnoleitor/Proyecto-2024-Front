@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import axios from 'axios';
 
-const Register = () => {
+const Register = ({setRegisterModalVisible}) => {
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
@@ -11,6 +11,7 @@ const Register = () => {
       const response = await axios.post('http://localhost:3000/auth/register', values);
       console.log(response.data);
       notification.success({ message: 'Usuario registrado!' });
+      setRegisterModalVisible(false)
     } catch (error) {
       console.error('Error de registro:', error.message);
       if (error.response && error.response.status === 400) {

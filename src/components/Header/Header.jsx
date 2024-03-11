@@ -128,7 +128,7 @@ const HeaderComponent = () => {
         onCancel={handleCloseModal}
         footer={null}
       >
-        <Login />
+        <Login handleCloseModal={handleCloseModal} />
       </Modal>
 
       <Modal
