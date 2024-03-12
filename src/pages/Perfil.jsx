@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Card, Select, notification, Modal, Divider } from "antd";
+import { Form, Input, Button, Card, Select, notification, Modal, Divider, message } from "antd";
 import { useDispatch } from "react-redux";
 import { setUserData } from '../store/user/userSlice';
 import { useFetch } from "../useHooks/useFetch";
 import { useGetUser } from '../store/user/userSelectors';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FechaFormateada from "../components/Customs/FechaFormateada";
 import EstadoTicket from "../components/Tickets/EstadoTickets";
@@ -11,11 +12,21 @@ import EstadoTicket from "../components/Tickets/EstadoTickets";
 const Perfil = () => {
   const dispatch = useDispatch();
   const userData = useGetUser();
+  const navigate = useNavigate(); 
   const [tiposDevia, setTiposDevia] = useState([]);
   const [tickets, setTickets] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
 
+  useEffect(() => {
+    if (!userData) {
+      navigate('/');
+    }
+  }, [userData, navigate]);
+
+  if (!userData) {
+    return message.error("Debes iniciar sesión para entrar en tu perfil");
+  }
 
   const openNotification = (type, message) => {
     notification[type]({
@@ -25,6 +36,7 @@ const Perfil = () => {
   };
   
   const idUsuario = userData.id;
+
   const { data: tipoViaData } = useFetch(`http://localhost:3000/api/tiposdevias`);
   useEffect(() => {
     if (tipoViaData) setTiposDevia(tipoViaData);
@@ -155,7 +167,7 @@ const Perfil = () => {
             <p>Titulo: {selectedTicket.titulo}</p>
             <p>Descripcion: {selectedTicket.descripcion}</p>
             <Divider />
-            <strong>Respuesta soporte técnico: <FechaFormateada timestamp={selectedTicket.fecha} /> </strong>
+            <strong>Respuesta soporte técnico: <FechaFormateada timestamp={selectedTicket.fecha} /></strong>
             <p>{selectedTicket.respuesta ? selectedTicket.respuesta : <span style={{ color: 'red' }}>El agente de soporte aun no ha respondido</span>}</p>
           </>
         )}

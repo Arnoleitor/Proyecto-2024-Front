@@ -87,14 +87,7 @@ const App = () => {
                       <Route path="/Ratones" element={<Ratones />} />
                       <Route path="/Usb" element={<Usb />} />
                       <Route path="/Teclados" element={<Teclados />} />
-                      {userData && userData.role === 1 ? (
-                        <Route path="/admin" element={<Admin userData={userData} />} />
-                      ) : (
-                        <Route
-                          path="/admin"
-                          element={<Navigate to="/" replace />}
-                        />
-                      )}
+                      <Route path="/admin" element={<Admin userData={userData} />} />
                     </Routes>
                   </Suspense>
                 </div>
