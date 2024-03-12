@@ -180,7 +180,7 @@ const Productos = () => {
             Agregar Producto
         </Button>
         <div style={{ marginRight: '2%' }}></div>
-        <CargarArchivo />
+        <CargarArchivo setProductos={setProductos}/>
     </div>
     <Table dataSource={productos} columns={columnsProductos} />
 
