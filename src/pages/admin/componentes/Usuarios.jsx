@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useFetch } from "../../../useHooks/useFetch";
 import axios from "axios";
-import { Input, Modal, Select, Table, Form, Space, Button, notification } from "antd";
+import { Input, Modal, Select, Table, Form, Space, Button, notification, Divider } from "antd";
 const { Option } = Select;
 
 const Usuarios = () => {
@@ -127,6 +127,7 @@ const Usuarios = () => {
   return (
     <>
       <h2>Usuarios registrados</h2>
+      <Divider/>
       <Table dataSource={users} columns={columnsUsers} rowKey={(record) => record.id} />
       <Modal
         title="Editar Usuario"

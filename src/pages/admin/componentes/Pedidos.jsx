@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Button, Tooltip, Modal } from 'antd';
+import { Table, Button, Tooltip, Modal, Divider } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 import FechaFormateada from '../../../components/Customs/FechaFormateada';
 import { saveAs } from 'file-saver';
@@ -131,7 +131,8 @@ const columnsPedidos = [
 
 return (
     <>
-        <h2>Pedidos Realizados</h2>
+        <h2>Pedidos realizados</h2>
+        <Divider/>
         <Table dataSource={pedidos} columns={columnsPedidos} />
         <Modal
         title="Previsualizar Factura"

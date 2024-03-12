@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Space, message, Modal, Input, Select } from 'antd';
+import { Table, Button, Space, message, Modal, Input, Select, Divider } from 'antd';
 import { useFetch } from '../../../useHooks/useFetch';
 import axios from 'axios';
 import FechaFormateada from '../../../components/Customs/FechaFormateada';
@@ -125,6 +125,8 @@ const TicketsAdmin = () => {
 
   return (
     <div>
+      <h2>Tickets soporte técnico</h2>
+      <Divider/>
       <Table dataSource={tickets} columns={columns} rowClassName={rowClassName} />
       <Modal
         title={`Responder a ${ticketSeleccionado?.titulo || ''}`}

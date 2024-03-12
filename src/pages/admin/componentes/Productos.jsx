@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Space, Modal, Button, Form, Input, Select, notification, Upload, message } from 'antd';
+import { Table, Space, Modal, Button, Form, Input, Select, notification, Upload, message, Divider } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useFetch } from '../../../useHooks/useFetch';
 import CargarArchivo from '../../../components/Customs/CargarArchivo';
@@ -70,7 +70,7 @@ const Productos = () => {
             form.resetFields();
             openNotification('success', 'Producto actualizado correctamente');
         } catch (error) {
-            console.error('Error al actualizar producto:', error.message);
+            message.error('Error al actualizar producto');
             openNotification('error', 'Error al actualizar producto');
         }
     };
@@ -89,7 +89,7 @@ const Productos = () => {
                     setProductos(productos.filter((producto) => producto._id !== productoId));
                     openNotification('success', 'Producto eliminado correctamente');
                 } catch (error) {
-                    console.error('Error al eliminar producto:', error.message);
+                    message.error('Error al eliminar producto');
                 }
             },
         });
@@ -115,7 +115,7 @@ const Productos = () => {
             setModalVisible(false);
             form.resetFields();
         } catch (error) {
-            console.error('Error al agregar producto:', error.message);
+            message.error('Error al agregar producto');
         }
     };
     
@@ -174,6 +174,7 @@ const Productos = () => {
     return (
     <>
     <h2>Productos disponibles</h2>
+    <Divider/>
     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2%' }}>
         <Button type="primary" onClick={handleAgregarProducto}>
             Agregar Producto
