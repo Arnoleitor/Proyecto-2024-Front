@@ -38,7 +38,19 @@ const TicketsAdmin = () => {
       title: 'Respuesta',
       dataIndex: 'respuesta',
       key: 'respuesta',
+      render: (respuesta) => (
+        respuesta ? respuesta : <span style={{ color: 'red' }}>Sin responder</span>
+      ),
     },
+    {
+      title: 'Fecha respuesta',
+      dataIndex: 'fechaRespuesta',
+      key: 'fechaRespuesta',
+      render: (fechaRespuesta) => (
+        fechaRespuesta ? <FechaFormateada timestamp={fechaRespuesta} /> : <span style={{ color: 'red' }}>Sin responder</span>
+      ),
+    },
+    
     {
       title: 'Estado',
       dataIndex: 'estado',
@@ -126,7 +138,7 @@ const TicketsAdmin = () => {
   return (
     <div>
       <h2>Tickets soporte técnico</h2>
-      <Divider/>
+      <Divider />
       <Table dataSource={tickets} columns={columns} rowClassName={rowClassName} />
       <Modal
         title={`Responder a ${ticketSeleccionado?.titulo || ''}`}
@@ -134,6 +146,10 @@ const TicketsAdmin = () => {
         onCancel={handleCerrarModal}
         onOk={handleResponder}
       >
+        <p>Fecha de creación: <FechaFormateada timestamp={ticketSeleccionado?.fecha} /></p>
+        {ticketSeleccionado?.fechaRespuesta && (
+          <p>Fecha ultima respuesta: <FechaFormateada timestamp={ticketSeleccionado?.fechaRespuesta} /></p>
+        )}
         <Input.TextArea
           rows={4}
           placeholder="Escribe tu respuesta aquí"

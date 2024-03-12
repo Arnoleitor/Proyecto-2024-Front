@@ -12,7 +12,7 @@ import EstadoTicket from "../components/Tickets/EstadoTickets";
 const Perfil = () => {
   const dispatch = useDispatch();
   const userData = useGetUser();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [tiposDevia, setTiposDevia] = useState([]);
   const [tickets, setTickets] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,7 +34,7 @@ const Perfil = () => {
       duration: 1,
     });
   };
-  
+
   const idUsuario = userData.id;
 
   const { data: tipoViaData } = useFetch(`http://localhost:3000/api/tiposdevias`);
@@ -138,7 +138,7 @@ const Perfil = () => {
               <p>No tienes ningún ticket actualmente.</p>
             ) : (
               tickets.map((ticket) => (
-                <div key={ticket.id} style={{ marginBottom: '10px', display:'flex', alignItems:'center', flexDirection:'column' }}>
+                <div key={ticket.id} style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                   <p><FechaFormateada timestamp={ticket.fecha} /></p>
                   <Button type="primary" onClick={() => handleOpenModal(ticket)}>
                     Ver Detalles
@@ -167,7 +167,14 @@ const Perfil = () => {
             <p>Titulo: {selectedTicket.titulo}</p>
             <p>Descripcion: {selectedTicket.descripcion}</p>
             <Divider />
-            <strong>Respuesta soporte técnico: <FechaFormateada timestamp={selectedTicket.fecha} /></strong>
+            <strong>
+              Respuesta soporte técnico:
+              {selectedTicket.fechaRespuesta ? (
+                <FechaFormateada timestamp={selectedTicket.fechaRespuesta} />
+              ) : (
+                <span style={{ color: 'red' }}> Sin fecha de respuesta</span>
+              )}
+            </strong>
             <p>{selectedTicket.respuesta ? selectedTicket.respuesta : <span style={{ color: 'red' }}>El agente de soporte aun no ha respondido</span>}</p>
           </>
         )}

@@ -105,3 +105,8 @@ html{
 :where(.css-dev-only-do-not-override-1k979oh).ant-layout {
   font-family: "basica";
 }
+
+:where(.css-dev-only-do-not-override-1k979oh).ant-space {
+  display: flex;
+  justify-content: space-evenly;
+}
