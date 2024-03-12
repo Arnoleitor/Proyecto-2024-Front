@@ -88,7 +88,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
   return (
     <>
       <Card
-        style={{ borderRadius: '20px', textAlign: 'center', height: '100%' }}
+        style={{ borderRadius: '20px', textAlign: 'center', height: '100%', fontFamily:'basica' }}
         cover={
           imagenError ? (
             <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

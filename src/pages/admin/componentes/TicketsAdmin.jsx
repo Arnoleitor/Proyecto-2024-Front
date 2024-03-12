@@ -9,7 +9,7 @@ const TicketsAdmin = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [respuesta, setRespuesta] = useState('');
   const [ticketSeleccionado, setTicketSeleccionado] = useState(null);
-    
+
   const { data: ticketsData } = useFetch('http://localhost:3000/api/recibirTicket');
   useEffect(() => {
     if (ticketsData) {
@@ -35,22 +35,22 @@ const TicketsAdmin = () => {
       key: 'descripcion',
     },
     {
-    title: 'Respuesta',
-    dataIndex: 'respuesta',
-    key: 'respuesta',
+      title: 'Respuesta',
+      dataIndex: 'respuesta',
+      key: 'respuesta',
     },
     {
-        title: 'Estado',
-        dataIndex: 'estado',
-        key: 'estado',
-        render: (text, record) => (
-          <Select defaultValue={text} onChange={(value) => handleCambiarEstado(record, value)}>
-            <Select.Option value="Abierto">Abierto</Select.Option>
-            <Select.Option value="Cerrado">Cerrado</Select.Option>
-            <Select.Option value="En progreso">En progreso</Select.Option>
-          </Select>
-        ),
-      },
+      title: 'Estado',
+      dataIndex: 'estado',
+      key: 'estado',
+      render: (text, record) => (
+        <Select defaultValue={text} onChange={(value) => handleCambiarEstado(record, value)}>
+          <Select.Option value="Abierto">Abierto</Select.Option>
+          <Select.Option value="Cerrado">Cerrado</Select.Option>
+          <Select.Option value="En progreso">En progreso</Select.Option>
+        </Select>
+      ),
+    },
     {
       title: 'Acciones',
       key: 'acciones',
@@ -58,13 +58,17 @@ const TicketsAdmin = () => {
         <Space size="middle">
           <Button type="primary" onClick={() => handleAbrirModal(record)}>Responder</Button>
         </Space>
-      ),
-    },
+      )
+    }
   ];
 
   const handleAbrirModal = (ticket) => {
-    setTicketSeleccionado(ticket);
-    setModalVisible(true);
+    if (ticket.estado === 'Cerrado') {
+      message.error('Para responder a este ticket, cambia su estado a "Abierto" o "En progreso"');
+    } else {
+      setTicketSeleccionado(ticket);
+      setModalVisible(true);
+    }
   };
 
   const handleCerrarModal = () => {
@@ -99,9 +103,9 @@ const TicketsAdmin = () => {
         respuesta,
         estado: ticketSeleccionado.estado,
       };
-  
+
       const response = await axios.post(`http://localhost:3000/api/responderTicket/${ticketSeleccionado._id}`, body);
-  
+
       if (response.status === 200) {
         message.success('Ticket respondido exitosamente');
         handleCerrarModal();
@@ -124,7 +128,7 @@ const TicketsAdmin = () => {
       <Table dataSource={tickets} columns={columns} rowClassName={rowClassName} />
       <Modal
         title={`Responder a ${ticketSeleccionado?.titulo || ''}`}
-        open={modalVisible}
+        open={modalVisible && ticketSeleccionado && ticketSeleccionado.estado !== 'Cerrado'}
         onCancel={handleCerrarModal}
         onOk={handleResponder}
       >
@@ -135,6 +139,7 @@ const TicketsAdmin = () => {
           onChange={(e) => setRespuesta(e.target.value)}
         />
       </Modal>
+
     </div>
   );
 };
