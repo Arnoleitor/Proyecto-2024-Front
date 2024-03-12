@@ -126,7 +126,7 @@ const Perfil = () => {
               <p>No tienes ningún ticket actualmente.</p>
             ) : (
               tickets.map((ticket) => (
-                <div key={ticket.id} style={{ marginBottom: '10px' }}>
+                <div key={ticket.id} style={{ marginBottom: '10px', display:'flex', alignItems:'center', flexDirection:'column' }}>
                   <p><FechaFormateada timestamp={ticket.fecha} /></p>
                   <Button type="primary" onClick={() => handleOpenModal(ticket)}>
                     Ver Detalles
