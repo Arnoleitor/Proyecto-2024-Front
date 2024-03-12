@@ -23,6 +23,7 @@ const Perfil = () => {
       duration: 1,
     });
   };
+  
   const idUsuario = userData.id;
   const { data: tipoViaData } = useFetch(`http://localhost:3000/api/tiposdevias`);
   useEffect(() => {
@@ -45,7 +46,7 @@ const Perfil = () => {
           ...values,
           username: values.nombre,
         });
-        dispatch(setUserData(response.data));
+        dispatch(setUserData(values));
         openNotification('success', 'Usuario actualizado correctamente');
       } catch (error) {
         console.error('Error al actualizar usuario:', error.message);
