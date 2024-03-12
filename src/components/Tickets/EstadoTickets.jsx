@@ -6,7 +6,7 @@ const EstadoTicket = ({ estado }) => {
         color = 'green';
         break;
       case 'En progreso':
-        color = 'yellow';
+        color = 'orange';
         break;
       case 'Cerrado':
         color = 'red';
