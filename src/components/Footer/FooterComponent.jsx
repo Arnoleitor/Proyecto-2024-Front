@@ -26,16 +26,16 @@ const FooterComponent  = () => {
       </Row>
       <Row justify="center" style={{ marginTop: '20px' }}>
         <Col span={4}>
-          <a href="/quiensomos">Quiénes somos</a>
+          <a style={{fontFamily:'basica'}} href="/quiensomos">Quiénes somos</a>
         </Col>
         <Col span={4}>
-          <a href="/faq">FAQ</a>
+          <a style={{fontFamily:'basica'}} href="/faq">FAQ</a>
         </Col>
         <Col span={4}>
-          <a href="/contactanos">Contáctanos</a>
+          <a style={{fontFamily:'basica'}} href="/contactanos">Contáctanos</a>
         </Col>
       </Row>
-      <p style={{ fontFamily: 'fantasy', marginTop:'5%' }}>&copy;{new Date().getFullYear()} <span>PC Piezas. Creado por Arnold</span></p>
+      <p style={{ fontFamily: 'fantasy', marginTop:'5%' }}>&copy;{new Date().getFullYear()} <span style={{fontFamily:'basica'}}>PC Piezas. Creado por Arnold</span></p>
     </Footer>
   );
 };

@@ -38,11 +38,11 @@ const Localizacion = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: '1%', fontFamily: 'inherit', letterSpacing: '2px' }}>
+    <div style={{ marginTop: '1%', letterSpacing: '2px' }}>
       {location ? (
         <div>
-          <p>Tu ubicación actual: <strong>{location} - {state} - {postCode}</strong></p>
-          <p>Ubicación obtenida por: <strong>{licence}</strong></p>
+          <p style={{fontFamily:'monospace'}}>Tu ubicación actual: <strong>{location} - {state} - {postCode}</strong></p>
+          <p style={{fontFamily:'monospace'}}>Ubicación obtenida por: <strong>{licence}</strong></p>
         </div>
       ) : (
         <p>Obteniendo ubicación...</p>

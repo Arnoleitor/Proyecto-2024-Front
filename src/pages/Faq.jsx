@@ -40,7 +40,7 @@ const Faq = () => {
             <h3>{item.question}</h3>
             <span>{openQuestion === index ? '▲' : '▼'}</span>
           </div>
-          {openQuestion === index && <p className="answer">{item.answer}</p>}
+          {openQuestion === index && <p style={{fontFamily:'monospace'}} className="answer">{item.answer}</p>}
         </div>
       ))}
     </div>
