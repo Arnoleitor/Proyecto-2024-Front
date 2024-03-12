@@ -115,11 +115,14 @@ const TicketsAdmin = () => {
         respuesta,
         estado: ticketSeleccionado.estado,
       };
-
+  
       const response = await axios.post(`http://localhost:3000/api/responderTicket/${ticketSeleccionado._id}`, body);
-
+  
       if (response.status === 200) {
-        message.success('Ticket respondido exitosamente');
+        const updatedTicketsData = await axios.get('http://localhost:3000/api/recibirTicket');
+        setTickets(updatedTicketsData.data);
+  
+        message.success('Ticket respondido correctamente');
         handleCerrarModal();
       } else {
         message.error(`Error al responder al ticket: ${response.status} - ${response.statusText}`);
