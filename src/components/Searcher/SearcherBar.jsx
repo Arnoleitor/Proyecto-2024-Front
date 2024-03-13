@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from 'antd';
 
 const SearchBar = ({ onSearch }) => {
-  const handleSearch = (value) => {
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleSearch = () => {
+    onSearch(searchValue);
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSearchValue(value);
     onSearch(value);
   };
 
@@ -12,6 +20,8 @@ const SearchBar = ({ onSearch }) => {
         placeholder="Buscar productos"
         enterButton="Buscar"
         size="large"
+        value={searchValue}
+        onChange={handleChange}
         onSearch={handleSearch}
       />
     </div>

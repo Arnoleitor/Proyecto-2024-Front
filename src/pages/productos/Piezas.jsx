@@ -5,6 +5,7 @@ import SearchBar from '../../components/Searcher/SearcherBar';
 
 const Piezas = () => {
   const [productos, setProductos] = useState([]);
+  const [descripcionFilter, setDescripcionFilter] = useState('');
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -20,13 +21,21 @@ const Piezas = () => {
     fetchProductos();
   }, []);
 
+  const filteredProductos = productos.filter((producto) =>
+    producto.descripcion.toLowerCase().includes(descripcionFilter.toLowerCase())
+  );
+
+  const handleSearch = (descripcion) => {
+    setDescripcionFilter(descripcion);
+  };
+
   return (
     <div>
       <h1>Todos los productos</h1>
       <div>
-      <SearchBar/>
+        <SearchBar onSearch={handleSearch} />
       </div>
-      <Grid productos={productos} />
+      <Grid productos={filteredProductos} />
     </div>
   );
 };
