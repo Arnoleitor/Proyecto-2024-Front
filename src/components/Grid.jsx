@@ -110,7 +110,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
             onClick={handleVerDetalles}
           />
         </Tooltip>
-        <Card.Meta title={descripcion} description={`Precio: ${precio}€`} />
+        <Card.Meta title={descripcion} description={`Precio: ${precio.toFixed(2)}€`} />
         <Button
           type='primary'
           ghost
@@ -136,7 +136,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
           alt="imagen"
           style={{ width: '50%', height: 'auto', marginBottom: 'auto', marginLeft: '25%' }}
         />
-        <p><span style={{ fontWeight: 'bold' }} >Precio:</span> {precio}€</p>
+        <p><span style={{ fontWeight: 'bold' }} >Precio:</span> {precio.toFixed(2)}€</p>
         <Input.TextArea
           placeholder="Añade tu comentario..."
           value={nuevoComentario}

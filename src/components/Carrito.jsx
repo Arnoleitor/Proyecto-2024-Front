@@ -35,7 +35,7 @@ const Carrito = () => {
     showSuccessMessage('Producto eliminado del carrito');
   };
   
-  const precioTotal = articulo.reduce((total, item) => total + parseFloat(item.precio) * item.quantity, 0);
+  const precioTotal = articulo.reduce((total, item) => total + parseFloat(item.precio.toFixed(2)) * item.quantity, 0);
   
   const showModal = () => {
     setModalVisible(true);
@@ -130,7 +130,7 @@ const Carrito = () => {
               <List.Item.Meta
                 avatar={<Avatar src={item.imagen} />}
                 title={item.descripcion}
-                description={`Precio: ${item.precio} € x ${item.quantity} = ${item.precio * item.quantity} €`}
+                description={`Precio: ${item.precio.toFixed(2)} € x ${item.quantity} = ${item.precio.toFixed(2) * item.quantity} €`}
               />
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Button
