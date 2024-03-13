@@ -27,7 +27,6 @@ const DiscountPopup = ({ onClose }) => {
   const fetchDiscountCode = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/codigosDescuento');
-      console.log("🚀 ~ fetchDiscountCode ~ response:", response);
       setDiscountCode(response.data[0].codigo);
     } catch (error) {
       console.error('Error al obtener el código de descuento:', error);
@@ -58,7 +57,7 @@ const DiscountPopup = ({ onClose }) => {
         message="¡Tenemos descuentos!"
         description={
           <>
-            Obtén un 10% de descuento con este código:{' '}
+            Obtén un 10% de descuento con este código en tu primera compra!:{' '}
             <span
               ref={codeRef}
               onClick={handleCodeClick}

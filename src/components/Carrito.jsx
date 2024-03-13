@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, List, Modal, Avatar, Tooltip, Steps, message } from 'antd';
+import { Button, List, Modal, Avatar, Tooltip, message, Empty } from 'antd';
 import {
   ShoppingCartOutlined,
   UserOutlined,
@@ -13,11 +13,9 @@ import { clearCart } from '../store/cart/cartSlice';
 import { useGetCart } from '../store/cart/cartSelectors';
 import { useGetUser } from '../store/user/userSelectors';
 
-const { Step } = Steps;
 
 const Carrito = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [pasoActual, setPasoActual] = useState(0);
   const dispatch = useDispatch();
   const articulo = useGetCart();
   const userData = useGetUser()
@@ -47,9 +45,6 @@ const Carrito = () => {
       setModalVisible(false);
       return;
     }
-
-    setPasoActual(2);
-    setModalVisible(true);
     
     try {
       const productosConCantidad = articulo.map(({ imagen, ...rest }) => ({
@@ -105,23 +100,14 @@ const Carrito = () => {
         open={modalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={[
-          <Button key="submit" type="primary" onClick={handleOk}>
+        footer={articulo.length === 0 ? (
+          <Empty description="Tu cesta está vacía" />
+        ) : (
+          <Button key="submit" type="primary" onClick={handleOk} disabled={articulo.length === 0}>
             Pagar
-          </Button>,
-          <Button key="back" onClick={handleCancel}>
-            Cerrar
-          </Button>,
-        ]}
-      >
-        {pasoActual >= 2 && (
-          <Steps current={pasoActual - 2} style={{ marginBottom: '20px' }}>
-            <Step title="Login" icon={<UserOutlined />} />
-            <Step title="Pago" icon={<LoadingOutlined />} />
-            <Step title="Completado" icon={<SmileOutlined />} />
-          </Steps>
+          </Button>
         )}
-
+      >
         <List
           bordered
           dataSource={articulo}
