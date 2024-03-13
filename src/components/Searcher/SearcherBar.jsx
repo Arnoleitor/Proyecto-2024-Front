@@ -4,10 +4,6 @@ import { Input } from 'antd';
 const SearchBar = ({ onSearch }) => {
   const [searchValue, setSearchValue] = useState('');
 
-  const handleSearch = () => {
-    onSearch(searchValue);
-  };
-
   const handleChange = (e) => {
     const value = e.target.value;
     setSearchValue(value);
@@ -15,14 +11,13 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div style={{ marginBottom: 16 }}>
-      <Input.Search
+    <div style={{ marginBottom: 16, width: '25%' }}>
+      <Input
+      style={{borderColor:'#87a7d3'}}
         placeholder="Buscar productos"
-        enterButton="Buscar"
         size="large"
         value={searchValue}
         onChange={handleChange}
-        onSearch={handleSearch}
       />
     </div>
   );
