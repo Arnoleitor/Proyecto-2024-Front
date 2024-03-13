@@ -61,7 +61,7 @@ const Login = ({handleCloseModal}) => {
           Inicia sesión
         </Button>
         <span style={{ marginLeft: '1%' }}>O</span>
-        <Button style={{ marginLeft: '1%' }} type='primary' ghost onClick={setRegisterModalVisible}>Regístrate aquí!</Button>
+        <Button style={{ marginLeft: '1%' }} type='primary' ghost onClick={showRegisterModal}>Regístrate aquí!</Button>
       </Form.Item>
 
       <Modal

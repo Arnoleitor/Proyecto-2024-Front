@@ -50,18 +50,24 @@ const TicketsAdmin = () => {
         fechaRespuesta ? <FechaFormateada timestamp={fechaRespuesta} /> : <span style={{ color: 'red' }}>Sin responder</span>
       ),
     },
-    
     {
       title: 'Estado',
       dataIndex: 'estado',
       key: 'estado',
-      render: (text, record) => (
-        <Select defaultValue={text} onChange={(value) => handleCambiarEstado(record, value)}>
-          <Select.Option value="Abierto">Abierto</Select.Option>
-          <Select.Option value="Cerrado">Cerrado</Select.Option>
-          <Select.Option value="En progreso">En progreso</Select.Option>
-        </Select>
-      ),
+      render: (text, record) => {
+        const disableClosedOption = !record.respuesta && text === 'Cerrado';
+  
+        return (
+          <Select 
+            value={text} 
+            onChange={(value) => handleCambiarEstado(record, value)}
+          >
+            <Select.Option value="Abierto">Abierto</Select.Option>
+            <Select.Option value="Cerrado" disabled={disableClosedOption}>Cerrado</Select.Option>
+            <Select.Option value="En progreso">En progreso</Select.Option>
+          </Select>
+        );
+      },
     },
     {
       title: 'Acciones',
@@ -91,8 +97,14 @@ const TicketsAdmin = () => {
 
   const handleCambiarEstado = async (record, nuevoEstado) => {
     try {
+      // Verifica si hay una respuesta antes de cambiar el estado a "Cerrado"
+      if (nuevoEstado === 'Cerrado' && !record.respuesta) {
+        message.error('No puedes cerrar el ticket sin una respuesta');
+        return;
+      }
+  
       const response = await axios.post(`http://localhost:3000/api/responderTicket/${record._id}`, { estado: nuevoEstado });
-
+  
       if (response.status === 200) {
         message.success('Estado del ticket actualizado');
         setTickets((prevTickets) =>
