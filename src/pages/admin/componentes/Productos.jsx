@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Space, Modal, Button, Form, Input, Select, notification, Upload, message, Divider } from 'antd';
+import { Table, Space, Modal, Button, Form, Input, Select, notification, Upload, message, Divider, InputNumber } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useFetch } from '../../../useHooks/useFetch';
 import CargarArchivo from '../../../components/Customs/CargarArchivo';
@@ -13,6 +13,8 @@ const Productos = () => {
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [form] = Form.useForm();
     const [tiposProductos, setTiposProductos] = useState([]);
+    const [descuentoModalVisible, setDescuentoModalVisible] = useState(false);
+    const [descuento, setDescuento] = useState(0);
 
     const openNotification = (type, message) => {
         notification[type]({
@@ -118,6 +120,28 @@ const Productos = () => {
             message.error('Error al agregar producto');
         }
     };
+
+    const handleAgregarDescuento = async () => {
+        try {
+            const { data } = await axios.post(`http://localhost:3000/api/productosconDescuento/${productoSeleccionado._id}`, { descuento });
+            console.log('Descuento agregado:', data);
+            setDescuentoModalVisible(false);
+
+            const { data: nuevosProductos } = await axios.get("http://localhost:3000/api/recibirProducto");
+            setProductos(nuevosProductos);
+
+            openNotification('success', 'Descuento agregado correctamente');
+        } catch (error) {
+            console.error('Error al agregar descuento:', error);
+            setDescuentoModalVisible(false);
+            openNotification('error', 'Error al agregar descuento');
+        }
+    };
+    
+
+    const handleDescuentoModalCancel = () => {
+        setDescuentoModalVisible(false);
+    };
     
 
     const columnsProductos = [
@@ -141,7 +165,7 @@ const Productos = () => {
             dataIndex: 'precio',
             render: (precio) => (
                 <span>
-                    {precio} €
+                    {precio.toFixed(2)} €
                 </span>
             ),
         },
@@ -166,6 +190,7 @@ const Productos = () => {
                     <Button onClick={() => handleEliminarProducto(record._id)} type="default" danger>
                         Eliminar
                     </Button>
+                    <Button onClick={() => { setProductoSeleccionado(record); setDescuentoModalVisible(true)}} type="dashed" style={{color:'green'}}>Descuento</Button>
                 </Space>
             ),
         },
@@ -334,6 +359,27 @@ const Productos = () => {
                 rules={[{ required: true, message: 'Ingresa el precio del producto' }]}
             >
                 <Input type="number" />
+            </Form.Item>
+        </Form>
+    </Modal>
+    <Modal
+        title="Agregar Descuento"
+        open={descuentoModalVisible}
+        onOk={handleAgregarDescuento}
+        onCancel={() => setDescuentoModalVisible(false)}
+        >
+        <Form layout="vertical">
+            <Form.Item
+                label="Descuento (%)"
+                name="descuento"
+                rules={[{ required: true, message: 'Ingresa el descuento' }]}
+                >
+                <InputNumber
+                    min={0}
+                    max={100}
+                    formatter={value => `${value}`}
+                    onChange={(value) => setDescuento(value)}
+                />
             </Form.Item>
         </Form>
     </Modal>

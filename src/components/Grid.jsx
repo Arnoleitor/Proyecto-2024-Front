@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Tooltip, List, message } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Tooltip, List, message, Tag } from 'antd';
+import { EuroCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../store/cart/cartSlice';
@@ -8,7 +8,7 @@ import axios from 'axios';
 import imagenPorDefecto from '../assets/img/imagenrota.jpg';
 import { useSelector } from "react-redux";
 
-const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) => {
+const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, descuento }) => {
 
   const [imagenError, setImagenError] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -110,6 +110,12 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito }) =>
             onClick={handleVerDetalles}
           />
         </Tooltip>
+        {descuento > 0 && (
+          <Tag color="red" style={{ position: 'absolute', top: 10, left: 10, zIndex: 1 }}>
+            <EuroCircleOutlined style={{ marginRight: '4px' }} />
+            Oferta -{descuento}%!
+          </Tag>
+        )}
         <Card.Meta title={descripcion} description={`Precio: ${precio.toFixed(2)}€`} />
         <Button
           type='primary'
