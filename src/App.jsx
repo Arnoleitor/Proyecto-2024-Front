@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { Layout, theme } from 'antd';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import HeaderComponent from './components/Header/Header';
@@ -8,6 +8,7 @@ import Help from './components/Help/Help';
 import { useGetUser } from './store/user/userSelectors';
 import ChatBotPersonal from './components/Asistente/ChatBotPersonal';
 import Localizacion from './components/Localizacion/Localizacion';
+import DiscountPopup from './components/PopUp/DiscountPopup';
 
 const { Header, Content, Sider } = Layout;
 const Piezas = lazy(() => import('./pages/productos/Piezas'));
@@ -34,6 +35,24 @@ const App = () => {
   } = theme.useToken();
   const userData = useGetUser()
 
+  const [showDiscountPopup, setShowDiscountPopup] = useState(true);
+
+  const handleDiscountPopupClose = () => {
+    setShowDiscountPopup(false);
+    // Guarda en localStorage para que no vuelva a aparecer
+    localStorage.setItem('hasSeenDiscountPopup', 'true');
+  };
+
+  useEffect(() => {
+    // Verifica si el usuario ya ha visto el popup
+    const hasSeenDiscountPopup = localStorage.getItem('hasSeenDiscountPopup');
+
+    // Si no lo ha visto, muestra el popup y actualiza el estado
+    if (!hasSeenDiscountPopup) {
+      setShowDiscountPopup(true);
+    }
+  }, []);
+  
   return (
     <>
       <Layout>
@@ -91,6 +110,7 @@ const App = () => {
                     </Routes>
                   </Suspense>
                 </div>
+                 {showDiscountPopup && <DiscountPopup onClose={handleDiscountPopupClose} />}
                 <Localizacion/>
                 <Help />
                 <ChatBotPersonal/>

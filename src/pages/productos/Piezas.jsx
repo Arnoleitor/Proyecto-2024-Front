@@ -36,8 +36,6 @@ const Piezas = () => {
 
   return (
     <div>
-      <h1>Todos los productos</h1>
-      <Divider/>
       <div>
         <SearchBar onSearch={handleSearch} />
       </div>

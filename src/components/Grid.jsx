@@ -18,6 +18,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
   const [comentarioRequerido, setComentarioRequerido] = useState(false);
   const [valoracionRequerida, setValoracionRequerida] = useState(false);
   const userData = useSelector((state) => state.user);
+  const precioConDescuento = descuento > 0 ? (precio * (100 - descuento) / 100).toFixed(2) : null;
 
   const desc = ['Terrible', 'Malo', 'Normal', 'Bueno', 'Excelente'];
 
@@ -116,7 +117,20 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
             Oferta -{descuento}%!
           </Tag>
         )}
-        <Card.Meta title={descripcion} description={`Precio: ${precio.toFixed(2)}€`} />
+        <Card.Meta title={descripcion} description={
+          <div>
+            {descuento > 0 ? (
+              <>
+                <span style={{ textDecoration: 'line-through', color: 'red', marginRight: '5px' }}>
+                  {precio.toFixed(2)}€
+                </span>
+                <span style={{ color: 'green' }}>{precioConDescuento}€</span>
+              </>
+            ) : (
+              `Precio: ${precio.toFixed(2)}€`
+            )}
+          </div>
+        } />
         <Button
           type='primary'
           ghost
@@ -142,7 +156,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
           alt="imagen"
           style={{ width: '50%', height: 'auto', marginBottom: 'auto', marginLeft: '25%' }}
         />
-        <p><span style={{ fontWeight: 'bold' }} >Precio:</span> {precio.toFixed(2)}€</p>
+        <p><span style={{ fontWeight: 'bold' }} >Precio:</span> {precioConDescuento ? `${precioConDescuento} €` : `${precio.toFixed(2)}€`}</p>
         <Input.TextArea
           placeholder="Añade tu comentario..."
           value={nuevoComentario}
