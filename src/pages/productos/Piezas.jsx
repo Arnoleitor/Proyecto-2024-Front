@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '../../components/Grid';
 import axios from 'axios';
+import SearchBar from '../../components/Searcher/SearcherBar';
 
 const Piezas = () => {
   const [productos, setProductos] = useState([]);
@@ -22,6 +23,9 @@ const Piezas = () => {
   return (
     <div>
       <h1>Todos los productos</h1>
+      <div>
+      <SearchBar/>
+      </div>
       <Grid productos={productos} />
     </div>
   );

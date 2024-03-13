@@ -110,3 +110,32 @@ html{
   display: flex;
   justify-content: space-evenly;
 }
+
+:where(.css-dev-only-do-not-override-1k979oh).ant-input-group-wrapper {
+  width: 25%;
+}
+
+:where(.css-dev-only-do-not-override-1k979oh).ant-btn-primary {
+  color: #fff;
+  background: #87a7d3;
+  border-radius: 3px
+}
+
+:where(.css-dev-only-do-not-override-1k979oh).ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button {
+  border-start-end-radius: 1px;
+  border-end-end-radius: 1px;
+}
+
+:where(.css-dev-only-do-not-override-1k979oh).ant-input-lg{
+  border-radius: 1px
+}
+
+.ant-btn-primary.ant-btn-background-ghost {
+  transition: 0.2s;
+}
+
+.ant-btn-primary.ant-btn-background-ghost:hover {
+  color: #4d79af; 
+  border-color: #4d79af;
+  transform: scale(1.1);
+}
