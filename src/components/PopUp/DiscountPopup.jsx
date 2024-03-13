@@ -1,8 +1,27 @@
 // DiscountPopup.js
-import React from 'react';
-import { Alert, Button } from 'antd';
+import React, { useRef } from 'react';
+import { Alert, Button, message } from 'antd';
 
 const DiscountPopup = ({ onClose }) => {
+  const codeRef = useRef(null);
+
+  const copyDiscountCode = () => {
+    const discountCode = 'Acv35Ad3'; // El código de descuento
+    navigator.clipboard.writeText(discountCode)
+      .then(() => {
+        message.success('Código copiado al portapapeles');
+      })
+      .catch((err) => {
+        console.error('Error al copiar el código al portapapeles:', err);
+        message.error('Error al copiar el código al portapapeles');
+      });
+  };
+
+  const handleCodeClick = (e) => {
+    e.stopPropagation(); // Detener la propagación del evento
+    copyDiscountCode();
+  };
+
   return (
     <div
       style={{
@@ -14,24 +33,34 @@ const DiscountPopup = ({ onClose }) => {
         background: '#fff',
         borderRadius: 8,
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+        cursor: 'pointer',
       }}
+      onClick={() => codeRef.current.click()}
     >
       <Alert
         message="¡Tenemos descuentos!"
-        description="Obtén un 10% de descuento con este código: Acv35Ad3"
+        description={
+          <>
+            Obtén un 10% de descuento con este código:{' '}
+            <span
+              ref={codeRef}
+              onClick={handleCodeClick}
+              style={{
+                background: '#f2f4f5',
+                padding: '2px 4px',
+                borderRadius: 2,
+                cursor: 'pointer',
+              }}
+            >
+              Acv35Ad3
+            </span>
+          </>
+        }
         type="info"
         showIcon
         closable
         onClose={onClose}
       />
-
-      <Button
-        type="text"
-        size="small"
-        onClick={onClose}
-        style={{ position: 'absolute', top: 5, right: 5 }}
-      >
-      </Button>
     </div>
   );
 };
