@@ -1,12 +1,13 @@
 // DiscountPopup.js
-import React, { useRef } from 'react';
-import { Alert, Button, message } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, message } from 'antd';
+import axios from 'axios';
 
 const DiscountPopup = ({ onClose }) => {
   const codeRef = useRef(null);
+  const [discountCode, setDiscountCode] = useState('');
 
   const copyDiscountCode = () => {
-    const discountCode = 'Acv35Ad3'; // El código de descuento
     navigator.clipboard.writeText(discountCode)
       .then(() => {
         message.success('Código copiado al portapapeles');
@@ -18,9 +19,25 @@ const DiscountPopup = ({ onClose }) => {
   };
 
   const handleCodeClick = (e) => {
-    e.stopPropagation(); // Detener la propagación del evento
+    e.stopPropagation();
     copyDiscountCode();
   };
+
+  // Llamada a la API para obtener el código de descuento
+  const fetchDiscountCode = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/codigosDescuento');
+      console.log("🚀 ~ fetchDiscountCode ~ response:", response);
+      setDiscountCode(response.data[0].codigo);
+    } catch (error) {
+      console.error('Error al obtener el código de descuento:', error);
+      message.error('Error al obtener el código de descuento');
+    }
+  };
+
+  useEffect(() => {
+    fetchDiscountCode();
+  }, []);
 
   return (
     <div
@@ -52,7 +69,7 @@ const DiscountPopup = ({ onClose }) => {
                 cursor: 'pointer',
               }}
             >
-              Acv35Ad3
+              {discountCode}
             </span>
           </>
         }
