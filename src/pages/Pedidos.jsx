@@ -85,9 +85,15 @@ const Pedidos = () => {
           <Button type="primary" ghost onClick={() => handleDescargarFactura(record)}>
             Descargar Factura
           </Button>
-          <Button style={{ marginLeft: '3%', borderColor: 'orange' }} type="default" onClick={() => handlePreviewFactura(record)}>
-            Ver Factura
-          </Button>
+          <Tooltip title="Ver Factura" placement="top">
+            <Button
+              style={{ marginLeft: '5%', color: 'orangered' }}
+              type="default"
+              shape="circle"
+              icon={<EyeOutlined />}
+              onClick={() => handlePreviewFactura(record)}
+            />
+          </Tooltip>
         </>
       ),
     },
