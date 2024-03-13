@@ -23,7 +23,7 @@ const CarrouselOfertas = ({ productos }) => (
     {productos.map((producto) => (
       <div key={producto._id}>
         <h1 style={{ fontFamily: 'negrita', color: 'orange' }}>Productos en PCPiezas!</h1>
-        <span style={{ marginLeft: '1%', fontFamily: 'negrita' }}>{producto.descripcion}<span style={{marginLeft:'5px', color:'green'}}> Por tan solo</span>
+        <span style={{ marginLeft: '1%', fontFamily: 'negrita' }}><span style={{fontSize:'20px'}}>{producto.descripcion}</span><span style={{marginLeft:'5px', color:'green'}}> Por tan solo</span>
           <span style={{color:'green', marginLeft:'5px', fontSize:'20px'}}>
             {producto.tieneDescuento ? (
               <>
