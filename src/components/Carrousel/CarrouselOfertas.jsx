@@ -19,7 +19,7 @@ const ImageStyle = {
 };
 
 const CarrouselOfertas = ({ productos }) => (
-  <Carousel autoplay>
+  <Carousel autoplay fade={true} dots={false}>
     {productos.map((producto) => (
       <div key={producto._id}>
         <h1 style={{ fontFamily: 'negrita', color: 'orange' }}>Productos en PCPiezas!</h1>
