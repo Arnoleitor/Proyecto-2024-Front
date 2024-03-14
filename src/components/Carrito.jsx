@@ -114,13 +114,16 @@ const Carrito = () => {
       return;
     }
 
+    // Aplicar el descuento antes de enviar el pedido
+    await aplicarDescuento();
+
     try {
       const productosConCantidad = articulo.map(({ imagen, ...rest }) => ({
         ...rest,
         cantidad: rest.quantity,
       }));
 
-      const direccion = `${userData.direccion}`
+      const direccion = `${userData.direccion}`;
 
       const response = await axios.post('http://localhost:3000/api/pedidos', {
         id: userData.id,
@@ -129,7 +132,8 @@ const Carrito = () => {
         direccion,
         tipoVia: userData.tipoVia,
         descripcion: articulo.descripcion,
-        precio: articulo.precio
+        precio: articulo.precio,
+        descuento: descuento // Añade el descuento al objeto del pedido
       });
 
       if (response.status === 200) {
@@ -145,9 +149,9 @@ const Carrito = () => {
       // Restablece el precio total con descuento después de realizar el pedido
       setPrecioTotalConDescuento(null);
       setModalVisible(false);
-      setCodigoDescuento('')
+      setCodigoDescuento('');
     }
-  };
+};
 
 
   return (
