@@ -73,46 +73,47 @@ const HeaderComponent = () => {
       ))}
     </Menu>
   );
-
   return (
-    <>
-      <div style={{ fontSize: '25px', fontFamily: 'fantasy', width: '100%' }}>
+    <div className='header'>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <img src={logo} style={{ width: '20%', marginTop: '1%', marginLeft: '12%' }} alt="Logo" />
+          <img src={logo} alt="Logo" className='logo'/>
         </Link>
-      </div>
-      {userData ? (
-        <Dropdown overlay={userMenu} placement="bottomRight" arrow>
-          <Text strong style={{ cursor: 'pointer' }}>
-            {`Bienvenido, ${userData.nombre} `}
-            <BarsOutlined />
-          </Text>
-        </Dropdown>
-      ) : null}
-
-      <Carrito />
-
-      {userData ? (
-        <>
-          <Button style={{ marginLeft: '1%' }} type="primary" onClick={() => setLogoutVisible(true)}>
-            Cerrar sesión
-          </Button>
-          {userData.role === 1 && (
-            <Button type="default" danger style={{ marginLeft: '1%' }} onClick={() => navigate('/admin')}>
-              Panel Admin
+      <div className='botonesHeader'>
+        <div className='menuPerfil'>
+        {userData ? (
+          <Dropdown overlay={userMenu} placement="bottomRight" arrow>
+            <Text strong style={{ cursor: 'pointer' }}>
+              {`Bienvenido, ${userData.nombre} `}
+              <BarsOutlined />
+            </Text>
+          </Dropdown>
+        ) : null}
+  
+        <Carrito />
+        </div>
+  
+        {userData ? (
+          <>
+            <Button type="primary" onClick={() => setLogoutVisible(true)}>
+              Cerrar sesión
             </Button>
-          )}
-        </>
-      ) : (
-        <Button style={{ marginLeft: '1%' }} type="primary" onClick={handleOpenModal}>
-          Iniciar sesión
-        </Button>
-      )}
-      {userData && userData.role === 2 ? 
-      <Button style={{ marginLeft: '1%', backgroundColor:'#FF993A' }} type="primary" onClick={handleOpenTicketForm}>
-        Soporte
-      </Button>
-       :<></>}
+            {userData.role === 1 && (
+              <Button type="default" danger onClick={() => navigate('/admin')}>
+                Panel Admin
+              </Button>
+            )}
+          </>
+        ) : (
+          <Button type="primary" onClick={handleOpenModal}>
+            Iniciar sesión
+          </Button>
+        )}
+        {userData && userData.role === 2 ? 
+          <Button style={{ backgroundColor:'#FF993A' }} type="primary" onClick={handleOpenTicketForm}>
+            Soporte
+          </Button>
+          : <></>}
+      </div>
       <TicketForm
         visible={ticketFormVisible}
         onCreate={(values) => {
@@ -121,7 +122,7 @@ const HeaderComponent = () => {
         }}
         onCancel={handleCloseTicketForm}
       />
-
+  
       <Modal
         title="Iniciar sesión"
         open={modalVisible}
@@ -130,7 +131,7 @@ const HeaderComponent = () => {
       >
         <Login handleCloseModal={handleCloseModal} />
       </Modal>
-
+  
       <Modal
         title="Cerrar sesión"
         open={logoutVisible}
@@ -143,8 +144,10 @@ const HeaderComponent = () => {
       >
         ¿Estás seguro de que deseas cerrar sesión?
       </Modal>
-    </>
+    </div>
   );
+  
+  
 };
 
 export default HeaderComponent;

@@ -14,6 +14,7 @@ const Carrito = () => {
   const [precioTotalConDescuento, setPrecioTotalConDescuento] = useState(null);
   const [codigoDescuento, setCodigoDescuento] = useState('');
   const [descuento, setDescuento] = useState(null);
+  const [codigo, setCodigo] = useState("");
   const dispatch = useDispatch();
   const articulo = useGetCart();
   const userData = useGetUser();
@@ -88,6 +89,9 @@ const Carrito = () => {
           // Almacena el descuento en el estado del componente
           setDescuento(porcentajeDescuento);
   
+          // Almacena el código promocional en el estado del componente
+          setCodigo(codigoDescuento);
+  
           // Calcula el total con descuento
           const totalConDescuento = precioTotal - (precioTotal * porcentajeDescuento / 100);
   
@@ -133,7 +137,8 @@ const Carrito = () => {
         tipoVia: userData.tipoVia,
         descripcion: articulo.descripcion,
         precio: articulo.precio,
-        descuento: descuento // Añade el descuento al objeto del pedido
+        descuento: descuento,
+        codigo: codigo
       });
 
       if (response.status === 200) {

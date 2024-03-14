@@ -139,3 +139,67 @@ html{
   border-color: #4d79af;
   transform: scale(1.1);
 }
+
+/* .ant-layout-header{
+  border:1px solid black
+} */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo {
+  width: 30%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.botonesHeader {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+
+.botonesHeader button {
+  margin-left: 15px;
+}
+
+.menuPerfil {
+  display: flex;
+  align-items: center;
+}
+
+/* Media Querys */
+
+
+@media (max-width: 768px) {
+
+  :where(.css-dev-only-do-not-override-1k979oh).ant-layout-header {
+
+    padding: 0 0px;
+  
+  }
+  
+  .logo {
+    display: none;
+  }
+  
+  .botonesHeader {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .menuPerfil{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-items: flex-end;
+}
+
+}
