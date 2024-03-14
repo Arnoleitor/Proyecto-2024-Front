@@ -93,7 +93,7 @@ const Pedidos = () => {
           </Button>
           <Tooltip title="Ver Factura" placement="top">
             <Button
-              style={{ marginLeft: '5%', color: 'orangered' }}
+              style={{ color: 'orangered', marginLeft:'1%' }}
               type="default"
               shape="circle"
               icon={<EyeOutlined />}
