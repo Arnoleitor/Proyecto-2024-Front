@@ -51,7 +51,7 @@ const Pedidos = () => {
             <div key={producto._id}>
               {producto.descripcion}
               &nbsp;&nbsp;
-              <strong>{producto.precio} €</strong>
+              <strong>{producto.precio.toFixed(2)} €</strong>
             </div>
           ))}
         </span>
