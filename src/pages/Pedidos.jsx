@@ -78,6 +78,12 @@ const Pedidos = () => {
       render: (totalImporte) => <strong>{totalImporte} €</strong>,
     },
     {
+      title: "Descuento",
+      dataIndex: "descuento",
+      key: "descuento",
+      render: (descuento) => descuento? <strong>-{descuento}%</strong> : "No",
+    },
+    {
       title: "Acciones",
       key: "acciones",
       render: (text, record) => (

@@ -100,6 +100,7 @@ const Pedidos = () => {
             title: "Dirección",
             dataIndex: "direccion",
             key: "direccion",
+            render: (direccion) => direccion === "undefined"? <span>NO</span> : <span>{direccion}</span>,
         },
         {
             title: "Importe",
