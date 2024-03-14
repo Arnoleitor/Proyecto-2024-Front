@@ -6,6 +6,7 @@ import axios from 'axios';
 const DiscountPopup = ({ onClose }) => {
   const codeRef = useRef(null);
   const [discountCode, setDiscountCode] = useState('');
+  const [descuento, setDescuento] = useState('');
 
   const copyDiscountCode = () => {
     navigator.clipboard.writeText(discountCode)
@@ -28,6 +29,7 @@ const DiscountPopup = ({ onClose }) => {
     try {
       const response = await axios.get('http://localhost:3000/api/codigosDescuento');
       setDiscountCode(response.data[0].codigo);
+      setDescuento(response.data[0].descuento)
     } catch (error) {
       console.error('Error al obtener el código de descuento:', error);
       message.error('Error al obtener el código de descuento');
@@ -37,7 +39,6 @@ const DiscountPopup = ({ onClose }) => {
   useEffect(() => {
     fetchDiscountCode();
   }, []);
-
   return (
     <div
       style={{
@@ -57,7 +58,7 @@ const DiscountPopup = ({ onClose }) => {
         message="¡Tenemos descuentos!"
         description={
           <>
-            Obtén un 10% de descuento con este código en tu primera compra!:{' '}
+            Obtén un {descuento}% de descuento con este código en tu primera compra!:{' '}
             <span
               ref={codeRef}
               onClick={handleCodeClick}

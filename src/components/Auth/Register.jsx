@@ -9,7 +9,6 @@ const Register = ({setRegisterModalVisible}) => {
     try {
       setLoading(true);
       const response = await axios.post('http://localhost:3000/auth/register', values);
-      console.log(response.data);
       notification.success({ message: 'Usuario registrado!' });
       setRegisterModalVisible(false)
     } catch (error) {
