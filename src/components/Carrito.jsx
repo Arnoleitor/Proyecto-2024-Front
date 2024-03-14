@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, List, Modal, Avatar, Tooltip, message, Empty, Typography } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
@@ -18,16 +18,31 @@ const Carrito = () => {
   const articulo = useGetCart();
   const userData = useGetUser();
 
+  
+  const calcularPrecioTotalConDescuento = () => {
+    if (descuento !== null) {
+      const totalConDescuento = precioTotal - (precioTotal * descuento / 100);
+      setPrecioTotalConDescuento(Number(totalConDescuento.toFixed(2)));
+    }
+  };
+
+  useEffect(() => {
+    calcularPrecioTotalConDescuento();
+  }, [articulo, descuento]);
+
   const incrementarCantidad = (itemId) => {
     dispatch(incrementItemQuantity(itemId));
+    calcularPrecioTotalConDescuento();
   };
 
   const decrementarCantidad = (itemId) => {
     dispatch(decrementItemQuantity(itemId));
+    calcularPrecioTotalConDescuento();
   };
 
   const borrarArticulo = (itemId) => {
     dispatch(removeItem(itemId));
+    calcularPrecioTotalConDescuento();
     showSuccessMessage('Producto eliminado del carrito');
   };
 
@@ -52,33 +67,33 @@ const Carrito = () => {
       setModalVisible(false);
       return;
     }
-
+  
     if (!codigoDescuento) {
       message.warning('Por favor, ingresa un código de descuento válido.');
       return;
     }
-
+  
     try {
       const responseDescuentos = await axios.get('http://localhost:3000/api/codigosDescuento');
-
+  
       if (responseDescuentos.status === 200) {
         const codigosDescuento = responseDescuentos.data;
-
+  
         // Busca el descuento correspondiente al código ingresado
         const descuentoEncontrado = codigosDescuento.find(descuento => descuento.codigo === codigoDescuento);
-
+  
         if (descuentoEncontrado) {
           const porcentajeDescuento = descuentoEncontrado.descuento;
-
+  
           // Almacena el descuento en el estado del componente
           setDescuento(porcentajeDescuento);
-
+  
           // Calcula el total con descuento
           const totalConDescuento = precioTotal - (precioTotal * porcentajeDescuento / 100);
-
+  
           // Actualiza el estado con el nuevo precio total
           setPrecioTotalConDescuento(Number(totalConDescuento.toFixed(2)));
-
+  
           message.success('Descuento aplicado con éxito');
         } else {
           message.error('Código de descuento no válido. Inténtalo de nuevo.');
@@ -91,7 +106,6 @@ const Carrito = () => {
       console.error('Error applying discount:', error.message);
     }
   };
-
 
   const handleOk = async () => {
     if (!userData) {
@@ -121,6 +135,7 @@ const Carrito = () => {
       if (response.status === 200) {
         showSuccessMessage('Pedido realizado con éxito');
         dispatch(clearCart());
+        setDescuento(null);
       } else {
         console.error('Error creating order:', response.statusText);
       }
@@ -130,6 +145,7 @@ const Carrito = () => {
       // Restablece el precio total con descuento después de realizar el pedido
       setPrecioTotalConDescuento(null);
       setModalVisible(false);
+      setCodigoDescuento('')
     }
   };
 
