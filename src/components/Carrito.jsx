@@ -177,7 +177,7 @@ const Carrito = () => {
           <Empty description="Tu cesta está vacía" />
         ) : (
           <>
-            <div style={{ marginBottom: '10px' }}>
+            <div className='modalCarrito' style={{ marginBottom: '10px' }}>
               <label>Código promocional</label>
               <input
                 type="text"
@@ -185,6 +185,7 @@ const Carrito = () => {
                 onChange={(e) => setCodigoDescuento(e.target.value)}
                 style={{ marginLeft: '10px' }}
               />
+              <div className='modalCarritoBoton'>
               <Button
                 type="primary"
                 onClick={aplicarDescuento}
@@ -192,6 +193,7 @@ const Carrito = () => {
               >
                 Aplicar Descuento
               </Button>
+              </div>
             </div>
             <div style={{ marginTop: '20px', textAlign: 'right' }}>
               <Button key="submit" type="primary" onClick={handleOk} disabled={articulo.length === 0}>
@@ -211,7 +213,7 @@ const Carrito = () => {
                 title={item.descripcion}
                 description={`Precio: ${item.precio.toFixed(2)} € x ${item.quantity} = ${item.precio.toFixed(2) * item.quantity} €`}
               />
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div className='botonesCarrito' style={{ display: 'flex', alignItems: 'center' }}>
                 <Button
                   onClick={() => incrementarCantidad(item._id)}
                   type="primary"

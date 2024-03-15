@@ -1,30 +1,30 @@
 @import "/src/assets/styles/_font-variables.scss";
 
 
-html{
-    width: 100%;
-    height: 100%;
-    font-family: "basica";
+html {
+  width: 100%;
+  height: 100%;
+  font-family: "basica";
 }
 
 .circuloCesta {
-    display: inline-block;
-    background-color: #c7c7c7;
-    color: #000000;
-    border-radius: 50%; 
-    width: 20px; 
-    height: 20px; 
-    line-height: 20px;
-    text-align: center; 
-    font-size: 12px;
-    margin-left:5px;
-  }
+  display: inline-block;
+  background-color: #c7c7c7;
+  color: #000000;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  font-size: 12px;
+  margin-left: 5px;
+}
 
-  :where(.css-dev-only-do-not-override-1k979oh).ant-card-bordered .ant-card-cover {
-    margin-top: 10%;
-    margin-inline-start: -1px;
-    margin-inline-end: -1px;
-    font-family: "basica";
+:where(.css-dev-only-do-not-override-1k979oh).ant-card-bordered .ant-card-cover {
+  margin-top: 10%;
+  margin-inline-start: -1px;
+  margin-inline-end: -1px;
+  font-family: "basica";
 }
 
 .question {
@@ -120,12 +120,12 @@ html{
   border-radius: 3px
 }
 
-:where(.css-dev-only-do-not-override-1k979oh).ant-input-search >.ant-input-group >.ant-input-group-addon:last-child .ant-input-search-button {
+:where(.css-dev-only-do-not-override-1k979oh).ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button {
   border-start-end-radius: 1px;
   border-end-end-radius: 1px;
 }
 
-:where(.css-dev-only-do-not-override-1k979oh).ant-input-lg{
+:where(.css-dev-only-do-not-override-1k979oh).ant-input-lg {
   border-radius: 1px
 }
 
@@ -134,7 +134,7 @@ html{
 }
 
 .ant-btn-primary.ant-btn-background-ghost:hover {
-  color: #4d79af; 
+  color: #4d79af;
   border-color: #4d79af;
   transform: scale(1.1);
 }
@@ -175,7 +175,7 @@ html{
   align-items: center;
 }
 
-.tablasAdmin{
+.tablasAdmin {
   overflow-x: auto;
 }
 
@@ -187,73 +187,92 @@ html{
   :where(.css-dev-only-do-not-override-1k979oh).ant-layout-header {
 
     padding: 0 0px;
-  
+
   }
-  
+
   .logo {
     display: none;
   }
-  
+
   .botonesHeader {
     justify-content: flex-end;
     align-items: flex-end;
   }
 
-  .menuPerfil{
+  .menuPerfil {
     display: flex;
     flex-direction: column;
     align-items: center;
     align-items: flex-end;
-}
-.tablasAdmin{
-  overflow-x: auto;
-  display: block;
-  width: 100%;
-  padding: 0;
-  font-size: 10px;
-}
+  }
 
-.tablaPedidos{
-  overflow-x: auto;
-  display: block;
-  width: 100%;
-  padding: 0;
-  font-size: 10px;
-}
+  .tablasAdmin {
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+    padding: 0;
+    font-size: 10px;
+  }
 
-:where(.css-dev-only-do-not-override-1k979oh).ant-layout-footer {
-  font-size: 10px;
-  padding: 0;
-}
-:where(.css-dev-only-do-not-override-1k979oh).ant-row {
-  display: flex;
-  flex-flow: row wrap;
-  margin: 0;
-  min-width: 0;
-  justify-content: space-evenly;
-  align-items: center;
-}
-.localizacion{
-letter-spacing: 0;
-}
+  .tablaPedidos {
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+    padding: 0;
+    font-size: 10px;
+  }
 
-.tablasPerfil{
-  display: flex;
-  flex-direction: column;
-}
+  :where(.css-dev-only-do-not-override-1k979oh).ant-layout-footer {
+    font-size: 10px;
+    padding: 0;
+  }
 
-:where(.css-dev-only-do-not-override-1k979oh).ant-table-wrapper .ant-table {
-  font-size: 10px;
-}
+  :where(.css-dev-only-do-not-override-1k979oh).ant-row {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0;
+    min-width: 0;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 
-.tarjetasPerfil{
-  flex-direction: column;
-  align-items: center;
-  
-}
+  .localizacion {
+    letter-spacing: 0;
+  }
 
-.tarjeta1{
-  margin-bottom: 5%;
-  margin-top: 10%;
-}
+  .tablasPerfil {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :where(.css-dev-only-do-not-override-1k979oh).ant-table-wrapper .ant-table {
+    font-size: 10px;
+  }
+
+  .tarjetasPerfil {
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  .tarjeta1 {
+    margin-bottom: 5%;
+    margin-top: 10%;
+  }
+
+  .modalCarrito {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modalCarritoBoton {
+    margin-top: 5%;
+    justify-content: center;
+    display: flex;
+  }
+
+  .botonesCarrito {
+    margin-left: 1%;
+  }
 }
