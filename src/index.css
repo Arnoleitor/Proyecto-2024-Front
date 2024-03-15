@@ -20,6 +20,10 @@ html {
   margin-left: 5px;
 }
 
+.ant-layout-header.css-dev-only-do-not-override-1k979oh{
+  border-bottom: 1px solid #87a7d361;
+}
+
 :where(.css-dev-only-do-not-override-1k979oh).ant-card-bordered .ant-card-cover {
   margin-top: 10%;
   margin-inline-start: -1px;
@@ -207,6 +211,11 @@ html {
 /* Media Querys */
 
 @media (max-width: 768px) {
+
+  .ant-layout-header.css-dev-only-do-not-override-1k979oh{
+    border-bottom: none;
+  }
+  
 
   :where(.css-dev-only-do-not-override-1k979oh).ant-layout-header {
     padding: 0 0px;
