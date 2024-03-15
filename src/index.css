@@ -152,10 +152,11 @@ html{
 }
 
 .logo {
-  width: 30%;
+  width: 40%;
   display: flex;
   align-content: center;
   align-items: center;
+  margin-left: 25%;
 }
 
 .botonesHeader {
