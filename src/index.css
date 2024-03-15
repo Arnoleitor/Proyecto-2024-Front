@@ -179,11 +179,11 @@ html {
   overflow-x: auto;
 }
 
-.buscador{
+.buscador {
   width: 25%;
 }
 
-.modalCarrito{
+.modalCarrito {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -286,7 +286,15 @@ html {
     margin-left: 1%;
   }
 
-  .buscador{
+  .buscador {
     width: 100%;
+  }
+
+  .ant-tooltip {
+    display: none;
+  }
+
+  .anticon-eye {
+    display: none !important;
   }
 }
