@@ -12,7 +12,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div style={{ marginBottom: 16, width: '25%' }}>
+    <div className='buscador' style={{ marginBottom: 16}}>
       <Input
         style={{ borderColor: '#87a7d3' }}
         placeholder="Buscar productos"

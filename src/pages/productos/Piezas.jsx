@@ -3,7 +3,6 @@ import Grid from '../../components/Grid';
 import axios from 'axios';
 import SearchBar from '../../components/Searcher/SearcherBar';
 import CarrouselOfertas from '../../components/Carrousel/CarrouselOfertas';
-import { Divider } from 'antd';
 
 const Piezas = () => {
   const [productos, setProductos] = useState([]);
