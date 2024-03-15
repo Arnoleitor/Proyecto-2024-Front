@@ -177,6 +177,8 @@ html {
 
 .buscador {
   width: 25%;
+  display: flex;
+  align-items: center;
 }
 
 .modalCarrito {
@@ -322,7 +324,15 @@ html {
   .buscador {
     width: 100%;
     margin-top: 5%;
+    display: flex;
+    flex-direction: column;
   }
+
+  :where(.css-dev-only-do-not-override-1k979oh).ant-select-single {
+    font-size: 14px;
+    height: 32px;
+    margin-top: 15px;
+}
 
   .ant-tooltip {
     display: none;

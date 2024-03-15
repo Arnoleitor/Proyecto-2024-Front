@@ -8,6 +8,7 @@ const Piezas = () => {
   const [productos, setProductos] = useState([]);
   const [filteredProductos, setFilteredProductos] = useState([]);
   const [descripcionFilter, setDescripcionFilter] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -24,21 +25,35 @@ const Piezas = () => {
     fetchProductos();
   }, []);
 
-  const handleSearch = (descripcion) => {
-    setDescripcionFilter(descripcionFilter);
-
-    const filtered = productos.filter((producto) =>
-      producto.descripcion.toLowerCase().includes(descripcion.toLowerCase())
-    );
+  const handleSearch = (descripcion, selectedOption) => {
+    setDescripcionFilter(descripcion);
+  
+    const filtered = productos.filter((producto) => {
+      const fieldValue = producto[selectedOption];
+      
+      if (selectedOption === 'precio') {
+        // Si el campo seleccionado es 'precio', filtramos por el precio base y por el precio con descuento
+        const precioBase = producto.precio;
+        const precioConDescuento = producto.descuento ? (precioBase - (precioBase * producto.descuento / 100)) : precioBase;
+        return precioBase.toString().toLowerCase().includes(descripcion.toLowerCase()) ||
+               precioConDescuento.toString().toLowerCase().includes(descripcion.toLowerCase());
+      } else if (typeof fieldValue === 'string') {
+        return fieldValue.toLowerCase().includes(descripcion.toLowerCase());
+      } else if (typeof fieldValue === 'number') {
+        return fieldValue.toString().toLowerCase().includes(descripcion.toLowerCase());
+      }
+  
+      return false;
+    });
     setFilteredProductos(filtered);
-  };
+};
 
   return (
     <div>
       <div>
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar onSearch={handleSearch} onSelectChange={setSelectedOption} />
       </div>
-      <CarrouselOfertas productos={productos} />
+      <CarrouselOfertas productos={filteredProductos} />
       <Grid productos={filteredProductos} />
     </div>
   );
