@@ -216,10 +216,8 @@ html {
   :where(.css-dev-only-do-not-override-1k979oh).ant-layout {
     background-color: white;
   }
-
-  :where(.css-dev-only-do-not-override-1k979oh).ant-layout, :where(.css-dev-only-do-not-override-1k979oh).ant-layout * {
-    box-sizing: border-box;
-    font-size: 13px;
+  :where(.css-dev-only-do-not-override-1k979oh).ant-col-6 {
+   min-width: 100%;
 }
 
   .header {
@@ -324,6 +322,7 @@ html {
 
   .buscador {
     width: 100%;
+    margin-top: 5%;
   }
 
   .ant-tooltip {
