@@ -34,6 +34,7 @@ const SearchBar = ({ onSearch, onSelectChange }) => {
       >
         <Option value="descripcion">Nombre</Option>
         <Option value="precio">Precio</Option>
+        <Option value="descuento">% Descuento</Option>
       </Select>
     </div>
   );

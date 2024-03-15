@@ -42,7 +42,6 @@ const Piezas = () => {
       } else if (typeof fieldValue === 'number') {
         return fieldValue.toString().toLowerCase().includes(descripcion.toLowerCase());
       }
-  
       return false;
     });
     setFilteredProductos(filtered);
