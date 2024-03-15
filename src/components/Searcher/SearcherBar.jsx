@@ -32,7 +32,7 @@ const SearchBar = ({ onSearch, onSelectChange }) => {
         onChange={handleSelectChange}
         value={selectedOption}
       >
-        <Option value="descripcion">Descripción</Option>
+        <Option value="descripcion">Nombre</Option>
         <Option value="precio">Precio</Option>
       </Select>
     </div>
