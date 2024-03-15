@@ -138,6 +138,7 @@ const Pedidos = () => {
 
   return (
     <>
+    <div className="tablaPedidos">
       <h1>Pedidos de {userData.nombre}</h1>
       {pedidos.length === 0 ? (
         <p>No tienes pedidos actualmente.</p>
@@ -152,6 +153,7 @@ const Pedidos = () => {
       >
         {pdfUrl && <iframe src={pdfUrl} width="100%" height="500px" title="Factura PDF" />}
       </Modal>
+    </div>
     </>
   );
 };

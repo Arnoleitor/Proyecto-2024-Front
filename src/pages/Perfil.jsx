@@ -80,7 +80,7 @@ const Perfil = () => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="tablasPerfil" style={{ display: 'flex' }}>
       <div style={{ flex: 1, marginRight: '20px' }}>
         <h1>Perfil de {userData.nombre ? userData.nombre : 'Usuario sin nombre'}</h1>
         <Form
@@ -123,7 +123,7 @@ const Perfil = () => {
           </Form.Item>
         </Form>
       </div>
-      <div style={{ flex: 1, display: 'flex', justifyContent: 'space-evenly' }}>
+      <div className="tarjetasPerfil" style={{ flex: 1, display: 'flex', justifyContent: 'space-evenly' }}>
         <div className="tarjeta1">
           <Card title="Tus datos" style={{ width: '300px' }}>
             <p>Nombre: {userData.nombre}</p>

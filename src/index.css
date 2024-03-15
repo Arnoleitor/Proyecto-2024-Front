@@ -209,6 +209,16 @@ html{
   overflow-x: auto;
   display: block;
   width: 100%;
+  padding: 0;
+  font-size: 10px;
+}
+
+.tablaPedidos{
+  overflow-x: auto;
+  display: block;
+  width: 100%;
+  padding: 0;
+  font-size: 10px;
 }
 
 :where(.css-dev-only-do-not-override-1k979oh).ant-layout-footer {
@@ -227,4 +237,23 @@ html{
 letter-spacing: 0;
 }
 
+.tablasPerfil{
+  display: flex;
+  flex-direction: column;
+}
+
+:where(.css-dev-only-do-not-override-1k979oh).ant-table-wrapper .ant-table {
+  font-size: 10px;
+}
+
+.tarjetasPerfil{
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.tarjeta1{
+  margin-bottom: 5%;
+  margin-top: 10%;
+}
 }
