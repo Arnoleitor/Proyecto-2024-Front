@@ -6,24 +6,31 @@ const { Footer } = Layout;
 const FooterComponent  = () => {
   return (
     <Footer style={{ textAlign: 'center', margin: '0 16px' }}>
-
-      <Row justify="center">
+      <div  className='footerIcons'>
+      <Row>
+        <div>
         <Col span={6}>
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
             <FacebookOutlined style={{ fontSize: '30px', color: '#1877f2' }} />
           </a>
         </Col>
+        </div>
+        <div>
         <Col span={6}>
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
             <TwitterOutlined style={{ fontSize: '30px', color: '#1da1f2' }} />
           </a>
         </Col>
+        </div>
+        <div>
         <Col span={6}>
           <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
             <InstagramOutlined style={{ fontSize: '30px', color: '#c13584' }} />
           </a>
         </Col>
+        </div>
       </Row>
+      </div>
       <Row justify="center" style={{ marginTop: '20px' }}>
         <Col span={4}>
           <a style={{fontFamily:'basica'}} href="/quiensomos">Quiénes somos</a>
