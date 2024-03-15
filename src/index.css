@@ -20,7 +20,7 @@ html {
   margin-left: 5px;
 }
 
-.ant-layout-header.css-dev-only-do-not-override-1k979oh{
+.ant-layout-header.css-dev-only-do-not-override-1k979oh {
   border-bottom: 1px solid #87a7d361;
 }
 
@@ -212,10 +212,17 @@ html {
 
 @media (max-width: 768px) {
 
-  .ant-layout-header.css-dev-only-do-not-override-1k979oh{
+  .ant-layout-header.css-dev-only-do-not-override-1k979oh {
     border-bottom: none;
   }
-  
+
+  .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.css-dev-only-do-not-override-1k979oh {
+    margin-top: 30%;
+  }
+  :where(.css-dev-only-do-not-override-1k979oh).ant-layout .ant-layout-sider-children{
+    background: white;
+  }
+
 
   :where(.css-dev-only-do-not-override-1k979oh).ant-layout-header {
     padding: 0 0px;
@@ -224,8 +231,9 @@ html {
   :where(.css-dev-only-do-not-override-1k979oh).ant-layout {
     background-color: white;
   }
+
   :where(.css-dev-only-do-not-override-1k979oh).ant-col-6 {
-   min-width: 100%;
+    min-width: 100%;
   }
 
   .header {
@@ -341,7 +349,7 @@ html {
     font-size: 14px;
     height: 32px;
     margin-top: 15px;
-}
+  }
 
   .ant-tooltip {
     display: none;
@@ -351,8 +359,8 @@ html {
     display: none !important;
   }
 
-  .ant-layout-sider-zero-width-trigger.ant-layout-sider-zero-width-trigger-left{
+  .ant-layout-sider-zero-width-trigger.ant-layout-sider-zero-width-trigger-left {
     background: #87a7d3;
   }
-  
+
 }
