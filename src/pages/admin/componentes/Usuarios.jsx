@@ -126,6 +126,7 @@ const Usuarios = () => {
 
   return (
     <>
+    <div className="tablasAdmin">
       <h2>Usuarios registrados</h2>
       <Divider/>
       <Table dataSource={users} columns={columnsUsers} rowKey={(record) => record.id} />
@@ -167,6 +168,7 @@ const Usuarios = () => {
           </Form.Item>
         </Form>
       </Modal>
+      </div>
     </>
   );
 };

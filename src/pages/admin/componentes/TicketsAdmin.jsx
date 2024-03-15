@@ -151,7 +151,7 @@ const TicketsAdmin = () => {
   };
 
   return (
-    <div>
+    <div className='tablasAdmin'>
       <h2>Tickets soporte técnico</h2>
       <Divider />
       <Table dataSource={tickets} columns={columns} rowClassName={rowClassName} />
@@ -172,7 +172,6 @@ const TicketsAdmin = () => {
           onChange={(e) => setRespuesta(e.target.value)}
         />
       </Modal>
-
     </div>
   );
 };

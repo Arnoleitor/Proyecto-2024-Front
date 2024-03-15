@@ -198,6 +198,7 @@ const Productos = () => {
     
     return (
     <>
+    <div className='tablasAdmin'>
     <h2>Productos disponibles</h2>
     <Divider/>
     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2%' }}>
@@ -383,6 +384,7 @@ const Productos = () => {
             </Form.Item>
         </Form>
     </Modal>
+    </div>
 </>
 )
 }

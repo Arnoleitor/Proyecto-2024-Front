@@ -176,6 +176,10 @@ html{
   align-items: center;
 }
 
+.tablasAdmin{
+  overflow-x: auto;
+}
+
 /* Media Querys */
 
 
@@ -201,6 +205,11 @@ html{
     flex-direction: column;
     align-items: center;
     align-items: flex-end;
+}
+.tablasAdmin{
+  overflow-x: auto;
+  display: block;
+  width: 100%;
 }
 
 }

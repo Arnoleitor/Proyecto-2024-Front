@@ -135,6 +135,7 @@ const Pedidos = () => {
 
     return (
         <>
+        <div className='tablasAdmin'>
             <h2>Pedidos realizados</h2>
             <Divider />
             <Table dataSource={pedidos} columns={columnsPedidos} />
@@ -146,6 +147,7 @@ const Pedidos = () => {
             >
                 {pdfUrl && <iframe src={pdfUrl} width="100%" height="500px" title="Factura PDF" />}
             </Modal>
+        </div>
         </>
     )
 }
