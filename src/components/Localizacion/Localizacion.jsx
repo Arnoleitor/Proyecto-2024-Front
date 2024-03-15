@@ -38,7 +38,7 @@ const Localizacion = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: '1%', letterSpacing: '2px' }}>
+    <div className='localizacion'>
       {location ? (
         <div>
           <p style={{fontFamily:'monospace'}}>Tu ubicación actual: <strong>{location} - {state} - {postCode}</strong></p>
