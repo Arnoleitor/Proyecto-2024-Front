@@ -69,8 +69,9 @@ const Carrito = () => {
       return;
     }
   
+    // Verifica si el código de descuento está vacío
     if (!codigoDescuento) {
-      message.warning('Por favor, ingresa un código de descuento válido.');
+      // Si está vacío, no realiza ninguna acción y sale de la función
       return;
     }
   
@@ -110,6 +111,7 @@ const Carrito = () => {
       console.error('Error applying discount:', error.message);
     }
   };
+  
 
   const handleOk = async () => {
     if (!userData) {
@@ -118,7 +120,7 @@ const Carrito = () => {
       return;
     }
 
-    // Aplicar el descuento antes de enviar el pedido
+    // Aplica el descuento antes de enviar el pedido
     await aplicarDescuento();
 
     try {

@@ -40,19 +40,8 @@ const DiscountPopup = ({ onClose }) => {
     fetchDiscountCode();
   }, []);
   return (
-    <div
-      style={{
-        position: 'fixed',
-        bottom: 20,
-        left: 20,
-        width: 300,
-        padding: 16,
-        background: '#fff',
-        borderRadius: 8,
-        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-        cursor: 'pointer',
-      }}
-      onClick={() => codeRef.current.click()}
+    <div className='popUp'
+     onClick={() => codeRef.current.click()}
     >
       <Alert
         message="¡Tenemos descuentos!"
