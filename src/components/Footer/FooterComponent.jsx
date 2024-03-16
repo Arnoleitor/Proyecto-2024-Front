@@ -1,48 +1,77 @@
-import { Layout, Row, Col } from 'antd';
-import { FacebookOutlined, TwitterOutlined, InstagramOutlined } from '@ant-design/icons';
+import { Layout, Row, Col, Card } from 'antd';
+import { FacebookOutlined, TwitterOutlined, InstagramOutlined, CheckCircleOutlined, CreditCardOutlined, CustomerServiceOutlined, RocketOutlined, DownloadOutlined } from '@ant-design/icons';
 
 const { Footer } = Layout;
 
-const FooterComponent  = () => {
+const FooterComponent = () => {
   return (
     <Footer style={{ textAlign: 'center', margin: '0 16px' }}>
-      <div  className='footerIcons'>
-      <Row>
-        <div>
+      <Row gutter={[16, 16]} justify="center">
         <Col span={6}>
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
             <FacebookOutlined style={{ fontSize: '30px', color: '#1877f2' }} />
           </a>
         </Col>
-        </div>
-        <div>
         <Col span={6}>
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
             <TwitterOutlined style={{ fontSize: '30px', color: '#1da1f2' }} />
           </a>
         </Col>
-        </div>
-        <div>
         <Col span={6}>
           <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
             <InstagramOutlined style={{ fontSize: '30px', color: '#c13584' }} />
           </a>
         </Col>
-        </div>
-      </Row>
-      </div>
-      <Row justify="center" style={{ marginTop: '20px' }}>
-        <Col span={4}>
-          <a style={{fontFamily:'basica'}} href="/quiensomos">Quiénes somos</a>
-        </Col>
-        <Col span={4}>
-          <a style={{fontFamily:'basica'}} href="/faq">FAQ</a>
-        </Col>
-        <Col span={4}>
-          <a style={{fontFamily:'basica'}} href="/contactanos">Contáctanos</a>
+        <Col span={6}>
+          <CheckCircleOutlined style={{ fontSize: '30px', color: 'green' }} />
+          <p>Envíos en 24h</p>
         </Col>
       </Row>
-      <p style={{ fontFamily: 'fantasy', marginTop:'5%' }}>&copy;{new Date().getFullYear()} <span style={{fontFamily:'basica'}}>PC Piezas. Creado por Arnold</span></p>
+      <Row gutter={[16, 16]} justify="center" style={{ marginTop: '20px' }}>
+        <Col span={6}>
+          <Card>
+            <CreditCardOutlined style={{ fontSize: '30px' }} />
+            <p>Formas de Pago:</p>
+            <p>Aceptamos Visa, Mastercard, y más.</p>
+          </Card>
+        </Col>
+        <Col span={6}>
+          <Card>
+            <CustomerServiceOutlined style={{ fontSize: '30px' }} />
+            <p>Compromiso con el Cliente:</p>
+            <p>Atención al cliente 24/7 y devoluciones gratuitas.</p>
+          </Card>
+        </Col>
+        <Col span={6}>
+          <Card>
+            <RocketOutlined style={{ fontSize: '30px' }} />
+            <p>Información de Envío:</p>
+            <p>Envío gratis en pedidos superiores a 50€.</p>
+          </Card>
+        </Col>
+        <Col span={6}>
+          <Card>
+            <DownloadOutlined style={{ fontSize: '30px' }} />
+            <p>Descargar App:</p>
+            <p>Disponible en Play Store y App Store.</p>
+          </Card>
+        </Col>
+      </Row>
+      <Row gutter={[16, 16]} justify="center" style={{ marginTop: '20px' }}>
+        <Col span={6}>
+          <a style={{ fontFamily: 'basica' }} href="/quiensomos">Quiénes somos</a>
+        </Col>
+        <Col span={6}>
+          <a style={{ fontFamily: 'basica' }} href="/faq">FAQ</a>
+        </Col>
+        <Col span={6}>
+          <a style={{ fontFamily: 'basica' }} href="/contactanos">Contáctanos</a>
+        </Col>
+        <Col span={6}>
+          <a style={{ fontFamily: 'basica' }} href="/terminoscondiciones">Términos y Condiciones</a>
+        </Col>
+      </Row>
+      <p style={{ fontFamily: 'fantasy', marginTop: '5%' }}>&copy;{new Date().getFullYear()} <span style={{ fontFamily: 'basica' }}>PC Piezas. Creado por Arnold</span></p>
     </Footer>
   );
 };

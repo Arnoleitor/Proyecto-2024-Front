@@ -28,6 +28,7 @@ const Procesadores = lazy(() => import('./pages/productos/Procesadores'));
 const Ratones = lazy(() => import('./pages/productos/Ratones'));
 const Usb = lazy(() => import('./pages/productos/Usb'));
 const Teclados = lazy(() => import('./pages/productos/Teclados'));
+const TerminosCondiciones = lazy(() => import('./pages/TerminosCondiciones'));
 
 const App = () => {
   const {
@@ -97,6 +98,7 @@ const App = () => {
                       <Route path="/pedidos" element={<Pedidos />} />
                       <Route path="/quiensomos" element={<QuienSomos />} />
                       <Route path="/faq" element={<Faq />} />
+                      <Route path="/terminoscondiciones" element={<TerminosCondiciones />} />
                       <Route path="/Cables" element={<Cables />} />
                       <Route path="/contactanos" element={<Contacto />} />
                       <Route path="/DiscosDuros" element={<DiscosDuros />} />
