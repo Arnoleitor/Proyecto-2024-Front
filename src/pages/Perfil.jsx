@@ -17,6 +17,8 @@ const Perfil = () => {
   const [tickets, setTickets] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [recargarModalVisible, setRecargarModalVisible] = useState(false); // Estado del modal de recargar saldo
+  const [montoRecarga, setMontoRecarga] = useState(0); // Estado del monto de recarga
 
   useEffect(() => {
     if (!userData) {
@@ -50,6 +52,19 @@ const Perfil = () => {
     }
   }, [datosTicket, idUsuario]);
 
+  const handleRecargarSaldo = async () => {
+    try {
+      await axios.post(`http://localhost:3000/api/monedero/${userData.id}`, { monedero: montoRecarga });
+      const updatedUserData = await axios.get(`http://localhost:3000/api/getmonedero/${userData.id}`);
+      dispatch(setUserData(updatedUserData.data));
+      setMontoRecarga(0);
+      setRecargarModalVisible(false);
+      openNotification('success', 'Saldo recargado correctamente');
+    } catch (error) {
+      console.error('Error al recargar saldo:', error.message);
+      openNotification('error', 'Error al recargar saldo');
+    }
+  };
 
   const onFinish = async (values) => {
     if (userData && userData.id) {
@@ -149,6 +164,14 @@ const Perfil = () => {
             )}
           </Card>
         </div>
+        <div className="tarjeta3">
+          <Card title="Tu saldo" style={{ width: '300px' }}>
+            <p>Tu saldo actual es de: {userData.monedero} €</p>
+            <Button type="primary" onClick={() => setRecargarModalVisible(true)}>
+              Recargar Saldo
+            </Button>
+          </Card>
+        </div>
       </div>
       <Modal
         title="Detalles del Ticket"
@@ -179,9 +202,25 @@ const Perfil = () => {
           </>
         )}
       </Modal>
+      <Modal
+        title="Recargar Saldo"
+        open={recargarModalVisible}
+        onCancel={() => setRecargarModalVisible(false)}
+        onOk={handleRecargarSaldo}
+      >
+        <Form.Item label="Monto a recargar">
+          <Input
+            value={montoRecarga}
+            onChange={(e) => setMontoRecarga(parseFloat(e.target.value))}
+            type="number"
+            min={0}
+            step={0.01}
+            autoFocus
+          />
+        </Form.Item>
+      </Modal>
     </div>
   );
 };
-
 
 export default Perfil;
