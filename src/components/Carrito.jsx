@@ -126,10 +126,10 @@ const calcularPrecioTotalConDescuento = () => {
       return;
     }
   
-    // Aplicar el descuento antes de enviar el pedido
-    await aplicarDescuento();
-  
     try {
+      // Aplicar el descuento antes de enviar el pedido
+      await aplicarDescuento();
+  
       const productosConCantidad = articulo.map(({ imagen, ...rest }) => ({
         ...rest,
         cantidad: rest.quantity,
@@ -137,7 +137,8 @@ const calcularPrecioTotalConDescuento = () => {
   
       const direccion = `${userData.direccion}`;
   
-      const response = await axios.post('http://localhost:3000/api/pedidos', {
+      // Realizar la solicitud POST para crear el pedido
+      const responsePedido = await axios.post('http://localhost:3000/api/pedidos', {
         id: userData.id,
         productos: productosConCantidad,
         totalImporte: precioTotalConDescuento || Number(precioTotal.toFixed(2)),
@@ -149,12 +150,16 @@ const calcularPrecioTotalConDescuento = () => {
         codigo: codigo
       });
   
-      if (response.status === 200) {
+      if (responsePedido.status === 200) {
+        await axios.put(`http://localhost:3000/api/putmonedero/${userData.id}`, {
+          totalPedido: precioTotalConDescuento || precioTotal
+        });
+  
         showSuccessMessage('Pedido realizado con éxito');
         dispatch(clearCart());
         setDescuento(null);
       } else {
-        console.error('Error creating order:', response.statusText);
+        console.error('Error creating order:', responsePedido.statusText);
       }
     } catch (error) {
       console.error('Error creating order:', error.message);
@@ -165,6 +170,7 @@ const calcularPrecioTotalConDescuento = () => {
       setCodigoDescuento('');
     }
   };
+  
   
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>

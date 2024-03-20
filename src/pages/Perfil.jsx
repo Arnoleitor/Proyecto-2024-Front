@@ -54,18 +54,40 @@ const Perfil = () => {
   }, [datosTicket, idUsuario]);
 
   const handleRecargarSaldo = async () => {
-    try {
-      await axios.post(`http://localhost:3000/api/monedero/${userData.id}`, { monedero: montoRecarga });
-      const updatedUserData = await axios.get(`http://localhost:3000/api/getmonedero/${userData.id}`);
-      dispatch(setUserData(updatedUserData.data));
-      setMontoRecarga(0);
-      setRecargarModalVisible(false);
-      openNotification('success', 'Saldo recargado correctamente');
-    } catch (error) {
-      console.error('Error al recargar saldo:', error.message);
-      openNotification('error', 'Error al recargar saldo');
+  try {
+    // Validar que el monto de recarga sea mayor que cero
+    if (montoRecarga <= 0) {
+      openNotification('error', 'El monto de recarga debe ser mayor que cero');
+      return;
     }
-  };
+
+    // Manejar el caso en que el usuario no esté autenticado
+    if (!userData) {
+      openNotification('error', 'Debes iniciar sesión para recargar saldo');
+      return;
+    }
+
+    // Realizar la recarga de saldo
+    await axios.post(`http://localhost:3000/api/monedero/${userData.id}`, { monedero: montoRecarga });
+
+    // Obtener el saldo actualizado después de la recarga
+    const updatedUserData = await axios.get(`http://localhost:3000/api/getmonedero/${userData.id}`);
+
+    // Actualizar los datos del usuario en el estado global
+    dispatch(setUserData(updatedUserData.data));
+
+    // Restablecer el monto de recarga y ocultar el modal
+    setMontoRecarga(0);
+    setRecargarModalVisible(false);
+
+    // Notificar al usuario que la recarga de saldo fue exitosa
+    openNotification('success', 'Saldo recargado correctamente');
+  } catch (error) {
+    // Manejar el caso en que la recarga de saldo no sea exitosa
+    console.error('Error al recargar saldo:', error.message);
+    openNotification('error', 'Error al recargar saldo');
+  }
+};
 
   const onFinish = async (values) => {
     if (userData && userData.id) {
