@@ -20,7 +20,7 @@ const Carrito = () => {
   const userData = useGetUser();
 
   
-  const calcularPrecioTotalConDescuento = () => {
+const calcularPrecioTotalConDescuento = () => {
     if (descuento !== null) {
       const totalConDescuento = precioTotal - (precioTotal * descuento / 100);
       setPrecioTotalConDescuento(Number(totalConDescuento.toFixed(2)));
@@ -119,18 +119,24 @@ const Carrito = () => {
       setModalVisible(false);
       return;
     }
-
-    // Aplica el descuento antes de enviar el pedido
+  
+    // Verifica si el saldo es suficiente para cubrir el total de la compra con o sin descuento
+    if (userData.monedero < precioTotal || userData.monedero < precioTotalConDescuento) {
+      message.error('No tienes suficiente saldo para realizar esta compra.');
+      return;
+    }
+  
+    // Aplicar el descuento antes de enviar el pedido
     await aplicarDescuento();
-
+  
     try {
       const productosConCantidad = articulo.map(({ imagen, ...rest }) => ({
         ...rest,
         cantidad: rest.quantity,
       }));
-
+  
       const direccion = `${userData.direccion}`;
-
+  
       const response = await axios.post('http://localhost:3000/api/pedidos', {
         id: userData.id,
         productos: productosConCantidad,
@@ -142,7 +148,7 @@ const Carrito = () => {
         descuento: descuento,
         codigo: codigo
       });
-
+  
       if (response.status === 200) {
         showSuccessMessage('Pedido realizado con éxito');
         dispatch(clearCart());
@@ -158,9 +164,8 @@ const Carrito = () => {
       setModalVisible(false);
       setCodigoDescuento('');
     }
-};
-
-
+  };
+  
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Tooltip title={`Total: ${precioTotal.toFixed(2)} € IVA inc`} placement="bottom">
