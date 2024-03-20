@@ -196,7 +196,7 @@ const Perfil = () => {
             }
             style={{ width: '300px' }}
           >
-            <p>Tu saldo actual es de: {userData.monedero} €</p>
+            <p>Tu saldo actual es de: {userData.monedero.toFixed(2)} €</p>
             <Button type="primary" onClick={() => setRecargarModalVisible(true)}>
               Recargar Saldo
             </Button>
