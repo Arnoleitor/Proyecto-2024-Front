@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FechaFormateada from "../components/Customs/FechaFormateada";
 import EstadoTicket from "../components/Tickets/EstadoTickets";
+import { EuroCircleOutlined, SolutionOutlined, UserOutlined } from "@ant-design/icons";
 
 const Perfil = () => {
   const dispatch = useDispatch();
@@ -17,8 +18,8 @@ const Perfil = () => {
   const [tickets, setTickets] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState(null);
-  const [recargarModalVisible, setRecargarModalVisible] = useState(false); // Estado del modal de recargar saldo
-  const [montoRecarga, setMontoRecarga] = useState(0); // Estado del monto de recarga
+  const [recargarModalVisible, setRecargarModalVisible] = useState(false);
+  const [montoRecarga, setMontoRecarga] = useState(0);
 
   useEffect(() => {
     if (!userData) {
@@ -140,7 +141,7 @@ const Perfil = () => {
       </div>
       <div className="tarjetasPerfil" style={{ flex: 1, display: 'flex', justifyContent: 'space-evenly' }}>
         <div className="tarjeta1">
-          <Card title="Tus datos" style={{ width: '300px' }}>
+          <Card title={<span><UserOutlined /> Tus datos</span>} style={{ width: '300px' }}>
             <p>Nombre: {userData.nombre}</p>
             <p>Dirección: {userData.direccion}</p>
             <p>Tipo de vía: {userData.tipoVia}</p>
@@ -148,7 +149,7 @@ const Perfil = () => {
           </Card>
         </div>
         <div className="tarjeta2">
-          <Card title="Tus tickets de soporte" style={{ width: '300px' }}>
+          <Card title={<span><SolutionOutlined /> Tus tickets de soporte</span>} style={{ width: '300px' }}>
             {tickets.length === 0 ? (
               <p>No tienes ningún ticket actualmente.</p>
             ) : (
@@ -165,7 +166,14 @@ const Perfil = () => {
           </Card>
         </div>
         <div className="tarjeta3">
-          <Card title="Tu saldo" style={{ width: '300px' }}>
+          <Card
+            title={
+              <span>
+                <EuroCircleOutlined /> Tu saldo 
+              </span>
+            }
+            style={{ width: '300px' }}
+          >
             <p>Tu saldo actual es de: {userData.monedero} €</p>
             <Button type="primary" onClick={() => setRecargarModalVisible(true)}>
               Recargar Saldo
