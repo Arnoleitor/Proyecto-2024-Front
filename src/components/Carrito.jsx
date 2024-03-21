@@ -19,8 +19,8 @@ const Carrito = () => {
   const articulo = useGetCart();
   const userData = useGetUser();
 
-  
-const calcularPrecioTotalConDescuento = () => {
+
+  const calcularPrecioTotalConDescuento = () => {
     if (descuento !== null) {
       const totalConDescuento = precioTotal - (precioTotal * descuento / 100);
       setPrecioTotalConDescuento(Number(totalConDescuento.toFixed(2)));
@@ -47,7 +47,10 @@ const calcularPrecioTotalConDescuento = () => {
     showSuccessMessage('Producto eliminado del carrito');
   };
 
-  const precioTotal = articulo.reduce((total, item) => total + parseFloat(item.precio.toFixed(2)) * item.quantity, 0);
+  const precioTotal = articulo.reduce((total, item) => {
+    const precioItem = item.descuento ? item.precio * (100 - item.descuento) / 100 : item.precio;
+    return total + parseFloat(precioItem.toFixed(2)) * item.quantity;
+  }, 0);
 
   const showModal = () => {
     setModalVisible(true);
@@ -68,37 +71,35 @@ const calcularPrecioTotalConDescuento = () => {
       setModalVisible(false);
       return;
     }
-  
-    // Verifica si el código de descuento está vacío
+
     if (!codigoDescuento) {
-      // Si está vacío, no realiza ninguna acción y sale de la función
       return;
     }
-  
+
     try {
       const responseDescuentos = await axios.get('http://localhost:3000/api/codigosDescuento');
-  
+
       if (responseDescuentos.status === 200) {
         const codigosDescuento = responseDescuentos.data;
-  
+
         // Busca el descuento correspondiente al código ingresado
         const descuentoEncontrado = codigosDescuento.find(descuento => descuento.codigo === codigoDescuento);
-  
+
         if (descuentoEncontrado) {
           const porcentajeDescuento = descuentoEncontrado.descuento;
-  
+
           // Almacena el descuento en el estado del componente
           setDescuento(porcentajeDescuento);
-  
+
           // Almacena el código promocional en el estado del componente
           setCodigo(codigoDescuento);
-  
+
           // Calcula el total con descuento
           const totalConDescuento = precioTotal - (precioTotal * porcentajeDescuento / 100);
-  
+
           // Actualiza el estado con el nuevo precio total
           setPrecioTotalConDescuento(Number(totalConDescuento.toFixed(2)));
-  
+
           message.success('Descuento aplicado con éxito');
         } else {
           message.error('Código de descuento no válido. Inténtalo de nuevo.');
@@ -111,7 +112,7 @@ const calcularPrecioTotalConDescuento = () => {
       console.error('Error applying discount:', error.message);
     }
   };
-  
+
 
   const handleOk = async () => {
     if (!userData) {
@@ -119,25 +120,24 @@ const calcularPrecioTotalConDescuento = () => {
       setModalVisible(false);
       return;
     }
-  
+
     // Verifica si el saldo es suficiente para cubrir el total de la compra con o sin descuento
     if (userData.monedero < precioTotal || userData.monedero < precioTotalConDescuento) {
       message.error('No tienes suficiente saldo para realizar esta compra.');
       return;
     }
-  
+
     try {
       // Aplicar el descuento antes de enviar el pedido
       await aplicarDescuento();
-  
+
       const productosConCantidad = articulo.map(({ imagen, ...rest }) => ({
         ...rest,
         cantidad: rest.quantity,
       }));
-  
+
       const direccion = `${userData.direccion}`;
-  
-      // Realizar la solicitud POST para crear el pedido
+
       const responsePedido = await axios.post('http://localhost:3000/api/pedidos', {
         id: userData.id,
         productos: productosConCantidad,
@@ -149,12 +149,12 @@ const calcularPrecioTotalConDescuento = () => {
         descuento: descuento,
         codigo: codigo
       });
-  
+
       if (responsePedido.status === 200) {
         await axios.put(`http://localhost:3000/api/putmonedero/${userData.id}`, {
           totalPedido: precioTotalConDescuento || precioTotal
         });
-  
+
         showSuccessMessage('Pedido realizado con éxito');
         dispatch(clearCart());
         setDescuento(null);
@@ -170,8 +170,8 @@ const calcularPrecioTotalConDescuento = () => {
       setCodigoDescuento('');
     }
   };
-  
-  
+
+
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Tooltip title={`Total: ${precioTotal.toFixed(2)} € IVA inc`} placement="bottom">
@@ -199,13 +199,13 @@ const calcularPrecioTotalConDescuento = () => {
                 style={{ marginLeft: '10px' }}
               />
               <div className='modalCarritoBoton'>
-              <Button
-                type="primary"
-                onClick={aplicarDescuento}
-                style={{ marginLeft: '10px' }}
-              >
-                Aplicar Descuento
-              </Button>
+                <Button
+                  type="primary"
+                  onClick={aplicarDescuento}
+                  style={{ marginLeft: '10px' }}
+                >
+                  Aplicar Descuento
+                </Button>
               </div>
             </div>
             <div style={{ marginTop: '20px', textAlign: 'right' }}>
@@ -224,7 +224,19 @@ const calcularPrecioTotalConDescuento = () => {
               <List.Item.Meta
                 avatar={<Avatar src={item.imagen} />}
                 title={item.descripcion}
-                description={`Precio: ${item.precio.toFixed(2)} € x ${item.quantity} = ${item.precio.toFixed(2) * item.quantity} €`}
+                description={item.descuento ? (
+                  <>
+                    <div>
+                      <span style={{ textDecoration: 'line-through', color: 'red', marginRight: '5px' }}>
+                        {item.precio.toFixed(2)} €
+                      </span>
+                      <span style={{ color: 'green' }}>{(item.precio * (100 - item.descuento) / 100).toFixed(2)}€ <span style={{color:'black'}}>-{item.descuento}%</span></span>
+                    </div>
+                    <div>Cantidad: {item.quantity}</div>
+                  </>
+                ) : (
+                  `Precio: ${item.precio.toFixed(2)}€ Cantidad ${item.quantity}`
+                )}
               />
               <div className='botonesCarrito' style={{ display: 'flex', alignItems: 'center' }}>
                 <Button
