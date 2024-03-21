@@ -64,10 +64,8 @@ const Productos = () => {
             const values = await form.validateFields();
             await axios.put(`http://localhost:3000/api/actualizaproducto/${productoSeleccionado}`, values);
     
-            // Después de actualizar el producto, se obtiene la lista actualizada de productos
             const { data: nuevosProductos } = await axios.get("http://localhost:3000/api/recibirProducto");
             setProductos(nuevosProductos);
-    
             setEditProductModalVisible(false);
             form.resetFields();
             openNotification('success', 'Producto actualizado correctamente');
@@ -109,7 +107,6 @@ const Productos = () => {
             
             await axios.post('http://localhost:3000/api/agregarproducto', body);
             
-            // Después de agregar el producto, actualiza la lista de productos
             const { data: nuevosProductos } = await axios.get("http://localhost:3000/api/recibirProducto");
             setProductos(nuevosProductos);
     
@@ -126,18 +123,17 @@ const Productos = () => {
             const { data } = await axios.post(`http://localhost:3000/api/productosconDescuento/${productoSeleccionado._id}`, { descuento });
             console.log('Descuento agregado:', data);
             setDescuentoModalVisible(false);
-
+    
             const { data: nuevosProductos } = await axios.get("http://localhost:3000/api/recibirProducto");
             setProductos(nuevosProductos);
-
             openNotification('success', 'Descuento agregado correctamente');
+
         } catch (error) {
             console.error('Error al agregar descuento:', error);
             setDescuentoModalVisible(false);
             openNotification('error', 'Error al agregar descuento');
         }
     };
-    
 
     const handleDescuentoModalCancel = () => {
         setDescuentoModalVisible(false);
@@ -163,11 +159,22 @@ const Productos = () => {
         {
             title: 'Precio',
             dataIndex: 'precio',
-            render: (precio) => (
-                <span>
-                    {precio.toFixed(2)} €
-                </span>
-            ),
+            render: (precio, record) => {
+                if (record.tieneDescuento) {
+                    const precioConDescuento = precio - (precio * (record.descuento / 100));
+                    return (
+                        <span>
+                            {precioConDescuento.toFixed(2)} € (Descuento: {record.descuento}%)
+                        </span>
+                    );
+                } else {
+                    return (
+                        <span>
+                            {precio.toFixed(2)} €
+                        </span>
+                    );
+                }
+            },
         },
         {
             title: 'Imagen',
