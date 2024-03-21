@@ -81,23 +81,15 @@ const Carrito = () => {
 
       if (responseDescuentos.status === 200) {
         const codigosDescuento = responseDescuentos.data;
-
-        // Busca el descuento correspondiente al código ingresado
         const descuentoEncontrado = codigosDescuento.find(descuento => descuento.codigo === codigoDescuento);
 
         if (descuentoEncontrado) {
           const porcentajeDescuento = descuentoEncontrado.descuento;
 
-          // Almacena el descuento en el estado del componente
           setDescuento(porcentajeDescuento);
-
-          // Almacena el código promocional en el estado del componente
           setCodigo(codigoDescuento);
 
-          // Calcula el total con descuento
           const totalConDescuento = precioTotal - (precioTotal * porcentajeDescuento / 100);
-
-          // Actualiza el estado con el nuevo precio total
           setPrecioTotalConDescuento(Number(totalConDescuento.toFixed(2)));
 
           message.success('Descuento aplicado con éxito');
@@ -121,14 +113,12 @@ const Carrito = () => {
       return;
     }
 
-    // Verifica si el saldo es suficiente para cubrir el total de la compra con o sin descuento
     if (userData.monedero < precioTotal || userData.monedero < precioTotalConDescuento) {
       message.error('No tienes suficiente saldo para realizar esta compra.');
       return;
     }
 
     try {
-      // Aplicar el descuento antes de enviar el pedido
       await aplicarDescuento();
 
       const productosConCantidad = articulo.map(({ imagen, ...rest }) => ({
@@ -164,12 +154,14 @@ const Carrito = () => {
     } catch (error) {
       console.error('Error creating order:', error.message);
     } finally {
-      // Restablece el precio total con descuento después de realizar el pedido
       setPrecioTotalConDescuento(null);
       setModalVisible(false);
       setCodigoDescuento('');
+      setDescuento(null);
+      setCodigo('');
     }
   };
+
 
 
   return (
