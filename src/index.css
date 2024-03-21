@@ -218,13 +218,21 @@ html {
   z-index: 999;
 }
 
-:where(.css-dev-only-do-not-override-1k979oh).ant-row {
+/* :where(.css-dev-only-do-not-override-1k979oh).ant-row {
   justify-content: space-around;
-}
+} */
 
 /* Media Querys */
 
 @media (max-width: 768px) {
+
+  :where(.css-dev-only-do-not-override-1k979oh).ant-layout.ant-layout-has-sider >.ant-layout{
+    width: 100%;
+  }
+
+  :where(.css-dev-only-do-not-override-1k979oh).ant-layout .ant-layout-sider {
+    background: white;
+}
 
   .ant-layout-header.css-dev-only-do-not-override-1k979oh {
     border-bottom: none;
