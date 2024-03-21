@@ -45,12 +45,16 @@ const Carrito = () => {
     dispatch(removeItem(itemId));
     calcularPrecioTotalConDescuento();
     showSuccessMessage('Producto eliminado del carrito');
+    if (articulo.length === 1) {
+      handleCancel();
+    }
   };
 
   const precioTotal = articulo.reduce((total, item) => {
     const precioItem = item.descuento ? item.precio * (100 - item.descuento) / 100 : item.precio;
     return total + parseFloat(precioItem.toFixed(2)) * item.quantity;
   }, 0);
+
 
   const showModal = () => {
     setModalVisible(true);
@@ -161,8 +165,6 @@ const Carrito = () => {
       setCodigo('');
     }
   };
-
-
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
