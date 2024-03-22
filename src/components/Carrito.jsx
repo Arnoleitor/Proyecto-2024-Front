@@ -7,6 +7,7 @@ import { removeItem, incrementItemQuantity, decrementItemQuantity } from '../sto
 import { clearCart } from '../store/cart/cartSlice';
 import { useGetCart } from '../store/cart/cartSelectors';
 import { useGetUser } from '../store/user/userSelectors';
+import { setUserData } from '../store/user/userSlice';
 
 
 const Carrito = () => {
@@ -152,6 +153,9 @@ const Carrito = () => {
         showSuccessMessage('Pedido realizado con éxito');
         dispatch(clearCart());
         setDescuento(null);
+
+        const updatedUserData = await axios.get(`http://localhost:3000/api/getmonedero/${userData.id}`);
+        dispatch(setUserData(updatedUserData.data));
       } else {
         console.error('Error creating order:', responsePedido.statusText);
       }

@@ -218,6 +218,10 @@ html {
   z-index: 999;
 }
 
+.ant-row.ant-row-center.css-dev-only-do-not-override-1k979oh{
+  margin-top: 5%;
+}
+
 /* :where(.css-dev-only-do-not-override-1k979oh).ant-row {
   justify-content: space-around;
 } */
