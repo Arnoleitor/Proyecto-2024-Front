@@ -1,5 +1,5 @@
 import { Layout, Row, Col, Card } from 'antd';
-import { FacebookOutlined, TwitterOutlined, InstagramOutlined, CheckCircleOutlined, CreditCardOutlined, CustomerServiceOutlined, RocketOutlined, DownloadOutlined } from '@ant-design/icons';
+import { FacebookOutlined, InstagramOutlined, CheckCircleOutlined, CreditCardOutlined, CustomerServiceOutlined, RocketOutlined, DownloadOutlined } from '@ant-design/icons';
 import x from '../../assets/img/x.png'
 
 const { Footer } = Layout;
