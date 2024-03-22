@@ -70,7 +70,7 @@ const Perfil = () => {
     // Realizar la recarga de saldo
     await axios.post(`http://localhost:3000/api/monedero/${userData.id}`, { monedero: montoRecarga });
 
-    // Obtener el saldo actualizado después de la recarga
+    // Obtener el saldo actualizado después de la compra
     const updatedUserData = await axios.get(`http://localhost:3000/api/getmonedero/${userData.id}`);
 
     // Actualizar los datos del usuario en el estado global
