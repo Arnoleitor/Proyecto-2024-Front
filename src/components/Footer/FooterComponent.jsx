@@ -28,7 +28,7 @@ const FooterComponent = () => {
         </Col>
         <Col span={6}>
           <CheckCircleOutlined style={{ fontSize: '30px', color: 'green' }} />
-          <p>Envíos en 24h</p>
+          <p style={{margin:'0'}}>Envíos en 24h</p>
         </Col>
       </Row>
       <Row gutter={[16, 16]} justify="center" style={{ marginTop: '20px' }}>
