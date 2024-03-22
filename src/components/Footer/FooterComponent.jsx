@@ -1,5 +1,6 @@
 import { Layout, Row, Col, Card } from 'antd';
 import { FacebookOutlined, TwitterOutlined, InstagramOutlined, CheckCircleOutlined, CreditCardOutlined, CustomerServiceOutlined, RocketOutlined, DownloadOutlined } from '@ant-design/icons';
+import x from '../../assets/img/x.png'
 
 const { Footer } = Layout;
 
@@ -9,17 +10,20 @@ const FooterComponent = () => {
       <Row gutter={[16, 16]} justify="center">
         <Col span={6}>
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-            <FacebookOutlined style={{ fontSize: '30px', color: '#1877f2' }} />
+            <FacebookOutlined style={{ fontSize: '30px', color: '#1877f2' }} /><br></br>
+            Facebook
           </a>
         </Col>
         <Col span={6}>
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-            <TwitterOutlined style={{ fontSize: '30px', color: '#1da1f2' }} />
+            <img src={x} style={{ width: '30px', color: '#1da1f2' }}></img><br></br>
+            X
           </a>
         </Col>
         <Col span={6}>
           <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-            <InstagramOutlined style={{ fontSize: '30px', color: '#c13584' }} />
+            <InstagramOutlined style={{ fontSize: '30px', color: '#c13584' }} /><br></br>
+            Instagram
           </a>
         </Col>
         <Col span={6}>
