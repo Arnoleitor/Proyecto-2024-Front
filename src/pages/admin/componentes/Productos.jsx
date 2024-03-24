@@ -11,6 +11,7 @@ const Productos = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [editProductModalVisible, setEditProductModalVisible] = useState(false);
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+    const [deleteDescuentoSeleccionado, setDeleteDescuentoSeleccionado] = useState(null);
     const [form] = Form.useForm();
     const [tiposProductos, setTiposProductos] = useState([]);
     const [descuentoModalVisible, setDescuentoModalVisible] = useState(false);
@@ -75,7 +76,6 @@ const Productos = () => {
         }
     };
 
-
     const handleEliminarProducto = async (productoId) => {
         Modal.confirm({
             title: 'Confirmar Eliminación',
@@ -124,20 +124,41 @@ const Productos = () => {
                 message.error('El descuento no puede ser 0.');
                 return;
             }
-    
+
             const { data } = await axios.post(`http://localhost:3000/api/productosconDescuento/${productoSeleccionado._id}`, { descuento });
             setDescuentoModalVisible(false);
-    
+
             const { data: nuevosProductos } = await axios.get("http://localhost:3000/api/recibirProducto");
             setProductos(nuevosProductos);
             openNotification('success', 'Descuento agregado correctamente');
-    
+
         } catch (error) {
             console.error('Error al agregar descuento:', error);
             setDescuentoModalVisible(false);
             openNotification('error', 'Error al agregar descuento');
         }
-    };    
+    };
+
+    const handleModalEliminarDescuento = (record) => {
+        Modal.confirm({
+            title: 'Confirmar Eliminación de Descuento',
+            content: '¿Estás seguro de que quieres eliminar este descuento?',
+            okText: 'Eliminar',
+            okType: 'danger',
+            cancelText: 'Cancelar',
+            onOk: async () => {
+                try {
+                    await axios.put(`http://localhost:3000/api/deleteDescuentoProducto/${record._id}`);
+                    const { data: nuevosProductos } = await axios.get("http://localhost:3000/api/recibirProducto");
+                    setProductos(nuevosProductos);
+                    openNotification('success', 'Descuento eliminado correctamente');
+                } catch (error) {
+                    message.error('Error al eliminar descuento');
+                    openNotification('error', 'Error al eliminar descuento');
+                }
+            },
+        });
+    };
 
     const columnsProductos = [
         {
@@ -197,206 +218,201 @@ const Productos = () => {
                         Eliminar
                     </Button>
                     <Button onClick={() => { setProductoSeleccionado(record); setDescuentoModalVisible(true) }} type="dashed" style={{ color: 'green' }}>Descuento</Button>
+                    <Button onClick={() => handleModalEliminarDescuento(record)} type="dashed" style={{ color: 'red' }}>Eliminar %</Button>
                 </Space>
             ),
         },
     ];
 
     return (
-    <>
-        <div className='tablasAdmin'>
-            <h2>Productos disponibles</h2>
-            <Divider />
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2%' }}>
-                <Button type="primary" onClick={handleAgregarProducto}>
-                    Agregar Producto
-                </Button>
-                <div style={{ marginRight: '2%' }}></div>
-                <CargarArchivo setProductos={setProductos} />
+        <>
+            <div className='tablasAdmin'>
+                <h2>Productos disponibles</h2>
+                <Divider />
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2%' }}>
+                    <Button type="primary" onClick={handleAgregarProducto}>
+                        Agregar Producto
+                    </Button>
+                    <div style={{ marginRight: '2%' }}></div>
+                    <CargarArchivo setProductos={setProductos} />
+                </div>
+                <Table dataSource={productos} columns={columnsProductos} />
+
+                <Modal
+                    title="Editar Producto"
+                    open={editProductModalVisible}
+                    onOk={handleModalEditOkProducto}
+                    onCancel={handleModalEditCancelProducto}
+                >
+                    <Form form={form} layout="vertical" name="edit-product-form">
+                        <Form.Item label="Imagen" name="imagen">
+                            <Upload
+                                maxCount={1}
+                                multiple={false}
+                                listType='picture-card'
+                                customRequest={dummyRequest}
+                                beforeUpload={(file) => {
+                                    const isImage = file.type.startsWith('image/');
+                                    if (!isImage) {
+                                        message.error('Solo se permiten archivos de imagen');
+                                    }
+                                    return isImage;
+                                }}
+                                onChange={(info) => {
+
+                                    let { status, name, response } = info.file;
+                                    if (status === 'done') {
+                                        if (response === 'ok') {
+                                            console.log(info.file.thumbUrl);
+                                            if (info.file.thumbUrl) {
+                                                form.setFieldsValue({ imagen: info.file.thumbUrl });
+                                            }
+                                            message.success(`${name} cargado exitosamente`);
+                                        } else {
+                                            console.error('Estructura de respuesta no válida:', response);
+                                            message.error('Error al obtener la imagen base64 de la respuesta del servidor.');
+                                        }
+                                    } else if (status === 'error') {
+                                        message.error(`${name} carga fallida.`);
+                                    }
+                                }}
+                            >
+                                <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
+                            </Upload>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Nombre"
+                            name="descripcion"
+                            rules={[{ required: true, message: 'Ingresa el nombre del producto' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Tipo"
+                            name="tipo"
+                            rules={[{ required: true, message: 'Selecciona el tipo del producto' }]}
+                        >
+                            <Select>
+                                {tiposProductos.map((tipo) => (
+                                    <Option key={tipo.id} value={tipo.id}>
+                                        {tipo.tipo}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                            label="Precio"
+                            name="precio"
+                            rules={[{ required: true, message: 'Ingresa el precio del producto' }]}
+                        >
+                            <Input type="number" />
+                        </Form.Item>
+                    </Form>
+                </Modal>
+
+                <Modal
+                    title="Agregar Producto"
+                    open={modalVisible}
+                    onOk={handleModalOk}
+                    onCancel={handleModalCancel}
+                >
+                    <Form form={form} layout="vertical" name="producto-form">
+                        <Form.Item label="Imagen" name="imagen">
+                            <Upload
+                                maxCount={1}
+                                multiple={false}
+                                listType='picture-card'
+                                customRequest={dummyRequest}
+                                beforeUpload={(file) => {
+                                    const isImage = file.type.startsWith('image/');
+                                    if (!isImage) {
+                                        message.error('Solo se permiten archivos de imagen');
+                                    }
+                                    return isImage;
+                                }}
+                                onChange={(info) => {
+
+                                    let { status, name, response } = info.file;
+                                    if (status === 'done') {
+                                        console.log("name", info.file.name);
+                                        if (response === 'ok') {
+                                            console.log(info.file.thumbUrl);
+                                            if (info.file.thumbUrl) {
+                                                form.setFieldsValue({ imagen: info.file.thumbUrl });
+                                            }
+
+                                            message.success(`${name} cargado exitosamente`);
+                                        } else {
+                                            console.error('Estructura de respuesta no válida:', response);
+                                            message.error('Error al obtener la imagen base64 de la respuesta del servidor.');
+                                        }
+                                    } else if (status === 'error') {
+                                        message.error(`${name} carga fallida.`);
+                                    }
+                                }}
+                            >
+                                <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
+                            </Upload>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Nombre"
+                            name="descripcion"
+                            rules={[{ required: true, message: 'Ingresa el nombre del producto' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Tipo"
+                            name="tipo"
+                            rules={[{ required: true, message: 'Selecciona el tipo del producto' }]}
+                        >
+                            <Select>
+                                {tiposProductos.map((tipo) => (
+                                    <Option key={tipo.id} value={tipo.id}>
+                                        {tipo.tipo}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                            label="Precio"
+                            name="precio"
+                            rules={[{ required: true, message: 'Ingresa el precio del producto' }]}
+                        >
+                            <Input type="number" />
+                        </Form.Item>
+                    </Form>
+                </Modal>
+                <Modal
+                    title="Agregar Descuento"
+                    open={descuentoModalVisible}
+                    onOk={handleAgregarDescuento}
+                    onCancel={() => setDescuentoModalVisible(false)}
+                >
+                    <Form layout="vertical">
+                        <Form.Item
+                            label="Descuento (%)"
+                            name="descuento"
+                            rules={[{ required: true, message: 'Ingresa el descuento' }]}
+                        >
+                            <InputNumber
+                                min={0}
+                                max={99}
+                                formatter={value => `${value}`}
+                                onChange={(value) => setDescuento(value)}
+                                onKeyDown={(e) => {
+                                    if (e.target.value.length >= 2 && e.key !== 'Backspace' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                                        e.preventDefault();
+                                    }
+                                }}
+                            />
+                        </Form.Item>
+                    </Form>
+                </Modal>
             </div>
-            <Table dataSource={productos} columns={columnsProductos} />
-
-            <Modal
-                title="Editar Producto"
-                open={editProductModalVisible}
-                onOk={handleModalEditOkProducto}
-                onCancel={handleModalEditCancelProducto}
-            >
-                <Form form={form} layout="vertical" name="edit-product-form">
-                    <Form.Item label="Imagen" name="imagen">
-                        <Upload
-                            maxCount={1}
-                            multiple={false}
-                            listType='picture-card'
-                            customRequest={dummyRequest}
-                            beforeUpload={(file) => {
-                                const isImage = file.type.startsWith('image/');
-                                if (!isImage) {
-                                    message.error('Solo se permiten archivos de imagen');
-                                }
-                                return isImage;
-                            }}
-                            onChange={(info) => {
-
-                                let { status, name, response } = info.file;
-                                if (status === 'done') {
-                                    console.log("name", info.file.name);
-                                    if (response === 'ok') {
-                                        console.log(info.file.thumbUrl);
-                                        if (info.file.thumbUrl) {
-                                            form.setFieldsValue({ imagen: info.file.thumbUrl });
-                                        }
-
-                                        message.success(`${name} cargado exitosamente`);
-                                    } else {
-                                        console.error('Estructura de respuesta no válida:', response);
-                                        message.error('Error al obtener la imagen base64 de la respuesta del servidor.');
-                                    }
-                                } else if (status === 'error') {
-                                    message.error(`${name} carga fallida.`);
-                                }
-                            }}
-
-
-                        >
-                            <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
-                        </Upload>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Nombre"
-                        name="descripcion"
-                        rules={[{ required: true, message: 'Ingresa el nombre del producto' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Tipo"
-                        name="tipo"
-                        rules={[{ required: true, message: 'Selecciona el tipo del producto' }]}
-                    >
-                        <Select>
-                            {tiposProductos.map((tipo) => (
-                                <Option key={tipo.id} value={tipo.id}>
-                                    {tipo.tipo}
-                                </Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                    <Form.Item
-                        label="Precio"
-                        name="precio"
-                        rules={[{ required: true, message: 'Ingresa el precio del producto' }]}
-                    >
-                        <Input type="number" />
-                    </Form.Item>
-                </Form>
-            </Modal>
-
-            <Modal
-                title="Agregar Producto"
-                open={modalVisible}
-                onOk={handleModalOk}
-                onCancel={handleModalCancel}
-            >
-                <Form form={form} layout="vertical" name="producto-form">
-                    <Form.Item label="Imagen" name="imagen">
-                        <Upload
-                            maxCount={1}
-                            multiple={false}
-                            listType='picture-card'
-                            customRequest={dummyRequest}
-                            beforeUpload={(file) => {
-                                const isImage = file.type.startsWith('image/');
-                                if (!isImage) {
-                                    message.error('Solo se permiten archivos de imagen');
-                                }
-                                return isImage;
-                            }}
-                            onChange={(info) => {
-
-                                let { status, name, response } = info.file;
-                                if (status === 'done') {
-                                    console.log("name", info.file.name);
-                                    if (response === 'ok') {
-                                        console.log(info.file.thumbUrl);
-                                        if (info.file.thumbUrl) {
-                                            form.setFieldsValue({ imagen: info.file.thumbUrl });
-                                        }
-
-                                        message.success(`${name} cargado exitosamente`);
-                                    } else {
-                                        console.error('Estructura de respuesta no válida:', response);
-                                        message.error('Error al obtener la imagen base64 de la respuesta del servidor.');
-                                    }
-                                } else if (status === 'error') {
-                                    message.error(`${name} carga fallida.`);
-                                }
-                            }}
-
-
-                        >
-                            <Button icon={<UploadOutlined />}>Cargar Imagen</Button>
-                        </Upload>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Nombre"
-                        name="descripcion"
-                        rules={[{ required: true, message: 'Ingresa el nombre del producto' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Tipo"
-                        name="tipo"
-                        rules={[{ required: true, message: 'Selecciona el tipo del producto' }]}
-                    >
-                        <Select>
-                            {tiposProductos.map((tipo) => (
-                                <Option key={tipo.id} value={tipo.id}>
-                                    {tipo.tipo}
-                                </Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                    <Form.Item
-                        label="Precio"
-                        name="precio"
-                        rules={[{ required: true, message: 'Ingresa el precio del producto' }]}
-                    >
-                        <Input type="number" />
-                    </Form.Item>
-                </Form>
-            </Modal>
-            <Modal
-                title="Agregar Descuento"
-                open={descuentoModalVisible}
-                onOk={handleAgregarDescuento}
-                onCancel={() => setDescuentoModalVisible(false)}
-            >
-                <Form layout="vertical">
-                    <Form.Item
-                        label="Descuento (%)"
-                        name="descuento"
-                        rules={[{ required: true, message: 'Ingresa el descuento' }]}
-                    >
-                        <InputNumber
-                            min={0}
-                            max={99}
-                            formatter={value => `${value}`}
-                            onChange={(value) => setDescuento(value)}
-                            onKeyDown={(e) => {
-                                if (e.target.value.length >= 2 && e.key !== 'Backspace' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
-                                    e.preventDefault();
-                                }
-                            }}
-                        />
-                    </Form.Item>
-                </Form>
-            </Modal>
-        </div>
-    </>
+        </>
     )
 }
 
