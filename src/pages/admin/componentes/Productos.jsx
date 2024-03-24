@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Space, Modal, Button, Form, Input, Select, notification, Upload, message, Divider, InputNumber } from 'antd';
+import { Table, Space, Modal, Button, Form, Input, Select, notification, Upload, message, Divider, InputNumber, Tooltip } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useFetch } from '../../../useHooks/useFetch';
 import CargarArchivo from '../../../components/Customs/CargarArchivo';
@@ -214,11 +214,15 @@ const Productos = () => {
             render: (text, record) => (
                 <Space size="middle">
                     <Button onClick={() => handleEditarProducto(record._id)}>Editar</Button>
+                    <Tooltip title={'Eliminar producto'}>
                     <Button onClick={() => handleEliminarProducto(record._id)} type="default" danger>
                         Eliminar
                     </Button>
+                    </Tooltip>
                     <Button onClick={() => { setProductoSeleccionado(record); setDescuentoModalVisible(true) }} type="dashed" style={{ color: 'green' }}>Descuento</Button>
+                    <Tooltip title={'Eliminar descuento'}>
                     <Button onClick={() => handleModalEliminarDescuento(record)} type="dashed" style={{ color: 'red' }}>Eliminar %</Button>
+                    </Tooltip>
                 </Space>
             ),
         },
