@@ -5,7 +5,6 @@ import { MailOutlined } from '@ant-design/icons';
 
 const ContactoMensaje = () => {
   const [mensajes, setMensajes] = useState([]);
-
   const { data: responseMensajesData } = useFetch("http://localhost:3000/api/getcontacto");
   
   useEffect(() => {
