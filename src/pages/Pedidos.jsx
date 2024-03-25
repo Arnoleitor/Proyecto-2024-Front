@@ -88,12 +88,12 @@ const Pedidos = () => {
         key: "acciones",
         render: (text, record) => (
           <>
-            <div style={{ marginRight: '8px', display: 'inline-block' }}> {/* Divisor entre botones */}
+            <div style={{ marginRight: '8px', display: 'inline-block' }}>
               <Tooltip title="Descargar Factura" placement="top">
                 <Button icon={<DownloadOutlined/>} type="primary" ghost onClick={() => handleDescargarFactura(record)} />
               </Tooltip>
             </div>
-            <div style={{ display: 'inline-block' }}> {/* Botón Ver Factura */}
+            <div style={{ display: 'inline-block' }}>
               <Tooltip title="Ver Factura" placement="top">
                 <Button
                   style={{ color: 'orangered' }}
