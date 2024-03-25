@@ -6,6 +6,7 @@ import TicketsAdmin from '../admin/componentes/TicketsAdmin';
 import Usuarios from '../admin/componentes/Usuarios';
 import Pedidos from './componentes/Pedidos';
 import Productos from './componentes/Productos';
+import ContactoMensaje from './componentes/ContactoMensaje';
 
 const AdminPanel = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const AdminPanel = () => {
       <Productos />
       <Pedidos />
       <TicketsAdmin />
+      <ContactoMensaje />
     </>
   );
 };
