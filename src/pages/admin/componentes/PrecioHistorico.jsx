@@ -32,6 +32,12 @@ const PrecioHistorico = () => {
         dataIndex: "precio",
         key: "precio"
       },
+      {
+        title: "Descuento actual",
+        dataIndex: "descuento",
+        key: "descuento",
+        render: (descuento) => <span>{descuento} %</span>,
+      },
     ];
   
     // Filtrar los productos que tienen historial de precios
