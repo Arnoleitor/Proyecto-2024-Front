@@ -74,6 +74,7 @@ const PrecioHistorico = () => {
                     title: "Precio",
                     dataIndex: "precio",
                     key: "precio",
+                    render: (precio) => <span>{precio.toFixed(2)} €</span>,
                   },
                 ]}
               />
