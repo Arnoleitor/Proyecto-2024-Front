@@ -386,9 +386,9 @@ html {
     display: none;
   }
 
-  .anticon-eye {
+  /* .anticon-eye {
     display: none !important;
-  }
+  } */
 
   .ant-layout-sider-zero-width-trigger.ant-layout-sider-zero-width-trigger-left {
     background: #87a7d3;
