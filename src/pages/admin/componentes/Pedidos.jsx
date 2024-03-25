@@ -111,6 +111,7 @@ const Pedidos = () => {
         {
             title: "Acciones",
             key: "acciones",
+            width:150,
             render: (text, record) => (
             <>
              <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
