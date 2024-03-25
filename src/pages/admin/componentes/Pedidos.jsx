@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button, Tooltip, Modal, Divider } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
+import { DownloadOutlined, EyeOutlined } from '@ant-design/icons';
 import FechaFormateada from '../../../components/Customs/FechaFormateada';
 import { saveAs } from 'file-saver';
 import { useFetch } from '../../../useHooks/useFetch';
@@ -112,23 +112,23 @@ const Pedidos = () => {
             title: "Acciones",
             key: "acciones",
             render: (text, record) => (
-                <>
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <>
+             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
 
-                        <Button type="primary" ghost onClick={() => handleDescargarFactura(record)}>
-                            Descargar Factura
-                        </Button>
-                        <Tooltip title="Ver Factura" placement="top">
-                            <Button
-                                style={{ marginLeft: '5%', color: 'orangered' }}
-                                type="default"
-                                shape="circle"
-                                icon={<EyeOutlined />}
-                                onClick={() => handlePreviewFactura(record)}
-                            />
-                        </Tooltip>
-                    </div>
-                </>
+                <Tooltip title="Descargar Factura" placement="top">
+                    <Button icon={<DownloadOutlined />} type="primary" ghost onClick={() => handleDescargarFactura(record)} />
+                </Tooltip>
+                <Tooltip title="Ver Factura" placement="top">
+                    <Button
+                        style={{ marginLeft: '5%', color: 'orangered' }}
+                        type="default"
+                        shape="circle"
+                        icon={<EyeOutlined />}
+                        onClick={() => handlePreviewFactura(record)}
+                    />
+                </Tooltip>
+             </div>
+            </>
             ),
         },
     ];

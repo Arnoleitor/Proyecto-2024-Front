@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, Tooltip, Modal } from "antd";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { EyeOutlined } from "@ant-design/icons";
+import { DownloadOutlined, EyeOutlined } from "@ant-design/icons";
 import FechaFormateada from "../components/Customs/FechaFormateada";
 import { saveAs } from 'file-saver';
 import { useFetch } from "../useHooks/useFetch";
@@ -84,26 +84,30 @@ const Pedidos = () => {
       render: (descuento) => descuento? <strong>-{descuento}%</strong> : "No",
     },
     {
-      title: "Acciones",
-      key: "acciones",
-      render: (text, record) => (
-        <>
-          <Button type="primary" ghost onClick={() => handleDescargarFactura(record)}>
-            Descargar Factura
-          </Button>
-          <Tooltip title="Ver Factura" placement="top">
-            <Button
-              style={{ color: 'orangered', marginLeft:'1%' }}
-              type="default"
-              shape="circle"
-              icon={<EyeOutlined />}
-              onClick={() => handlePreviewFactura(record)}
-            />
-          </Tooltip>
-        </>
-      ),
-    },
-  ];
+        title: "Acciones",
+        key: "acciones",
+        render: (text, record) => (
+          <>
+            <div style={{ marginRight: '8px', display: 'inline-block' }}> {/* Divisor entre botones */}
+              <Tooltip title="Descargar Factura" placement="top">
+                <Button icon={<DownloadOutlined/>} type="primary" ghost onClick={() => handleDescargarFactura(record)} />
+              </Tooltip>
+            </div>
+            <div style={{ display: 'inline-block' }}> {/* Botón Ver Factura */}
+              <Tooltip title="Ver Factura" placement="top">
+                <Button
+                  style={{ color: 'orangered' }}
+                  type="default"
+                  shape="circle"
+                  icon={<EyeOutlined />}
+                  onClick={() => handlePreviewFactura(record)}
+                />
+              </Tooltip>
+            </div>
+          </>
+        ),
+      },
+    ];
 
   const handleDescargarFactura = (record) => {
     const fetchFactura = async () => {
