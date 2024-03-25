@@ -7,6 +7,7 @@ import Usuarios from '../admin/componentes/Usuarios';
 import Pedidos from './componentes/Pedidos';
 import Productos from './componentes/Productos';
 import ContactoMensaje from './componentes/ContactoMensaje';
+import PrecioHistorico from './componentes/precioHistorico';
 
 const AdminPanel = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const AdminPanel = () => {
       <Pedidos />
       <TicketsAdmin />
       <ContactoMensaje />
+      <PrecioHistorico/>
     </>
   );
 };
