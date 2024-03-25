@@ -1,7 +1,8 @@
-import { Divider, Modal, Table } from 'antd';
+import { Button, Divider, Modal, Table } from 'antd';
 import React, { useState } from 'react';
 import { useFetch } from '../../../useHooks/useFetch';
 import FechaFormateada from '../../../components/Customs/FechaFormateada';
+import { EyeOutlined } from '@ant-design/icons';
 
 const PrecioHistorico = () => {
     const { data: responseDatos } = useFetch("http://localhost:3000/api/recibirProducto");
@@ -20,17 +21,17 @@ const PrecioHistorico = () => {
   
     const columnsPrecioHistorico = [
       {
-        title: "Nombre",
+        title: "Nombre - Historial",
         dataIndex: "descripcion",
         key: "descripcion",
         render: (text, record) => (
-          <a onClick={() => handleOpenModal(record)}>{text}</a>
+          <Button type='dashed' icon={<EyeOutlined/>} onClick={() => handleOpenModal(record)}>{text}</Button>
         ),
       },
       {
         title: "Precio actual",
         dataIndex: "precio",
-        key: "precio"
+        render: (precio) => <span>{precio.toFixed(2)} €</span>,
       },
       {
         title: "Descuento actual",
