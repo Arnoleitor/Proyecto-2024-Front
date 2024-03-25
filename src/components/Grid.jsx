@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Tooltip, List, message, Tag } from 'antd';
-import { EuroCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Tooltip, List, message, Tag, Table } from 'antd';
+import { EuroCircleOutlined, InfoCircleOutlined, LineChartOutlined } from '@ant-design/icons';
 import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../store/cart/cartSlice';
 import axios from 'axios';
 import imagenPorDefecto from '../assets/img/imagenrota.jpg';
 import { useSelector } from "react-redux";
+import FechaFormateada from './Customs/FechaFormateada';
 
-const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, descuento }) => {
+const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, descuento, historico }) => {
 
   const [imagenError, setImagenError] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,6 +18,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
   const [nuevoComentario, setNuevoComentario] = useState("");
   const [comentarioRequerido, setComentarioRequerido] = useState(false);
   const [valoracionRequerida, setValoracionRequerida] = useState(false);
+  const [historialModalVisible, setHistorialModalVisible] = useState(false);
   const userData = useSelector((state) => state.user);
   const precioConDescuento = descuento > 0 ? (precio * (100 - descuento) / 100).toFixed(2) : null;
 
@@ -37,6 +39,14 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
 
   const handleModalCancel = () => {
     setModalVisible(false);
+  };
+
+  const handleHistorialModalCancel = () => {
+    setHistorialModalVisible(false);
+  };
+
+  const handleVerHistorialPrecios = () => {
+    setHistorialModalVisible(true);
   };
 
   const comentariosPublicados = useSelector((state) => state.comentarios?.[_id] || new Set());
@@ -61,13 +71,13 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
             nombreUsuario: userData.nombre,
             idUsuario: userData.id
           });
-          if(response.data.error){
+          if (response.data.error) {
             message.error(response.data.error)
             return
           }
           setComentarioRequerido(false);
           setValoracionRequerida(false);
-          setComentarios([...comentarios, response.data]);          
+          setComentarios([...comentarios, response.data]);
           setNuevoComentario("");
         }
       } catch (error) {
@@ -85,11 +95,26 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
     return totalValoraciones > 0 ? sumaValoraciones / totalValoraciones : 0;
   };
 
-  
+  const columnsHistorico = [
+    {
+      title: "Fecha",
+      dataIndex: "fechaPrecio",
+      key: "fechaPrecio",
+      render: (fechaPrecio) => (
+        <FechaFormateada timestamp={fechaPrecio} />
+      ),
+    },
+    {
+      title: "Precio",
+      dataIndex: "precio",
+      key: "precio",
+    },
+  ]
+
   return (
     <>
       <Card
-        style={{ borderRadius: '20px', textAlign: 'center', height: '100%', fontFamily:'basica' }}
+        style={{ borderRadius: '20px', textAlign: 'center', height: '100%', fontFamily: 'basica' }}
         cover={
           imagenError ? (
             <img src={imagenPorDefecto} alt="imagen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -111,6 +136,42 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
             onClick={handleVerDetalles}
           />
         </Tooltip>
+        <Tooltip title="Ver historial de precios">
+          <LineChartOutlined
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: 280,
+              color: '#1890ff',
+              fontSize: '20px',
+              cursor: 'pointer',
+            }}
+            onClick={handleVerHistorialPrecios}
+          />
+        </Tooltip>
+        <Modal
+          title={
+            <>
+              <span>Historial de precios - Precio actual: </span>
+              <span style={{ color: '#1890ff' }}>
+                {precioConDescuento ? `${precioConDescuento} €` : `${precio.toFixed(2)}€`}
+              </span>
+            </>
+          }
+          open={historialModalVisible}
+          onCancel={handleHistorialModalCancel}
+          footer={[
+            <Button key="cancel" onClick={handleHistorialModalCancel}>
+              Cerrar
+            </Button>
+          ]}
+        >
+          {historico.length === 0 ? (
+            <span style={{ color: 'green' }}>El precio no ha variado.</span>
+          ) : (
+            <Table dataSource={historico} columns={columnsHistorico} />
+          )}
+        </Modal>
         {descuento > 0 && (
           <Tag color="red" style={{ position: 'absolute', top: 10, left: 10, zIndex: 1 }}>
             <EuroCircleOutlined style={{ marginRight: '4px' }} />
@@ -140,6 +201,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
           Agregar al carrito
         </Button>
       </Card>
+
       <Modal
         closable={false}
         title={descripcion}
@@ -196,7 +258,7 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
   );
 };
 
-const Grid = ({productos}) => {
+const Grid = ({ productos }) => {
   const totalItems = productos.length;
   const dispatch = useDispatch();
   const [showSkeleton, setShowSkeleton] = useState(false);

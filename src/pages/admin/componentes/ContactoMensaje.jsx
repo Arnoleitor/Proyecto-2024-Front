@@ -37,7 +37,7 @@ const ContactoMensaje = () => {
     {
       title: "Responder",
       key: "accion",
-      render: (_, record) => (
+      render: (i, record) => (
         <Button icon={<MailOutlined/>} type='primary' onClick={() => handleReply(record.email)}></Button>
       )
     }
