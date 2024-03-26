@@ -99,10 +99,28 @@ html {
   flex-direction: row;
 }
 
-.tablasPerfil .ant-card.ant-card-bordered.css-dev-only-do-not-override-1k979oh{
+.tablasPerfil .ant-card.ant-card-bordered.css-dev-only-do-not-override-1k979oh {
   height: 300px;
   overflow: auto;
 }
+
+/* Estilos para la barra de desplazamiento */
+.tablasPerfil .ant-card.ant-card-bordered.css-dev-only-do-not-override-1k979oh::-webkit-scrollbar {
+  width: 10px;
+}
+
+.tablasPerfil .ant-card.ant-card-bordered.css-dev-only-do-not-override-1k979oh::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.tablasPerfil .ant-card.ant-card-bordered.css-dev-only-do-not-override-1k979oh::-webkit-scrollbar-thumb {
+  background: #89bcff;
+}
+
+.tablasPerfil .ant-card.ant-card-bordered.css-dev-only-do-not-override-1k979oh::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 
 .tarjetasPerfil{
   gap:1%
