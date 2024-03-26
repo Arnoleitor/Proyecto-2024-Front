@@ -100,7 +100,8 @@ html {
 }
 
 .tablasPerfil .ant-card.ant-card-bordered.css-dev-only-do-not-override-1k979oh{
-  height: auto;
+  height: 300px;
+  overflow: auto;
 }
 
 .tarjetasPerfil{
