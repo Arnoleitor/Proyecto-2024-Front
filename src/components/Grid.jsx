@@ -8,6 +8,7 @@ import axios from 'axios';
 import imagenPorDefecto from '../assets/img/imagenrota.jpg';
 import { useSelector } from "react-redux";
 import FechaFormateada from './Customs/FechaFormateada';
+import MyChart from './Chart/MyChart';
 
 const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, descuento, historico }) => {
 
@@ -151,28 +152,31 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
           />
         </Tooltip>
         <Modal
-          title={
-            <>
-              <span>Historial de precios - Precio actual: </span>
-              <span style={{ color: '#1890ff' }}>
-                {precioConDescuento ? `${precioConDescuento} €` : `${precio.toFixed(2)}€`}
-              </span>
-            </>
-          }
-          open={historialModalVisible}
-          onCancel={handleHistorialModalCancel}
-          footer={[
-            <Button key="cancel" onClick={handleHistorialModalCancel}>
-              Cerrar
-            </Button>
-          ]}
-        >
-          {historico.length === 0 ? (
-            <span style={{ color: 'green' }}>El precio no ha variado.</span>
-          ) : (
+        title={
+          <>
+            <span>Historial de precios - Precio actual: </span>
+            <span style={{ color: '#1890ff' }}>
+              {precioConDescuento ? `${precioConDescuento} €` : `${precio.toFixed(2)}€`}
+            </span>
+          </>
+        }
+        open={historialModalVisible}
+        onCancel={handleHistorialModalCancel}
+        footer={[
+          <Button key="cancel" onClick={handleHistorialModalCancel}>
+            Cerrar
+          </Button>
+        ]}
+      >
+        {historico.length === 0 ? (
+          <span style={{ color: 'green' }}>El precio no ha variado.</span>
+        ) : (
+          <>
+            <MyChart historico={historico} precioConDescuento={precioConDescuento} />
             <Table dataSource={historico} columns={columnsHistorico} />
-          )}
-        </Modal>
+          </>
+        )}
+      </Modal>
         {descuento > 0 && (
           <Tag color="red" style={{ position: 'absolute', top: 10, left: 10, zIndex: 1 }}>
             <EuroCircleOutlined style={{ marginRight: '4px' }} />
