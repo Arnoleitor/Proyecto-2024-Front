@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useFetch } from '../../../useHooks/useFetch';
 import FechaFormateada from '../../../components/Customs/FechaFormateada';
 import { EyeOutlined } from '@ant-design/icons';
+import MyChart from '../../../components/Chart/MyChart';
 
 const PrecioHistorico = () => {
     const { data: responseDatos } = useFetch("http://localhost:3000/api/recibirProducto");
@@ -52,13 +53,14 @@ const PrecioHistorico = () => {
   
         <Modal
           title={selectedItem ? selectedItem.descripcion : ""}
-          visible={modalVisible}
+          open={modalVisible}
           onCancel={handleModalClose}
           footer={null}
+          width={500}
         >
           {selectedItem && (
             <div>
-              <h3>Historial de precios:</h3>
+              <MyChart historico={selectedItem.historico} />
               <Table
                 dataSource={selectedItem.historico}
                 columns={[
