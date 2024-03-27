@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Card, Col, Divider, Pagination, Row, Modal, Rate, Input, Tooltip, List, message, Tag, Table } from 'antd';
-import { EuroCircleOutlined, InfoCircleOutlined, LineChartOutlined } from '@ant-design/icons';
+import { EuroCircleOutlined, FireOutlined, LineChartOutlined } from '@ant-design/icons';
 import SkeletonComponent from './Skeleton/Skeleton';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../store/cart/cartSlice';
@@ -125,8 +125,8 @@ const TipoArticulo = ({ _id, imagen, descripcion, precio, agregarAlCarrito, desc
           )
         }
       >
-        <Tooltip title="Ver detalles">
-          <InfoCircleOutlined
+        <Tooltip title="Valorar producto">
+        <FireOutlined
             style={{
               position: 'absolute',
               top: 10,
