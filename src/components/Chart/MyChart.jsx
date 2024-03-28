@@ -39,7 +39,7 @@ const MyChart = ({ historico }) => {
       y: {
         title: {
           display: true,
-          text: 'Precio (€)'
+          text: 'Precio en €'
         }
       }
     }
