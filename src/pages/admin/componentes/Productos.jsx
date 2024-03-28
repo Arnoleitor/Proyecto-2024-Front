@@ -63,8 +63,7 @@ const Productos = () => {
     const handleModalEditOkProducto = async () => {
         try {
             const values = await form.validateFields();
-            await axios.put(`http://localhost:3000/api/actualizaproducto/${productoSeleccionado}`, values);
-
+            await axios.put(`http://localhost:3000/api/actualizaproducto/${productoSeleccionado._id}`, values);
             const { data: nuevosProductos } = await axios.get("http://localhost:3000/api/recibirProducto");
             setProductos(nuevosProductos);
             setEditProductModalVisible(false);
@@ -213,15 +212,15 @@ const Productos = () => {
             key: 'acciones',
             render: (text, record) => (
                 <Space size="middle">
-                    <Button onClick={() => handleEditarProducto(record._id)}>Editar</Button>
+                    <Button onClick={() => handleEditarProducto(record)}>Editar</Button>
                     <Tooltip title={'Eliminar producto'}>
-                    <Button onClick={() => handleEliminarProducto(record._id)} type="default" danger>
-                        Eliminar
-                    </Button>
+                        <Button onClick={() => handleEliminarProducto(record._id)} type="default" danger>
+                            Eliminar
+                        </Button>
                     </Tooltip>
                     <Button onClick={() => { setProductoSeleccionado(record); setDescuentoModalVisible(true) }} type="dashed" style={{ color: 'green' }}>Descuento</Button>
                     <Tooltip title={'Eliminar descuento'}>
-                    <Button onClick={() => handleModalEliminarDescuento(record)} type="dashed" style={{ color: 'red' }}>Eliminar %</Button>
+                        <Button onClick={() => handleModalEliminarDescuento(record)} type="dashed" style={{ color: 'red' }}>Eliminar %</Button>
                     </Tooltip>
                 </Space>
             ),
